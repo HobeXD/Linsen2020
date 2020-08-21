@@ -1,0 +1,29 @@
+<html>
+<head>
+<style>
+.time_input {
+    
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+</style>
+</head>
+<body>
+
+時間: 
+<input class="time_input" type="number" onfocus="this.value=''" onkeyup="moveOnMax(this,'min')" id="hour" autocomplete="off" maxlength="2">:
+<input class="time_input" type="number" onfocus="this.value=''" onkeyup="moveOnMax(this,'sec')" id="min" autocomplete="off" maxlength="2">:
+<input class="time_input" type="number" onfocus="this.value=''" id="sec" autocomplete="off" maxlength="2">
+</body>
+<script>
+
+function moveOnMax(field,nextFieldID){
+  if(field.value.length >= field.maxLength){
+    document.getElementById(nextFieldID).focus();
+  }
+}
+</script>
+</html>
