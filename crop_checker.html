@@ -1,0 +1,69 @@
+<html>
+<head>
+<script>
+function doChecker() {
+    var inputVal = document.getElementById("input").value;
+    var tables = inputVal.split('<table class="traders"');
+    
+    tables.shift();
+    var startTime = -1;
+    var user_resource = {};
+    tables.every(function(table) {
+        if (table.indexOf("來的運輸") == -1) {
+            return true;
+        }
+        var comer = table.split('<a href="/profile')[1].split('">')[1].split("</a>")[0];
+        var come_time = table.split('於 ')[1].split('  ')[0];
+        var min = parseInt(come_time.split(':')[0])*60+parseInt(come_time.split(':')[1]);
+        //console.log(comer);
+        //console.log(come_time, min);
+        if (startTime == -1)
+            startTime = min;
+        if (min - startTime >= 60)
+            return false;
+        var r1 = parseInt(table.split('<i class="r1"></i><span class="value ">')[1].split('</span>')[0]);
+        var r2 = parseInt(table.split('<i class="r2"></i><span class="value ">')[1].split('</span>')[0]);
+        var r3 = parseInt(table.split('<i class="r3"></i><span class="value ">')[1].split('</span>')[0]);
+        var r4 = parseInt(table.split('<i class="r4"></i><span class="value ">')[1].split('</span>')[0]);
+        if (comer in user_resource) {
+            user_resource[comer][0] += r1;
+            user_resource[comer][1] += r2;
+            user_resource[comer][2] += r3;
+            user_resource[comer][3] += r4;
+        } else {
+            user_resource[comer] = [r1, r2, r3, r4];
+        }
+        return true;
+    });
+    console.log(user_resource);
+    var outputTable = document.getElementById("output");
+    Object.keys(user_resource).forEach(function(key) {
+        var row = outputTable.insertRow(-1);
+        row.insertCell(-1).innerHTML = key;
+        row.insertCell(-1).innerHTML = user_resource[key][0];
+        row.insertCell(-1).innerHTML = user_resource[key][1];
+        row.insertCell(-1).innerHTML = user_resource[key][2];
+        row.insertCell(-1).innerHTML = user_resource[key][3];
+        var sum = user_resource[key].reduce(function(a, b){return a + b;}, 0);
+        row.insertCell(-1).innerHTML = sum;
+    });
+}
+</script> 
+</head>
+<body>
+市場畫面點右鍵選擇"檢視網頁原始碼"，全部複製下來後貼上。</br>
+自動抓前一小時內每個玩家分別推的資源數量。</br>
+<textarea id="input" cols="50" rows="10"></textarea></br>
+<button onclick="doChecker();">查!</button>
+<table id="output">
+<tr>
+    <th> 誰? </th>
+    <th> 木 </th>
+    <th> 磚 </th>
+    <th> 鐵 </th>
+    <th> 米 </th>
+    <th> 總共 </th>
+</tr>
+</table>
+</body>
+</html>
