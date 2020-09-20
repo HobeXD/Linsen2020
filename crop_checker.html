@@ -6,20 +6,14 @@ function doChecker() {
     var tables = inputVal.split('<table class="traders"');
     
     tables.shift();
-    var startTime = -1;
     var user_resource = {};
     tables.every(function(table) {
-        if (table.indexOf("來的運輸") == -1) {
+        if (table.indexOf("來的運輸") == -1 && table.indexOf("Transport from") == -1) {
             return true;
         }
         var comer = table.split('<a href="/profile')[1].split('">')[1].split("</a>")[0];
-        var come_time = table.split('於 ')[1].split('  ')[0];
-        var min = parseInt(come_time.split(':')[0])*60+parseInt(come_time.split(':')[1]);
-        //console.log(comer);
-        //console.log(come_time, min);
-        if (startTime == -1)
-            startTime = min;
-        if (min - startTime >= 60)
+        var come_time = table.split('class="timer"')[1].split('">')[1].split('</span>')[0];
+        if (parseInt(come_time.split(':')[0]) > 0)
             return false;
         var r1 = parseInt(table.split('<i class="r1"></i><span class="value ">')[1].split('</span>')[0]);
         var r2 = parseInt(table.split('<i class="r2"></i><span class="value ">')[1].split('</span>')[0]);
