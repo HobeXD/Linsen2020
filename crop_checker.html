@@ -8,6 +8,7 @@ function doChecker() {
     
     tables.shift();
     var user_resource = {};
+    var min_resource = new Array(60).fill(0);
     tables.every(function(table) {
         if (table.indexOf("來的運輸") == -1 && table.indexOf("Transport from") == -1) {
             return true;
@@ -28,6 +29,10 @@ function doChecker() {
         } else {
             user_resource[comer] = [r1, r2, r3, r4];
         }
+        
+        var come_time_min = parseInt(table.split('<div class="at">')[1].split(':')[1].split(' ')[0]);
+        min_resource[come_time_min] += r4;
+        
         return true;
     });
     console.log(user_resource);
@@ -41,6 +46,13 @@ function doChecker() {
         row.insertCell(-1).innerHTML = user_resource[key][3];
         var sum = user_resource[key].reduce(function(a, b){return a + b;}, 0);
         row.insertCell(-1).innerHTML = sum;
+    });
+    
+    var cropTable = document.getElementById("crop");
+    Object.keys(min_resource).forEach(function(key) {
+        var row = cropTable.insertRow(-1);
+        row.insertCell(-1).innerHTML = key;
+        row.insertCell(-1).innerHTML = user_resource[key]
     });
 }
 </script> 
@@ -58,6 +70,13 @@ function doChecker() {
     <th> 鐵 </th>
     <th> 米 </th>
     <th> 總共 </th>
+</tr>
+</table>
+<table id="crop">
+米縣分佈
+<tr>
+    <th> 分鐘 </th>
+    <th> 米 </th>
 </tr>
 </table>
 </body>
