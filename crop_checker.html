@@ -35,7 +35,7 @@ function doChecker() {
         
         return true;
     });
-    console.log(user_resource);
+    console.log(min_resource);
     var outputTable = document.getElementById("output");
     Object.keys(user_resource).forEach(function(key) {
         var row = outputTable.insertRow(-1);
@@ -52,7 +52,7 @@ function doChecker() {
     Object.keys(min_resource).forEach(function(key) {
         var row = cropTable.insertRow(-1);
         row.insertCell(-1).innerHTML = key;
-        row.insertCell(-1).innerHTML = user_resource[key]
+        row.insertCell(-1).innerHTML = min_resource[key]
     });
 }
 </script> 
