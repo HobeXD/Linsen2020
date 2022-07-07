@@ -1,5 +1,5 @@
 var button = document.createElement("button");
-button.innerHTML = "Do Something";
+button.innerHTML = "Upload";
 
 // 2. Append somewhere
 var body = document.getElementsByTagName("body")[0];
