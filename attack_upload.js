@@ -18,13 +18,18 @@ body.appendChild(button);
 button.addEventListener ("click", function() {
     navigator.clipboard.writeText("1,2,3");
     var copyText = "";
+    attacked_id = document.getElementsByClassName("playerName")[0].innerHTML;
+    attacked_X = document.getElementById("sidebarBoxVillagelist").getElementsByClassName("active")[0].getElementsByClassName("coordinateX")[0].innerHTML.replaceAll("−", "-").replace(/[^\d-]/g, '');
+    attacked_Y = document.getElementById("sidebarBoxVillagelist").getElementsByClassName("active")[0].getElementsByClassName("coordinateY")[0].innerHTML.replaceAll("−", "-").replace(/[^\d-]/g, '');
     var attacks = document.getElementsByClassName("inAttack");
     for (var i = 0; i < attacks.length; i++) {
       attacker = attacks[i].getElementsByTagName("thead")[0].getElementsByTagName("td")[1].getElementsByTagName("a")[1].innerHTML.split(" ")[0];
       attackerPosX = attacks[i].getElementsByClassName("coordinateX")[0].innerHTML.replaceAll("−", "-").replace(/[^\d-]/g, '');
       attackerPosY = attacks[i].getElementsByClassName("coordinateY")[0].innerHTML.replaceAll("−", "-").replace(/[^\d-]/g, '');
       attackTime = attacks[i].getElementsByClassName("at")[0].innerHTML.replace(/[^\d:]/g, '');
-      copyText += attacker + '\t' + attackerPosX + '|' + attackerPosY + '\t' + attackTime + '\n';
+      
+      
+      copyText += attacked_id + '\t' + attacked_X + '|' + attacked_Y + '\t' + attacker + '\t' + attackerPosX + '|' + attackerPosY + '\t' + attackTime + '\n';
     }
     navigator.clipboard.writeText(copyText);
     alert("已複製"+attacks.length+"波攻擊");
