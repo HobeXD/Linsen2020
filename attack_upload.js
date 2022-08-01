@@ -27,5 +27,5 @@ button.addEventListener ("click", function() {
       copyText += attacker + '\t' + attackerPosX + '|' + attackerPosY + '\t' + attackTime + '\n';
     }
     navigator.clipboard.writeText(copyText);
-    alert("複製完成");
+    alert("已複製"+attacks.length+"波攻擊");
 });
