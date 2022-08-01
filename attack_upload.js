@@ -21,8 +21,8 @@ button.addEventListener ("click", function() {
     var attacks = document.getElementsByClassName("inAttack");
     for (var i = 0; i < attacks.length; i++) {
       attacker = attacks[i].getElementsByTagName("thead")[0].getElementsByTagName("td")[1].getElementsByTagName("a")[1].innerHTML.split(" ")[0];
-      attackerPosX = attacks[i].getElementsByClassName("coordinateX")[0].innerHTML.innerText.replace("−", "-").replace(/[^\d-]/g, '');
-      attackerPosY = attacks[i].getElementsByClassName("coordinateY")[0].innerHTML.innerText.replace("−", "-").replace(/[^\d-]/g, '');
+      attackerPosX = attacks[i].getElementsByClassName("coordinateX")[0].innerHTML.replaceAll("−", "-").replace(/[^\d-]/g, '');
+      attackerPosY = attacks[i].getElementsByClassName("coordinateY")[0].innerHTML.replace("−", "-").replace(/[^\d-]/g, '');
       attackTime = attacks[i].getElementsByClassName("at")[0].innerHTML.replace(/[^\d:]/g, '');
       copyText += attacker + '\t' + attackerPosX + '|' + attackerPosY + '\t' + attackTime + '\n';
     }
