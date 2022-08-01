@@ -1,6 +1,6 @@
 var button = document.createElement("button");
 button.innerHTML = "複製攻波";
-button.style.position = 'fixed';
+button.style.position = 'absolute';
 button.style.top = "10px";
 button.style.left = "10px";
 button.style.width = 300;
@@ -11,7 +11,7 @@ button.style.display = 'block';
 button.style.zIndex = 99;
 
 // 2. Append somewhere
-var body = document.getElementsByTagName("body")[0];
+var body = document.getElementsByTagName("contentPage")[0];
 body.appendChild(button);
 
 // 3. Add event handler
