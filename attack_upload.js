@@ -16,7 +16,6 @@ body.appendChild(button);
 
 // 3. Add event handler
 button.addEventListener ("click", function() {
-    navigator.clipboard.writeText("1,2,3");
     var copyText = "";
     attacked_id = document.getElementsByClassName("playerName")[0].innerHTML;
     attacked_X = document.getElementById("sidebarBoxVillagelist").getElementsByClassName("active")[0].getElementsByClassName("coordinateX")[0].innerHTML.replaceAll("−", "-").replace(/[^\d-]/g, '');
