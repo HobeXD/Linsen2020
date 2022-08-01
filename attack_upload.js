@@ -11,7 +11,7 @@ button.style.display = 'block';
 button.style.zIndex = 99;
 
 // 2. Append somewhere
-var body = document.getElementsByTagName("contentPage")[0];
+var body = document.getElementsByClassName("contentPage")[0];
 body.appendChild(button);
 
 // 3. Add event handler
