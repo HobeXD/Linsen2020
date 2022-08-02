@@ -9,6 +9,7 @@ function doChecker() {
     tables.shift();
     var user_resource = {};
     var min_resource = new Array(60).fill(0);
+    var total_rice = 0;
     tables.every(function(table) {
         if (table.indexOf("來的運輸") == -1 && table.indexOf("Transport from") == -1) {
             return true;
@@ -32,11 +33,13 @@ function doChecker() {
         
         var come_time_min = parseInt(table.split('<div class="at">')[1].split(':')[1].split(' ')[0]);
         min_resource[come_time_min] += r4;
+        total_rice += r4;
         
         return true;
     });
     console.log(min_resource);
     var outputTable = document.getElementById("output");
+    
     Object.keys(user_resource).forEach(function(key) {
         var row = outputTable.insertRow(-1);
         row.insertCell(-1).innerHTML = key;
@@ -49,10 +52,14 @@ function doChecker() {
     });
     
     var cropTable = document.getElementById("crop");
+    
+    row = cropTable.insertRow(-1);
+    row.insertCell(-1).innerHTML = "總計米線";
+    row.insertCell(-1).innerHTML = total_rice;
     Object.keys(min_resource).forEach(function(key) {
         var row = cropTable.insertRow(-1);
         row.insertCell(-1).innerHTML = key;
-        row.insertCell(-1).innerHTML = min_resource[key]
+        row.insertCell(-1).innerHTML = min_resource[key];
     });
 }
 </script> 
