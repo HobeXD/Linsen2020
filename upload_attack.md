@@ -12,6 +12,9 @@
 ![](https://i.imgur.com/pViOdso.png)
 
 6. 將攻波貼到聯防表格上
-7. 點選空白行第一格貼上
+
+https://docs.google.com/spreadsheets/d/1SQzZdMoN409-5eZUuiaYqVJKiVoexWa3zlVzatm3zBE/edit#gid=1010113171&fvid=1578990839
+
+8. 點選空白行第一格貼上
 
 ![](https://i.imgur.com/rKFntrY.png)
