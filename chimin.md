@@ -28,7 +28,7 @@
 
 
 
-6. 可以手動測試網路延遲，按下測試延遲按鈕後會測試當前網路環境
+7. 可以手動測試網路延遲，按下測試延遲按鈕後會測試當前網路環境
 
 ![image](https://user-images.githubusercontent.com/5218535/183649142-78dac9bd-b77a-4c92-aaad-41b933d8ac98.png)
 ![image](https://user-images.githubusercontent.com/5218535/183649114-29e86949-053d-464d-b3bf-e82176adc30e.png)
