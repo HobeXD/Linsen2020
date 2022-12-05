@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)http://travian.kirilloid.ru/distance.php#cc=0,0,3,4&srv=2.432&size=200&spd=7&art=1 -->
+<html lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/ico" href="http://travian.kirilloid.ru/img/favicon.ico" sizes="16x16">
+<link rel="icon" type="image/png" href="http://travian.kirilloid.ru/favicon.png" sizes="32x32">
+<link rel="stylesheet" type="text/css" href="./distance_files/style.css">
+<link rel="stylesheet" type="text/css" media="screen and (pointer: coarse)" href="./distance_files/touch.css">
+<link rel="stylesheet" type="text/css" href="./distance_files/ltr.css">
+
+<link rel="icon" sizes="192x192" href="http://travian.kirilloid.ru/img/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="http://travian.kirilloid.ru/img/icon-152.png">
+<script async="" src="./distance_files/analytics.js.下載"></script><script type="text/javascript">
+if (!window.$) {
+	$ = function (id) { return document.getElementById(id); };
+}
+var _overlay = null;
+function scriptLoadFail() {
+	if (_overlay) {
+		return;
+	}
+	var div = document.createElement('div');
+	div.className = "overlay";
+	div.innerHTML = "<button class='close' onclick='closeOverlay()'>&times;</button>"
+				  + "<p>There was an error loading JavaScript.</p>"
+				  + "<p>The page might work incorrectly.</p>"
+				  + "<p class='buttons'>"
+				  + "<button class='but' onclick='location.reload()'>🔁 Reload</button>"
+				  + "<button class='but' onclick='closeOverlay()'>❎ Ignore</button></p>";
+	$$(".page")[0].appendChild(div);
+	_overlay = div;
+	document.addEventListener('keyup', closeOverlayOnEsc);
+}
+function closeOverlay() {
+	_overlay.parentNode.removeChild(_overlay);
+	document.removeEventListener('keyup', closeOverlayOnEsc);
+	_overlay = null;
+}
+function closeOverlayOnEsc(e) {
+	if (e.keyCode === 27) {
+		closeOverlay();
+	}
+}
+document.addEventListener('keypress', function (e) {
+  if (e.key === '\n' && (e.ctrlKey || e.metaKey)) {
+	var original = document.getSelection().toString().trim();
+	if (!original) original = prompt("Nothing was selected, enter what to replace:");
+	if (!original) return alert("Still nothing. See you later.");
+	const result = prompt("How to better translate this?", original);
+	if (!result) return;
+	var img = new Image();
+	img.onload = function () { alert("Thanks!"); };
+	img.onerror = function () { alert("Failed! Did you suggest too long string?"); };
+	img.src = 'suggest_translation.php'
+	  + '?lang=' + document.documentElement.lang
+	  + '&path=' + encodeURIComponent(location.pathname)
+	  + '&original=' + encodeURIComponent(original)
+	  + '&suggest=' + encodeURIComponent(result)
+  }
+});
+Element.prototype.matches =
+	Element.prototype.matches ||
+	Element.prototype.msMatchesSelector || 
+	function(s) {
+		var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+			i = matches.length;
+		while (--i >= 0 && matches.item(i) !== this) {}
+		return i > -1;
+	};
+function findParent(e, s) {
+	if (e.closest) return e.closest(s);
+	while (e && e !== document) {
+		if (e.matches(s)) return e;
+		e = e.parentNode;
+	}
+	return null;
+}
+(function () {
+	function css(name, value) {
+		if (arguments.length === 1) { 
+			return this[0].style[name];
+		}
+		this.forEach(function (el) { el.style[name] = value; });
+	}
+	function prop(name, value) {
+		if (arguments.length === 1) { 
+			return this[0][name];
+		}
+		this.forEach(function (el) { el[name] = value; });
+	}
+	function on(event, handler) {
+		this.forEach(function (el) {
+			el.addEventListener(event, handler, false);
+		});
+		return this;
+	}
+	function addClass(cls) {
+		this.forEach(function (el) {
+			el.classList.add(cls);
+		});
+	}
+	function removeClass(cls) {
+		this.forEach(function (el) {
+			el.classList.remove(cls);
+		});
+	}
+	function toggleClass(cls, set) {
+		this.forEach(function (el) {
+			if (set) {
+				el.classList.add(cls);
+			} else if (set == null) {
+				el.classList.toggle(cls);
+			} else {
+				el.classList.remove(cls);
+			}
+		});
+	}
+	function find(selector) {
+		return wrap(this.reduce(function (a, el) {
+			return a.concat([].slice.call(el.querySelectorAll(selector)));
+		}, []));
+	}
+	function wrap(a) {
+		a.on = on;
+		a.css = css;
+		a.prop = prop;
+		a.addClass = addClass;
+		a.removeClass = removeClass;
+		a.toggleClass = toggleClass;
+		a.find = find;
+		a.parent = parent;
+		return a;
+	}
+	function query(ctx, selector) {
+		return [].slice.call(ctx.querySelectorAll(selector));
+	}
+	$$ = function (selector, context) {
+		if (context === undefined) { context = document; }
+		var a;
+		if (selector instanceof HTMLElement) {
+			a = [selector];
+		} else if (typeof selector === 'string') {
+			a = query(context, selector);
+		} else if (selector instanceof Array) {
+			a = selector;
+		} else {
+			throw new TypeError("Selector of wrong type: " + Object.prototype.toString.call(a));
+		}
+		return wrap(a);
+	};
+	Cookie = {
+		write: function (name, value, options) {
+			if (!options) options = {};
+			document.cookie = name + "=" + value
+				+ (options.duration ? ';max-age=' + (options.duration * 86400) : '');
+		},
+		read: function (name) {
+			var m = document.cookie.match(new RegExp("(^|; )" + name + "=(.*?)(; |$)"));
+			return m && m[2];
+		},
+		dispose: function (name) {
+			document.cookie = name + "=0;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		}
+	};
+	if (!window.Event) {
+		window.Event = function (type, params) {
+			var event = document.createEvent('Event');
+			event.initEvent(type, true, true);
+			return event;
+		};
+	}
+}());
+</script>
+<title>Travian :: distance calculator</title>
+<style type="text/css">
+ul.blank { margin:0; padding-left:0.5ex; }
+ul.blank li { list-style-type:none; }
+legend.strong { font-weight:bold; }
+input { font-family: Verdana; padding: 0; }
+#start_time,
+#end_time { width: 5em; border: 1px solid silver; }
+.coords_panel { text-align: center; }
+.coords { width: 4em; }
+.coords_block { display: inline-block; font-size: 0; }
+.coords_block .coords { border: 1px solid silver; padding: 0 2px; }
+.coords_block .coords:invalid,
+#start_time:invalid,
+#end_time:invalid { border-color: red; }
+.distance_block { position: absolute; right: 0; }
+:root[dir='rtl'] .distance_block { right: auto; left: 0; }
+#unit_spd { vertical-align: middle; }
+#arena_lvl { vertical-align: middle; }
+
+#speed_table { cursor: pointer; width: 100%; }
+#speed_table .active { background: #ddd; }
+#input_wrapper { width: 100%; }
+.input_wrapper_block:first-child { max-width: 47%; }
+.wire td { padding: 3px 2px; }
+@media all and (max-width: 639px) {
+    .coords_panel { text-align: inherit; }
+    .input_wrapper_block { display: block; }
+    .input_wrapper_block:first-child { width: 100%; max-width: 375px; }
+}
+@media all and (max-width: 479px) {
+    .distance_block { visibility: hidden; }
+    #distance { visibility: visible; }
+}
+.level {
+    display: block;
+    width: 12px;
+    margin: -4px -6px -4px -15px;
+    font: 10px/11px Arial;
+    float: right;
+}
+.pmode2 .mode:not(.mode2),
+.pmode3 .mode:not(.mode3),
+.pmode4 .mode:not(.mode4),
+.pmode5 .mode:not(.mode5) { display: none; }
+
+@media (prefers-color-scheme: dark) {
+    #speed_table .active { background: #555; }
+}
+
+</style>
+<script type="text/javascript" src="./distance_files/utils.js.下載"></script>
+</head>
+<body class="t4 t432" style="--scale-zoom:1;">
+<div class="ad"><style id="scaling">
+	.icon--scalable {
+		zoom: var(--scale-zoom);
+		transform: scale(var(--scale-transform));
+	}
+</style>
+<script type="text/javascript" async=""><!--
+(function () {
+	var urls = {};
+	window.onerror = function(msg, url, line, column, error) {
+		if ($ == window.jQuery) { msg = "jQuery sneaked here!"; }
+		var origin = location.protocol + '//' + location.host;
+		var params =
+			"?msg=" + encodeURIComponent(msg) +
+			"&url=" + encodeURIComponent(url) +
+			"&page=" + encodeURIComponent(location.href.replace(origin, '')) +
+			"&line=" + line +
+            "&lang=" + document.documentElement.lang +
+            "&column=" + (column === undefined ? 'n/a' : column) +
+            "&stack=" + encodeURIComponent(error && error.stack) +
+			"";
+		var url = "/error.php"+ params;
+		if (urls[url] > 3) return false;
+		var img = new Image();
+		img.width = 1;
+		img.height = 1;
+		img.src = url;
+		document.body.appendChild(img);
+		urls[url] = (urls[url] || 0) + 1;
+		return false;
+	};
+	if (!window.devicePixelRatio) return;
+	Cookie.write('dpi', Math.round(devicePixelRatio * 96), { duration: 365 });
+	var oldValue = devicePixelRatio;
+	var zoomKind = window.CSS && CSS.supports('zoom', '1') ? 'zoom' : 'transform';
+	function setZoomLevel(zoomLevel) {
+		document.body.style.setProperty("--scale-" + zoomKind, zoomLevel);
+	}
+	function resize(currentScale) {
+		function f(n) {
+			return Math.abs(Math.log(currentScale / n));
+		}
+		var zoomLevels = [0.125, 0.25, 0.5, 1, 1.25, 1.5, 2, 2.5, 3, 4];
+		zoomLevels.sort(function (a, b) { return f(a) - f(b); });
+		setZoomLevel(zoomLevels[0] / currentScale);
+	}
+	window.addEventListener('resize', function () {
+		var newValue = devicePixelRatio;
+		if (newValue === oldValue) { return; }
+		resize(oldValue = newValue);
+	});
+	resize(devicePixelRatio);
+}());
+--></script>
+<!--[if lte IE 10]>
+    <div id="warning">
+        <a href="https://www.microsoft.com/en-us/WindowsForBusiness/End-of-IE-support">
+            Support for older versions of Internet Explorer ended on January 12th, 2016
+        </a>
+    </div>
+<![endif]-->
+</div>
+<div id="menu">
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="http://travian.kirilloid.ru/" class="icon--scalable menuitem-index"></a><div>Home Page</div></div>
+	</span>
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="http://travian.kirilloid.ru/warsim2.php" class="icon--scalable menuitem-warsim2"></a><div>Extended Combat Simulator</div></div>
+		<div class="menutitle">Calculators</div>
+		<div class="menuitem"><a href="http://travian.kirilloid.ru/distance.php" class="icon--scalable menuitem-distance current"></a><div>distance calculator</div></div>
+		<div class="menuitem"><a href="http://travian.kirilloid.ru/conq.php" class="icon--scalable menuitem-conq"></a><div>Conquering calculator</div></div>
+		<div class="menuitem"><a href="http://travian.kirilloid.ru/off_calc.php" class="icon--scalable menuitem-off_calc"></a><div>offense calculator</div></div>
+		<div class="menuitem"><a href="http://travian.kirilloid.ru/def_calc.php" class="icon--scalable menuitem-def_calc"></a><div>defense calculator</div></div>
+		<div class="menuitem"><a href="http://travian.kirilloid.ru/war.php" class="icon--scalable menuitem-war"></a><div>units' attributes calculator</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="http://travian.kirilloid.ru/build.php" class="icon--scalable menuitem-build"></a><div>buildings</div></div>
+		<div class="menutitle">Tables</div>
+		<div class="menuitem"><a href="http://travian.kirilloid.ru/villages_res.php" class="icon--scalable menuitem-villages_res"></a><div>resource development calculator</div></div>
+		<div class="menuitem"><a href="http://travian.kirilloid.ru/troops.php" class="icon--scalable menuitem-troops"></a><div>Troops</div></div>
+		<div class="menuitem"><a href="http://travian.kirilloid.ru/oases.php" class="icon--scalable menuitem-oases"></a><div>Oases</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="http://travian.kirilloid.ru/hero4.php" class="icon--scalable menuitem-hero4"></a><div>hero (T4)</div></div>
+		<div class="menutitle">hero</div>
+		<div class="menuitem"><a href="http://travian.kirilloid.ru/hero.php" class="icon--scalable menuitem-hero"></a><div>hero (T3)</div></div>
+		<div class="menuitem"><a href="http://travian.kirilloid.ru/items.php" class="icon--scalable menuitem-items"></a><div>items</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="http://travian.kirilloid.ru/report.php" class="icon--scalable menuitem-report"></a><div>logger</div></div>
+		<div class="menutitle">Misc</div>
+		<div class="menuitem"><a href="http://travian.kirilloid.ru/about.php" class="icon--scalable menuitem-about"></a><div>about this site</div></div>
+		<div class="menuitem"><a href="http://travian.kirilloid.ru/thanks.php" class="icon--scalable menuitem-thanks"></a><div>Acknowledgements</div></div>
+			</span>
+	
+</div>
+<div id="langbar">
+	<img alt="ar" src="./distance_files/x.gif" class="icon--scalable click flag ae">
+	<img alt="bg" src="./distance_files/x.gif" class="icon--scalable click flag bg">
+	<img alt="cs" src="./distance_files/x.gif" class="icon--scalable click flag cz">
+	<img alt="da" src="./distance_files/x.gif" class="icon--scalable click flag dk">
+	<img alt="de" src="./distance_files/x.gif" class="icon--scalable click flag de">
+	<img alt="ee" src="./distance_files/x.gif" class="icon--scalable click flag ee">
+	<img alt="el" src="./distance_files/x.gif" class="icon--scalable click flag gr">
+	<img alt="en" src="./distance_files/x.gif" class="icon--scalable click flag us">
+	<img alt="es" src="./distance_files/x.gif" class="icon--scalable click flag es">
+	<img alt="fa" src="./distance_files/x.gif" class="icon--scalable click flag ir">
+	<img alt="fr" src="./distance_files/x.gif" class="icon--scalable click flag fr">
+	<img alt="he" src="./distance_files/x.gif" class="icon--scalable click flag il">
+	<img alt="hu" src="./distance_files/x.gif" class="icon--scalable click flag hu">
+	<img alt="it" src="./distance_files/x.gif" class="icon--scalable click flag it">
+	<img alt="ja" src="./distance_files/x.gif" class="icon--scalable click flag jp">
+	<img alt="lt" src="./distance_files/x.gif" class="icon--scalable click flag lt">
+	<img alt="lv" src="./distance_files/x.gif" class="icon--scalable click flag lv">
+	<img alt="nl" src="./distance_files/x.gif" class="icon--scalable click flag nl">
+	<img alt="pl" src="./distance_files/x.gif" class="icon--scalable click flag pl">
+	<img alt="pt" src="./distance_files/x.gif" class="icon--scalable click flag pt">
+	<img alt="rs" src="./distance_files/x.gif" class="icon--scalable click flag rs">
+	<img alt="ru" src="./distance_files/x.gif" class="icon--scalable click flag ru">
+	<img alt="sl" src="./distance_files/x.gif" class="icon--scalable click flag si">
+	<img alt="sv" src="./distance_files/x.gif" class="icon--scalable click flag se">
+	<img alt="tr" src="./distance_files/x.gif" class="icon--scalable click flag tr">
+	<img alt="uk" src="./distance_files/x.gif" class="icon--scalable click flag ua">
+	</div>
+
+<script type="text/javascript">
+(function(){
+	var page = location.pathname.match(/(\w+)\.php$/) || [,'index'];
+	$$(".menuitem-" + page[1]).addClass('current');
+})();
+function switch_lang(lang_name) {
+	const d = new Date();
+	d.setYear(d.getYear() + 1);
+	document.cookie = "lang=" + lang_name + ';expires=' + d.toISOString();
+	window.location.reload();
+}
+$$(".flag").on('click', function(){ switch_lang(this.alt) });
+(function(){
+	var search = $$("#search input")[0];
+	if (!search || !window.fetch) return;
+	var index = [];
+	fetch('asearch.php')
+		.then(function (s) {
+			return s.json();
+		})
+		.then(function (obj) {
+			for (var k in obj) {
+				var item = obj[k];
+				if (typeof item.str === 'string') {
+					item.str = item.str.toLowerCase();
+					index.push(item);
+				} else {
+					item.str.forEach(function (s) {
+						var obj = {
+							ico: item.ico,
+							str: s.toLowerCase(),
+							url: item.url
+						};
+						if (item.ver) {
+							obj.ver = item.ver;
+						}
+						index.push(obj);
+					});
+				}
+			}
+		});
+	var lastResults = [];
+	var lastIndex = -1;
+	function matcher(term) {
+		return function(item) {
+			if (item.str.indexOf(term) !== -1) return true;
+			const letters = term.split('');
+			const words = item.str.split(' ');
+			if (words.length >= letters.length
+			&& letters.every(function (c, i) { return words[i][0] === c; })) {
+				return true;
+			}
+			return false;
+		}
+	}
+	search.oninput = function () {
+		var term = this.value.toLowerCase();
+		if (term.length < 2) {
+			window['search-results'].innerHTML = '';
+			return;
+		}
+		let termMatcher = matcher(term);
+		lastResults = index.filter(termMatcher).slice(0, 10);
+		if (lastResults.length > 0 && lastIndex === -1) {
+			lastIndex = 0;
+		}
+		window['search-results'].innerHTML = lastResults.map(function (item) {
+			return '<a href="' + item.url + '">'
+				+ '<img src="img/x.gif" class="' + item.ico + '"> '
+				+ item.str.replace(term, '<mark>$&</mark>')
+				+ '</a>';
+		}).join('');
+	};
+	search.onkeyup = function (e) {
+		if (e.keyCode === 38) {
+			// up
+			e.preventDefault();
+		}
+		if (e.keyCode === 40) {
+			// down
+			e.preventDefault();
+		}
+	}
+}());
+</script>
+
+<div class="page">
+<div class="content">
+<div class="coords_panel">
+    <div class="coords_block">
+        <input maxlength="4" class="coords" id="x_from" idx="0" type="number" pattern="-?\d*" placeholder="0" autofocus="" min="-200" max="200">
+        <input maxlength="4" class="coords" id="y_from" idx="1" type="number" pattern="-?\d*" placeholder="0" min="-200" max="200">
+    </div>
+    →
+    <div class="coords_block">
+        <input maxlength="4" class="coords" id="x_to" idx="2" type="number" pattern="-?\d*" placeholder="0" value="3" min="-200" max="200">
+        <input maxlength="4" class="coords" id="y_to" idx="3" type="number" pattern="-?\d*" placeholder="0" value="4" min="-200" max="200">
+    </div>
+    <span class="distance_block">
+        fields = <span id="distance">5</span>
+    <span>
+</span></span></div>
+
+<table id="input_wrapper" class="pmode4"><tbody><tr>
+<td class="input_wrapper_block">
+    Select speed by choosing the slowest unit:    <table class="wire" id="speed_table" cellspacing="0">
+    <tbody><tr><td spd="6" class="spd-6" title="Legionnaire: 6"><img src="./distance_files/x.gif" class="unit u1 icon--scalable"></td><td spd="5" class="spd-5" title="Praetorian: 5"><img src="./distance_files/x.gif" class="unit u2 icon--scalable"></td><td spd="7" class="spd-7" title="Imperian: 7"><img src="./distance_files/x.gif" class="unit u3 icon--scalable"></td><td spd="16" class="spd-16" title="Equites Legati: 16"><img src="./distance_files/x.gif" class="unit u4 icon--scalable"></td><td spd="14" class="spd-14" title="Equites Imperatoris: 14"><img src="./distance_files/x.gif" class="unit u5 icon--scalable"></td><td spd="10" class="spd-10" title="Equites Caesaris: 10"><img src="./distance_files/x.gif" class="unit u6 icon--scalable"></td><td spd="4" class="spd-4" title="Battering ram: 4"><img src="./distance_files/x.gif" class="unit u7 icon--scalable"></td><td spd="3" class="spd-3" title="Fire Catapult: 3"><img src="./distance_files/x.gif" class="unit u8 icon--scalable"></td><td spd="4" class="spd-4" title="Senator: 4"><img src="./distance_files/x.gif" class="unit u9 icon--scalable"></td><td spd="5" class="spd-5" title="Settler: 5"><img src="./distance_files/x.gif" class="unit u10 icon--scalable"></td>            <td spd="7" class="mode mode4 mode5 spd-7" title="hero: 7">
+                <img src="./distance_files/x.gif" class="unit uhero icon--scalable">
+            </td>
+                            <td spd="14" title="Gelding: 14" class="mode mode4 mode5 spd-14">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">I</div>
+                </td>
+                            <td spd="17" title="Thoroughbred: 17" class="mode mode4 mode5 spd-15 spd-16 spd-17 spd-18 spd-19">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">II</div>
+                </td>
+                            <td spd="22" title="Warhorse: 22" class="mode mode4 mode5 spd-20 spd-21 spd-22 spd-23 spd-25">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">III</div>
+                </td>
+                    </tr>
+<tr><td spd="7" class="spd-7" title="Maceman: 7"><img src="./distance_files/x.gif" class="unit u11 icon--scalable"></td><td spd="7" class="spd-7" title="Spearman: 7"><img src="./distance_files/x.gif" class="unit u12 icon--scalable"></td><td spd="6" class="spd-6" title="Axeman: 6"><img src="./distance_files/x.gif" class="unit u13 icon--scalable"></td><td spd="9" class="spd-9" title="Scout: 9"><img src="./distance_files/x.gif" class="unit u14 icon--scalable"></td><td spd="10" class="spd-10" title="Paladin: 10"><img src="./distance_files/x.gif" class="unit u15 icon--scalable"></td><td spd="9" class="spd-9" title="Teutonic Knight: 9"><img src="./distance_files/x.gif" class="unit u16 icon--scalable"></td><td spd="4" class="spd-4" title="Ram: 4"><img src="./distance_files/x.gif" class="unit u17 icon--scalable"></td><td spd="3" class="spd-3" title="Catapult: 3"><img src="./distance_files/x.gif" class="unit u18 icon--scalable"></td><td spd="4" class="spd-4" title="Chief: 4"><img src="./distance_files/x.gif" class="unit u19 icon--scalable"></td><td spd="5" class="spd-5" title="Settler: 5"><img src="./distance_files/x.gif" class="unit u20 icon--scalable"></td>            <td spd="7" class="mode mode4 mode5 spd-7" title="hero: 7">
+                <img src="./distance_files/x.gif" class="unit uhero icon--scalable">
+            </td>
+                            <td spd="14" title="Gelding: 14" class="mode mode4 mode5 spd-14">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">I</div>
+                </td>
+                            <td spd="17" title="Thoroughbred: 17" class="mode mode4 mode5 spd-15 spd-16 spd-17 spd-18 spd-19">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">II</div>
+                </td>
+                            <td spd="22" title="Warhorse: 22" class="mode mode4 mode5 spd-20 spd-21 spd-22 spd-23 spd-25">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">III</div>
+                </td>
+                    </tr>
+<tr><td spd="7" class="spd-7" title="Phalanx: 7"><img src="./distance_files/x.gif" class="unit u21 icon--scalable"></td><td spd="6" class="spd-6" title="Swordsman: 6"><img src="./distance_files/x.gif" class="unit u22 icon--scalable"></td><td spd="17" class="spd-17" title="Pathfinder: 17"><img src="./distance_files/x.gif" class="unit u23 icon--scalable"></td><td spd="19" class="spd-19" title="Theutates Thunder: 19"><img src="./distance_files/x.gif" class="unit u24 icon--scalable"></td><td spd="16" class="spd-16" title="Druidrider: 16"><img src="./distance_files/x.gif" class="unit u25 icon--scalable"></td><td spd="13" class="spd-13" title="Haeduan: 13"><img src="./distance_files/x.gif" class="unit u26 icon--scalable"></td><td spd="4" class="spd-4" title="Ram: 4"><img src="./distance_files/x.gif" class="unit u27 icon--scalable"></td><td spd="3" class="spd-3" title="Trebuchet: 3"><img src="./distance_files/x.gif" class="unit u28 icon--scalable"></td><td spd="5" class="spd-5" title="Chieftain: 5"><img src="./distance_files/x.gif" class="unit u29 icon--scalable"></td><td spd="5" class="spd-5" title="Settler: 5"><img src="./distance_files/x.gif" class="unit u30 icon--scalable"></td>            <td spd="7" class="mode mode4 mode5 spd-7" title="hero: 7">
+                <img src="./distance_files/x.gif" class="unit uhero icon--scalable">
+            </td>
+                            <td spd="19" title="Gelding: 19" class="mode mode4 mode5 spd-19">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">I</div>
+                </td>
+                            <td spd="22" title="Thoroughbred: 22" class="mode mode4 mode5 spd-20 spd-21 spd-22 spd-23 spd-24">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">II</div>
+                </td>
+                            <td spd="27" title="Warhorse: 27" class="mode mode4 mode5 spd-25 spd-26 spd-27 spd-28 spd-30">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">III</div>
+                </td>
+                    </tr>
+<tr class="mode mode4"><td spd="7" class="spd-7" title="Slave Militia: 7"><img src="./distance_files/x.gif" class="unit u51 icon--scalable"></td><td spd="6" class="spd-6" title="Ash Warden: 6"><img src="./distance_files/x.gif" class="unit u52 icon--scalable"></td><td spd="7" class="spd-7" title="Khopesh Warrior: 7"><img src="./distance_files/x.gif" class="unit u53 icon--scalable"></td><td spd="16" class="spd-16" title="Sopdu Explorer: 16"><img src="./distance_files/x.gif" class="unit u54 icon--scalable"></td><td spd="15" class="spd-15" title="Anhur Guard: 15"><img src="./distance_files/x.gif" class="unit u55 icon--scalable"></td><td spd="10" class="spd-10" title="Resheph Chariot: 10"><img src="./distance_files/x.gif" class="unit u56 icon--scalable"></td><td spd="4" class="spd-4" title="Ram: 4"><img src="./distance_files/x.gif" class="unit u57 icon--scalable"></td><td spd="3" class="spd-3" title="Stone Catapult: 3"><img src="./distance_files/x.gif" class="unit u58 icon--scalable"></td><td spd="4" class="spd-4" title="Nomarch: 4"><img src="./distance_files/x.gif" class="unit u59 icon--scalable"></td><td spd="5" class="spd-5" title="Settler: 5"><img src="./distance_files/x.gif" class="unit u60 icon--scalable"></td>            <td spd="7" class="mode mode4 mode5 spd-7" title="hero: 7">
+                <img src="./distance_files/x.gif" class="unit uhero icon--scalable">
+            </td>
+                            <td spd="14" title="Gelding: 14" class="mode mode4 mode5 spd-14">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">I</div>
+                </td>
+                            <td spd="17" title="Thoroughbred: 17" class="mode mode4 mode5 spd-15 spd-16 spd-17 spd-18 spd-19">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">II</div>
+                </td>
+                            <td spd="22" title="Warhorse: 22" class="mode mode4 mode5 spd-20 spd-21 spd-22 spd-23 spd-25">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">III</div>
+                </td>
+                    </tr>
+<tr class="mode mode4"><td spd="6" class="spd-6" title="Mercenary: 6"><img src="./distance_files/x.gif" class="unit u61 icon--scalable"></td><td spd="6" class="spd-6" title="Bowman: 6"><img src="./distance_files/x.gif" class="unit u62 icon--scalable"></td><td spd="19" class="spd-19" title="Spotter: 19"><img src="./distance_files/x.gif" class="unit u63 icon--scalable"></td><td spd="16" class="spd-16" title="Steppe Rider: 16"><img src="./distance_files/x.gif" class="unit u64 icon--scalable"></td><td spd="16" class="spd-16" title="Marksman: 16"><img src="./distance_files/x.gif" class="unit u65 icon--scalable"></td><td spd="14" class="spd-14" title="Marauder: 14"><img src="./distance_files/x.gif" class="unit u66 icon--scalable"></td><td spd="4" class="spd-4" title="Ram: 4"><img src="./distance_files/x.gif" class="unit u67 icon--scalable"></td><td spd="3" class="spd-3" title="Catapult: 3"><img src="./distance_files/x.gif" class="unit u68 icon--scalable"></td><td spd="5" class="spd-5" title="Logades: 5"><img src="./distance_files/x.gif" class="unit u69 icon--scalable"></td><td spd="5" class="spd-5" title="Settler: 5"><img src="./distance_files/x.gif" class="unit u70 icon--scalable"></td>            <td spd="7" class="mode mode4 mode5 spd-7" title="hero: 7">
+                <img src="./distance_files/x.gif" class="unit uhero icon--scalable">
+            </td>
+                            <td spd="14" title="Gelding: 14" class="mode mode4 mode5 spd-14">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">I</div>
+                </td>
+                            <td spd="17" title="Thoroughbred: 17" class="mode mode4 mode5 spd-15 spd-16 spd-17 spd-18 spd-19">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">II</div>
+                </td>
+                            <td spd="22" title="Warhorse: 22" class="mode mode4 mode5 spd-20 spd-21 spd-22 spd-23 spd-25">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">III</div>
+                </td>
+                    </tr>
+<tr class="mode mode4"><td spd="6" class="spd-6" title="Hoplite: 6"><img src="./distance_files/x.gif" class="unit u71 icon--scalable"></td><td spd="9" class="spd-9" title="Sentinel: 9"><img src="./distance_files/x.gif" class="unit u72 icon--scalable"></td><td spd="8" class="spd-8" title="Shieldsman: 8"><img src="./distance_files/x.gif" class="unit u73 icon--scalable"></td><td spd="6" class="spd-6" title="Twinsteel Therion: 6"><img src="./distance_files/x.gif" class="unit u74 icon--scalable"></td><td spd="16" class="spd-16" title="Elpida Rider: 16"><img src="./distance_files/x.gif" class="unit u75 icon--scalable"></td><td spd="9" class="spd-9" title="Corinthian Crusher: 9"><img src="./distance_files/x.gif" class="unit u76 icon--scalable"></td><td spd="4" class="spd-4" title="Ram: 4"><img src="./distance_files/x.gif" class="unit u77 icon--scalable"></td><td spd="3" class="spd-3" title="Ballista: 3"><img src="./distance_files/x.gif" class="unit u78 icon--scalable"></td><td spd="4" class="spd-4" title="Ephor: 4"><img src="./distance_files/x.gif" class="unit u79 icon--scalable"></td><td spd="5" class="spd-5" title="Settler: 5"><img src="./distance_files/x.gif" class="unit u80 icon--scalable"></td>            <td spd="7" class="mode mode4 mode5 spd-7" title="hero: 7">
+                <img src="./distance_files/x.gif" class="unit uhero icon--scalable">
+            </td>
+                            <td spd="14" title="Gelding: 14" class="mode mode4 mode5 spd-14">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">I</div>
+                </td>
+                            <td spd="17" title="Thoroughbred: 17" class="mode mode4 mode5 spd-15 spd-16 spd-17 spd-18 spd-19">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">II</div>
+                </td>
+                            <td spd="22" title="Warhorse: 22" class="mode mode4 mode5 spd-20 spd-21 spd-22 spd-23 spd-25">
+                    <img src="./distance_files/x.gif" class="itemCategory itemCategory_horse icon--scalable">
+                    <div class="level">III</div>
+                </td>
+                    </tr>
+    </tbody></table>
+    or input speed manually:    <select id="unit_spd"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12">12</option><option value="14">14</option><option value="18">18</option><option value="20">20</option><option value="26">26</option><option value="28">28</option><option value="30">30</option><option value="31">31</option><option value="32">32</option><option value="34">34</option><option value="35">35</option><option value="38">38</option><option value="40">40</option><option value="44">44</option><option value="50">50</option></select>
+</td>
+<td class="input_wrapper_block" style="vertical-align: top;">
+    <table>
+    <tbody><tr>
+        <td></td>
+        <td>server</td>
+        <td><style>
+    #serverHint {
+        position: relative;
+        display: inline-block;
+        z-index: 100;
+    }
+    #serverHint > div {
+        position: absolute;
+        border: 1px solid gray;
+        background: white;
+        padding: 4px;
+        width: 200px;
+        z-index: 1;
+        top: -12px;
+        box-shadow: 0 0 2px gray;
+        white-space: normal;
+    }
+    #serverHint .but {
+        font-size: 14px;
+    }
+    #serverVersionNew {
+        font-weight: bold;
+    }
+    #serverHintButtons {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 8px;
+    }
+</style>
+<select id="server">
+    <optgroup label="Kingdoms">
+        <option value="1.50">T5</option>
+        <option value="3.50">T5 3x</option>
+        <option value="5.50">T5 5x</option>
+    </optgroup>
+    <optgroup label="Legends">
+        <option value="1.45">T4.5 1x</option>
+        <option value="1.46">T4.6 1x</option>
+        <option value="2.46">T4.6 2x</option>
+        <option value="3.46">T4.6 3x</option>
+        <option value="5.46">T4.6 5x</option>
+        <option value="10.46">T4.6 10x</option>
+    </optgroup>
+    <optgroup label="Specials">
+        <option value="1.431" disabled="">New Year Special</option>
+        <option value="1.432">Annual Special</option>
+        <option value="2.432">Annual Special 2x</option>
+        <option value="3.432">Annual Special 3x</option>
+    </optgroup>
+    <optgroup label="Classis">
+        <option value="1.36">T3.6</option>
+        <option value="3.36">T3.6 3x</option>
+        <option value="1.25">T2.5</option>
+    </optgroup>
+</select>
+<div id="serverHint" style="display: none;">
+    <div>
+        <div>You have changed version to <span id="serverVersionNew"></span> on another tab</div>
+        <div id="serverHintButtons">
+            <input type="button" class="but" value="use it" id="serverHintButtonUse">
+            <input type="button" class="but" value="discard" id="serverHintButtonDiscard">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+(function (server) {
+    if (!server) { return; }
+    var lastValue = null;
+    var lastNewValue = null;
+    function f() {
+        lastNewValue = lastValue = this.value;
+        var s = parseVersion(this.value);
+        document.body.className = 't' + s.major + ' t' + s.major + s.minor;
+    };
+    server.addEventListener('change', f);
+    window.addEventListener('load', function () {
+        setTimeout(f.bind(server), 0);
+    });
+    window.addEventListener('storage', function (event) {
+        if (event.key === 'v') {
+            lastNewValue = event.newValue;
+        }
+    });
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState !== 'visible') { return; }
+        if (lastNewValue === lastValue) { return; }
+        var option = [].filter.call(server.options, function (o) {
+            return o.value === lastNewValue;
+        })[0];
+        if (!option) return;
+        var fullVersion = option.parentNode.label + ' / ' + option.innerHTML;
+        $('serverVersionNew').innerHTML = fullVersion;
+        $('serverHint').style.display = '';
+    });
+    $('serverHintButtonUse').onclick = function () {
+        server.value = lastNewValue;
+        f.call(server);
+        $('serverHint').style.display = 'none';
+    };
+    $('serverHintButtonDiscard').onclick = function () {
+        $('serverHint').style.display = 'none';
+    };
+}(document.getElementById('server')));
+</script>
+</td>
+    </tr>
+    <tr class="mode mode4">
+        <td></td>
+        <td><label for="size">| ← map size → |</label></td>
+        <td>
+            <select id="size">
+                <option value="200">200</option>
+                <option value="250">250</option>
+                <option value="400">400</option>
+            </select>
+        </td>
+    </tr>
+    <tr class="mode mode3 mode4 mode5">
+        <td><img src="./distance_files/x.gif" class="building g14 icon--scalable"></td>
+        <td><label for="arena_lvl">Tournament Square</label></td>
+        <td><input type="range" min="0" max="20" value="0" id="arena_lvl">
+            lvl <span id="arena_lvl_val">0</span>
+        </td>
+    </tr><tr class="mode mode4 mode5">
+        <td><img src="./distance_files/x.gif" class="art art3 icon--scalable"></td>
+        <td>Speed artifact</td>
+        <td><select id="art_spd">
+            <option value="3">3x</option>
+            <option value="2">2x</option>
+            <option value="1.5">1.5x</option>
+            <option value="1" selected="selected">—</option>
+            <option value="-1.5">0.67x</option>
+            <option value="-2">0.5x</option>
+            <option value="-3">0.33x</option>
+        </select>
+        </td>
+    </tr><tr class="mode mode4 mode5">
+    <td><img src="./distance_files/x.gif" class="itemCategory itemCategory_shoes icon--scalable"></td>
+    <td>boots (feet)</td>
+    <td><select id="boots">
+            <option value="0" effect="{}" selected="selected">—</option>
+                    <option value="97" effect="{&quot;ts&quot;:[15,20,25,30,35]}" data-crystal="5">
+                Boots of the Mercenary            </option>
+                    <option value="98" effect="{&quot;ts&quot;:[40,45,50,55,60]}" data-crystal="5">
+                Boots of the Warrior            </option>
+                    <option value="99" effect="{&quot;ts&quot;:[75,80,85,90,100]}" data-crystal="5">
+                Boots of the Archon            </option>
+                            <option value="100" effect="{&quot;spd&quot;:[2,3]}" data-crystal="1">
+                Small spurs            </option>
+                    <option value="101" effect="{&quot;spd&quot;:[4,5]}" data-crystal="1">
+                Spurs            </option>
+                    <option value="102" effect="{&quot;spd&quot;:[5,6]}" data-crystal="1">
+                Nasty spurs            </option>
+                </select>
+        <span id="boots_note" class="note" style="display:none;" title="Spurs work for hero ONLY">*</span>
+        <nobr>
+        <select id="boots_var" class="mode5" style="display: none;"><option></option><option></option><option></option><option></option><option></option></select>
+        <label for="boots_crystals" class="mode mode5">
+            <img src="./distance_files/x.gif" class="icon--scalable crystal crystal_shoes">
+        </label>
+        <input type="number" value="0" min="0" max="5" id="boots_crystals" class="mode mode5">
+        </nobr>
+    </td></tr><tr class="mode mode4 mode5">
+    <td><img src="./distance_files/x.gif" class="itemCategory itemCategory_leftHand icon--scalable"></td>
+    <td>
+        Left-hand items    </td><td>
+        <select id="left">
+            <option value="0" effect="{}" selected="selected">—</option>
+                    <option value="64" effect="{&quot;sm&quot;:[25,30,35]}" data-crystal="5">
+                Small Pennant            </option>
+                    <option value="65" effect="{&quot;sm&quot;:[35,40,45]}" data-crystal="5">
+                Pennant            </option>
+                    <option value="66" effect="{&quot;sm&quot;:[45,50,55]}" data-crystal="5">
+                Great Pennant            </option>
+                            <option value="67" effect="{&quot;sm&quot;:[13,14,15,16,17]}" data-crystal="1">
+                Small Standard            </option>
+                    <option value="68" effect="{&quot;sm&quot;:[18,19,20,21,22]}" data-crystal="1">
+                Standard            </option>
+                    <option value="69" effect="{&quot;sm&quot;:[23,24,25,26,27]}" data-crystal="1">
+                Great Standard            </option>
+                            <option value="61" effect="{&quot;sm&quot;:[30]}" data-crystal="5">
+                Small Map            </option>
+                    <option value="62" effect="{&quot;sm&quot;:[40]}" data-crystal="5">
+                Map            </option>
+                    <option value="63" effect="{&quot;sm&quot;:[50]}" data-crystal="5">
+                Large Map            </option>
+                </select>
+        <span id="left_note" class="note" style="display:none;" title="NB: Map works only for the way back">*</span>
+        <select id="left_var" class="mode5" style="display: none;"><option></option><option></option><option></option><option></option><option></option></select>
+        <label for="left_crystals" class="mode mode5">
+            <img src="./distance_files/x.gif" class="icon--scalable crystal crystal_leftHand">
+        </label>
+        <input type="number" value="0" min="0" max="5" id="left_crystals" class="mode mode5">
+    </td></tr></tbody></table>
+</td>
+</tr></tbody></table>
+    <input id="start_time" value="0:00:00" pattern="\d{1,3}:\d{1,2}:\d{1,2}">
+    + <span id="travel_time">0:42:51</span>
+    = <input id="end_time" value="0:00:00" pattern="\d{1,3}:\d{1,2}:\d{1,2}">
+<script type="text/javascript" src="./distance_files/server.js.下載"></script>
+<script type="text/javascript" src="./distance_files/units.js.下載"></script>
+<script type="text/javascript" src="./distance_files/distance.js.下載"></script>
+</div>
+</div>
+<div id="icons">
+	This is a site about browser online game „Travian”.<br>
+	Which contains different tools and calculators,<br>
+	helping you playing this wonderful MMOG.
+	<noscript><p style="background:red">It will works properly only if JavaScript is enabled!</p></noscript>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64635667-1', 'auto');
+  ga('set', 'language', document.documentElement.lang);
+  ga('send', 'pageview');
+
+</script>
+
+
+</body></html>
