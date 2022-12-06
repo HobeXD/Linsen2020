@@ -13,7 +13,7 @@ var Model = {
     boots: 0,
     left: 0,
     sm: 0,
-    size: 400
+    size: 200
   },
   extra: {
     boots: {},
