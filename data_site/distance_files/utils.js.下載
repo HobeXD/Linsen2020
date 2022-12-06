@@ -174,9 +174,9 @@ function getMyVersion() {
   var v = getVersionFromReferrer();
   if (v) saveVersion(v);
   try {
-    return localStorage.v || '1.45';
+    return localStorage.v || '2.46';
   } catch (e) {
-    return '1.45';
+    return '2.46';
   }
 }
 
