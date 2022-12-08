@@ -1,0 +1,86 @@
+.slider {
+	text-align: left;
+	width: 200px;
+	height: 16px;
+	background: #eee;
+	direction: ltr;
+}
+.slider .knob {
+	background: #555; 
+	position: relative;
+	width: 16px;
+	height: 16px;
+	direction: ltr;
+	cursor: pointer;
+}
+#cpanel td {
+	vertical-align: bottom;
+}
+
+.slider_holder {
+	direction: ltr;
+	margin-top: 1em;
+}
+
+table.blank td {
+	border: 0px;
+	padding: 1px;
+}
+
+.separator {
+	height: 10px;
+}
+img.unit2 {
+	margin: 0px 2px;
+	cursor: pointer;
+}
+
+#times, #hero_bonus {
+	width: 3em;
+}
+
+span.line {
+	white-space: nowrap;
+}
+
+.title .middle {
+	text-align: center;
+	width: 10em;
+	position: absolute;
+	left: -5em;
+}
+
+span.but {
+	vertical-align: middle;
+}
+
+input {
+	padding: 0;
+}
+input[type=number] {
+	max-width: 4em;
+}
+
+@media all and (max-width: 700px) {
+	#result {
+		border: none;
+	}
+	#page-off_calc #result {
+		float: none;
+		clear: left;
+	}
+	#result td,
+	#result tr {
+		float: left;
+		border: none;
+	}
+
+	#result .separator {
+		clear: both;
+	}
+
+	#result .value {
+		padding-left: 0;
+		padding-right: 8px;
+	}
+}

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from travian.kirilloid.ru/items.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:03:55 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/ico" href="img/favicon.ico" sizes="16x16">
+<link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+<link rel="stylesheet" type="text/css" href="css/stylee167.css?e">
+<link rel="stylesheet" type="text/css" media="screen and (pointer: coarse)" href="css/touch.css">
+<link rel="stylesheet" type="text/css" href="css/ltr.css">
+
+<link rel="icon" sizes="192x192" href="img/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="img/icon-152.png">
+<script type="text/javascript">
+if (!window.$) {
+	$ = function (id) { return document.getElementById(id); };
+}
+var _overlay = null;
+function scriptLoadFail() {
+	if (_overlay) {
+		return;
+	}
+	var div = document.createElement('div');
+	div.className = "overlay";
+	div.innerHTML = "<button class='close' onclick='closeOverlay()'>&times;</button>"
+				  + "<p>There was an error loading JavaScript.</p>"
+				  + "<p>The page might work incorrectly.</p>"
+				  + "<p class='buttons'>"
+				  + "<button class='but' onclick='location.reload()'>🔁 Reload</button>"
+				  + "<button class='but' onclick='closeOverlay()'>❎ Ignore</button></p>";
+	$$(".page")[0].appendChild(div);
+	_overlay = div;
+	document.addEventListener('keyup', closeOverlayOnEsc);
+}
+function closeOverlay() {
+	_overlay.parentNode.removeChild(_overlay);
+	document.removeEventListener('keyup', closeOverlayOnEsc);
+	_overlay = null;
+}
+function closeOverlayOnEsc(e) {
+	if (e.keyCode === 27) {
+		closeOverlay();
+	}
+}
+document.addEventListener('keypress', function (e) {
+  if (e.key === '\n' && (e.ctrlKey || e.metaKey)) {
+	var original = document.getSelection().toString().trim();
+	if (!original) original = prompt("Nothing was selected, enter what to replace:");
+	if (!original) return alert("Still nothing. See you later.");
+	const result = prompt("How to better translate this?", original);
+	if (!result) return;
+	var img = new Image();
+	img.onload = function () { alert("Thanks!"); };
+	img.onerror = function () { alert("Failed! Did you suggest too long string?"); };
+	img.src = 'suggest_translation.html'
+	  + '?lang=' + document.documentElement.lang
+	  + '&path=' + encodeURIComponent(location.pathname)
+	  + '&original=' + encodeURIComponent(original)
+	  + '&suggest=' + encodeURIComponent(result)
+  }
+});
+Element.prototype.matches =
+	Element.prototype.matches ||
+	Element.prototype.msMatchesSelector || 
+	function(s) {
+		var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+			i = matches.length;
+		while (--i >= 0 && matches.item(i) !== this) {}
+		return i > -1;
+	};
+function findParent(e, s) {
+	if (e.closest) return e.closest(s);
+	while (e && e !== document) {
+		if (e.matches(s)) return e;
+		e = e.parentNode;
+	}
+	return null;
+}
+(function () {
+	function css(name, value) {
+		if (arguments.length === 1) { 
+			return this[0].style[name];
+		}
+		this.forEach(function (el) { el.style[name] = value; });
+	}
+	function prop(name, value) {
+		if (arguments.length === 1) { 
+			return this[0][name];
+		}
+		this.forEach(function (el) { el[name] = value; });
+	}
+	function on(event, handler) {
+		this.forEach(function (el) {
+			el.addEventListener(event, handler, false);
+		});
+		return this;
+	}
+	function addClass(cls) {
+		this.forEach(function (el) {
+			el.classList.add(cls);
+		});
+	}
+	function removeClass(cls) {
+		this.forEach(function (el) {
+			el.classList.remove(cls);
+		});
+	}
+	function toggleClass(cls, set) {
+		this.forEach(function (el) {
+			if (set) {
+				el.classList.add(cls);
+			} else if (set == null) {
+				el.classList.toggle(cls);
+			} else {
+				el.classList.remove(cls);
+			}
+		});
+	}
+	function find(selector) {
+		return wrap(this.reduce(function (a, el) {
+			return a.concat([].slice.call(el.querySelectorAll(selector)));
+		}, []));
+	}
+	function wrap(a) {
+		a.on = on;
+		a.css = css;
+		a.prop = prop;
+		a.addClass = addClass;
+		a.removeClass = removeClass;
+		a.toggleClass = toggleClass;
+		a.find = find;
+		a.parent = parent;
+		return a;
+	}
+	function query(ctx, selector) {
+		return [].slice.call(ctx.querySelectorAll(selector));
+	}
+	$$ = function (selector, context) {
+		if (context === undefined) { context = document; }
+		var a;
+		if (selector instanceof HTMLElement) {
+			a = [selector];
+		} else if (typeof selector === 'string') {
+			a = query(context, selector);
+		} else if (selector instanceof Array) {
+			a = selector;
+		} else {
+			throw new TypeError("Selector of wrong type: " + Object.prototype.toString.call(a));
+		}
+		return wrap(a);
+	};
+	Cookie = {
+		write: function (name, value, options) {
+			if (!options) options = {};
+			document.cookie = name + "=" + value
+				+ (options.duration ? ';max-age=' + (options.duration * 86400) : '');
+		},
+		read: function (name) {
+			var m = document.cookie.match(new RegExp("(^|; )" + name + "=(.*?)(; |$)"));
+			return m && m[2];
+		},
+		dispose: function (name) {
+			document.cookie = name + "=0;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		}
+	};
+	if (!window.Event) {
+		window.Event = function (type, params) {
+			var event = document.createEvent('Event');
+			event.initEvent(type, true, true);
+			return event;
+		};
+	}
+}());
+</script>
+<title>Travian tools & utils :: items</title>
+<style>
+.item p { margin: 3px 0 6px 0; }
+.note { transition: background-color 250ms; }
+</style>
+</head>
+<body>
+<div class="ad"><style id="scaling">
+	.icon--scalable {
+		zoom: var(--scale-zoom);
+		transform: scale(var(--scale-transform));
+	}
+</style>
+<script type="text/javascript" async><!--
+(function () {
+	var urls = {};
+	window.onerror = function(msg, url, line, column, error) {
+		if ($ == window.jQuery) { msg = "jQuery sneaked here!"; }
+		var origin = location.protocol + '//' + location.host;
+		var params =
+			"?msg=" + encodeURIComponent(msg) +
+			"&url=" + encodeURIComponent(url) +
+			"&page=" + encodeURIComponent(location.href.replace(origin, '')) +
+			"&line=" + line +
+            "&lang=" + document.documentElement.lang +
+            "&column=" + (column === undefined ? 'n/a' : column) +
+            "&stack=" + encodeURIComponent(error && error.stack) +
+			"";
+		var url = "error.html"+ params;
+		if (urls[url] > 3) return false;
+		var img = new Image();
+		img.width = 1;
+		img.height = 1;
+		img.src = url;
+		document.body.appendChild(img);
+		urls[url] = (urls[url] || 0) + 1;
+		return false;
+	};
+	if (!window.devicePixelRatio) return;
+	Cookie.write('dpi', Math.round(devicePixelRatio * 96), { duration: 365 });
+	var oldValue = devicePixelRatio;
+	var zoomKind = window.CSS && CSS.supports('zoom', '1') ? 'zoom' : 'transform';
+	function setZoomLevel(zoomLevel) {
+		document.body.style.setProperty("--scale-" + zoomKind, zoomLevel);
+	}
+	function resize(currentScale) {
+		function f(n) {
+			return Math.abs(Math.log(currentScale / n));
+		}
+		var zoomLevels = [0.125, 0.25, 0.5, 1, 1.25, 1.5, 2, 2.5, 3, 4];
+		zoomLevels.sort(function (a, b) { return f(a) - f(b); });
+		setZoomLevel(zoomLevels[0] / currentScale);
+	}
+	window.addEventListener('resize', function () {
+		var newValue = devicePixelRatio;
+		if (newValue === oldValue) { return; }
+		resize(oldValue = newValue);
+	});
+	resize(devicePixelRatio);
+}());
+--></script>
+<!--[if lte IE 10]>
+    <div id="warning">
+        <a href="https://www.microsoft.com/en-us/WindowsForBusiness/End-of-IE-support">
+            Support for older versions of Internet Explorer ended on January 12th, 2016
+        </a>
+    </div>
+<![endif]-->
+</div>
+<div id="menu">
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="index.html" class="icon--scalable menuitem-index"></a><div>Home Page</div></div>
+	</span>
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="warsim2.html" class="icon--scalable menuitem-warsim2"></a><div>Extended Combat Simulator</div></div>
+		<div class="menutitle">Calculators</div>
+		<div class="menuitem"><a href="distance.html" class="icon--scalable menuitem-distance"></a><div>distance calculator</div></div>
+		<div class="menuitem"><a href="conq.html" class="icon--scalable menuitem-conq"></a><div>Conquering calculator</div></div>
+		<div class="menuitem"><a href="off_calc.html" class="icon--scalable menuitem-off_calc"></a><div>offense calculator</div></div>
+		<div class="menuitem"><a href="def_calc.html" class="icon--scalable menuitem-def_calc"></a><div>defense calculator</div></div>
+		<div class="menuitem"><a href="war.html" class="icon--scalable menuitem-war"></a><div>units' attributes calculator</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="build.html" class="icon--scalable menuitem-build"></a><div>buildings</div></div>
+		<div class="menutitle">Tables</div>
+		<div class="menuitem"><a href="villages_res.html" class="icon--scalable menuitem-villages_res"></a><div>resource development calculator</div></div>
+		<div class="menuitem"><a href="troops.html" class="icon--scalable menuitem-troops"></a><div>Troops</div></div>
+		<div class="menuitem"><a href="oases.html" class="icon--scalable menuitem-oases"></a><div>Oases</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="hero4.html" class="icon--scalable menuitem-hero4"></a><div>hero (T4)</div></div>
+		<div class="menutitle">hero</div>
+		<div class="menuitem"><a href="hero.html" class="icon--scalable menuitem-hero"></a><div>hero (T3)</div></div>
+		<div class="menuitem"><a href="items.html" class="icon--scalable menuitem-items"></a><div>items</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="report.html" class="icon--scalable menuitem-report"></a><div>logger</div></div>
+		<div class="menutitle">Misc</div>
+		<div class="menuitem"><a href="about.html" class="icon--scalable menuitem-about"></a><div>about this site</div></div>
+		<div class="menuitem"><a href="thanks.html" class="icon--scalable menuitem-thanks"></a><div>Acknowledgements</div></div>
+			</span>
+	
+</div>
+<div id="langbar">
+	<img alt="ar" src="img/x.gif" class="icon--scalable click flag ae">
+	<img alt="bg" src="img/x.gif" class="icon--scalable click flag bg">
+	<img alt="cs" src="img/x.gif" class="icon--scalable click flag cz">
+	<img alt="da" src="img/x.gif" class="icon--scalable click flag dk">
+	<img alt="de" src="img/x.gif" class="icon--scalable click flag de">
+	<img alt="ee" src="img/x.gif" class="icon--scalable click flag ee">
+	<img alt="el" src="img/x.gif" class="icon--scalable click flag gr">
+	<img alt="en" src="img/x.gif" class="icon--scalable click flag us">
+	<img alt="es" src="img/x.gif" class="icon--scalable click flag es">
+	<img alt="fa" src="img/x.gif" class="icon--scalable click flag ir">
+	<img alt="fr" src="img/x.gif" class="icon--scalable click flag fr">
+	<img alt="he" src="img/x.gif" class="icon--scalable click flag il">
+	<img alt="hu" src="img/x.gif" class="icon--scalable click flag hu">
+	<img alt="it" src="img/x.gif" class="icon--scalable click flag it">
+	<img alt="ja" src="img/x.gif" class="icon--scalable click flag jp">
+	<img alt="lt" src="img/x.gif" class="icon--scalable click flag lt">
+	<img alt="lv" src="img/x.gif" class="icon--scalable click flag lv">
+	<img alt="nl" src="img/x.gif" class="icon--scalable click flag nl">
+	<img alt="pl" src="img/x.gif" class="icon--scalable click flag pl">
+	<img alt="pt" src="img/x.gif" class="icon--scalable click flag pt">
+	<img alt="rs" src="img/x.gif" class="icon--scalable click flag rs">
+	<img alt="ru" src="img/x.gif" class="icon--scalable click flag ru">
+	<img alt="sl" src="img/x.gif" class="icon--scalable click flag si">
+	<img alt="sv" src="img/x.gif" class="icon--scalable click flag se">
+	<img alt="tr" src="img/x.gif" class="icon--scalable click flag tr">
+	<img alt="uk" src="img/x.gif" class="icon--scalable click flag ua">
+	</div>
+
+<script type="text/javascript">
+(function(){
+	var page = location.pathname.match(/(\w+)\.php$/) || [,'index'];
+	$$(".menuitem-" + page[1]).addClass('current');
+})();
+function switch_lang(lang_name) {
+	const d = new Date();
+	d.setYear(d.getYear() + 1);
+	document.cookie = "lang=" + lang_name + ';expires=' + d.toISOString();
+	window.location.reload();
+}
+$$(".flag").on('click', function(){ switch_lang(this.alt) });
+(function(){
+	var search = $$("#search input")[0];
+	if (!search || !window.fetch) return;
+	var index = [];
+	fetch('asearch.html')
+		.then(function (s) {
+			return s.json();
+		})
+		.then(function (obj) {
+			for (var k in obj) {
+				var item = obj[k];
+				if (typeof item.str === 'string') {
+					item.str = item.str.toLowerCase();
+					index.push(item);
+				} else {
+					item.str.forEach(function (s) {
+						var obj = {
+							ico: item.ico,
+							str: s.toLowerCase(),
+							url: item.url
+						};
+						if (item.ver) {
+							obj.ver = item.ver;
+						}
+						index.push(obj);
+					});
+				}
+			}
+		});
+	var lastResults = [];
+	var lastIndex = -1;
+	function matcher(term) {
+		return function(item) {
+			if (item.str.indexOf(term) !== -1) return true;
+			const letters = term.split('');
+			const words = item.str.split(' ');
+			if (words.length >= letters.length
+			&& letters.every(function (c, i) { return words[i][0] === c; })) {
+				return true;
+			}
+			return false;
+		}
+	}
+	search.oninput = function () {
+		var term = this.value.toLowerCase();
+		if (term.length < 2) {
+			window['search-results'].innerHTML = '';
+			return;
+		}
+		let termMatcher = matcher(term);
+		lastResults = index.filter(termMatcher).slice(0, 10);
+		if (lastResults.length > 0 && lastIndex === -1) {
+			lastIndex = 0;
+		}
+		window['search-results'].innerHTML = lastResults.map(function (item) {
+			return '<a href="' + item.url + '">'
+				+ '<img src="img/x.gif" class="' + item.ico + '"> '
+				+ item.str.replace(term, '<mark>$&</mark>')
+				+ '</a>';
+		}).join('');
+	};
+	search.onkeyup = function (e) {
+		if (e.keyCode === 38) {
+			// up
+			e.preventDefault();
+		}
+		if (e.keyCode === 40) {
+			// down
+			e.preventDefault();
+		}
+	}
+}());
+</script>
+
+<div class="page" id="page-items">
+<div class="content">
+
+
+<h2>Travian 4 item reference</h2>
+
+<select id="sex">
+	<option value="0">♂ male</option>
+	<option value="1">♀ female</option>
+</select>
+
+<h3><img src="img/x.gif" class="icon--scalable itemCategory itemCategory_helmet"><a href="#helmets-block" class="block">Helmets (head)</a></h3>
+<div id="helmets-block"><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_1" /><b>Helmet of Awareness</b><p><img src="img/x.gif" class="icon--scalable unit uexp"> +15% more experience</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_2" /><b>Helmet of Enlightenment</b><p><img src="img/x.gif" class="icon--scalable unit uexp"> +20% more experience</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_3" /><b>Helmet of Wisdom</b><p><img src="img/x.gif" class="icon--scalable unit uexp"> +25% more experience</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_4" /><b>Helmet of Regeneration</b> <sup><a href="#note2">2</a></sup><p><img src="img/x.gif" class="icon--scalable stats health"> +10 health points/day</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_5" /><b>Helmet of Healthiness</b> <sup><a href="#note2">2</a></sup><p><img src="img/x.gif" class="icon--scalable stats health"> +15 health points/day</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_6" /><b>Helmet of Healing</b> <sup><a href="#note2">2</a></sup><p><img src="img/x.gif" class="icon--scalable stats health"> +20 health points/day</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_7" /><b>Helmet of the Gladiator</b> <sup><a href="#note1">1</a></sup><p><img src="img/x.gif" class="icon--scalable icon-cp"> +100 CP/day</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_8" /><b>Helmet of the Tribune</b> <sup><a href="#note1">1</a></sup><p><img src="img/x.gif" class="icon--scalable icon-cp"> +400 CP/day</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_9" /><b>Helmet of the Consul</b> <sup><a href="#note1">1</a></sup><p><img src="img/x.gif" class="icon--scalable icon-cp"> +800 CP/day</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_10" /><b>Helmet of the Horseman</b><p><img src="img/x.gif" class="icon--scalable building g20"> Training time in stable reduced by 10%.</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_11" /><b>Helmet of the Cavalry</b><p><img src="img/x.gif" class="icon--scalable building g20"> Training time in stable reduced by 15%.</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_12" /><b>Helmet of the Heavy cavalry</b><p><img src="img/x.gif" class="icon--scalable building g20"> Training time in stable reduced by 20%.</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_13" /><b>Helmet of the Mercenary</b><p><img src="img/x.gif" class="icon--scalable building g19"> Training time in barracks reduced by 10%.</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_14" /><b>Helmet of the Warrior</b><p><img src="img/x.gif" class="icon--scalable building g19"> Training time in barracks reduced by 15%.</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_15" /><b>Helmet of the Archon</b><p><img src="img/x.gif" class="icon--scalable building g19"> Training time in barracks reduced by 20%.</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div></div>
+	
+<h3><img src="img/x.gif" class="icon--scalable itemCategory itemCategory_rightHand">
+	Weapon (right hand)</h3>
+<h4><a href="#romans-weapon" class="block">
+	<img src="img/x.gif" class="icon--scalable tribe tribe-1">Romans</a></h4>
+<div id="romans-weapon"><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_16" /><b>Short sword of the Legionnaire</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u1"> For every Legionnaire: +3 attack and +3 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_17" /><b>Sword of the Legionnaire</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u1"> For every Legionnaire: +4 attack and +4 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_18" /><b>Long sword of the Legionnaire</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u1"> For every Legionnaire: +5 attack and +5 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_19" /><b>Short sword of the Praetorian</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u2"> For every Praetorian: +3 attack and +3 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_20" /><b>Sword of the Praetorian</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u2"> For every Praetorian: +4 attack and +4 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_21" /><b>Long sword of the Praetorian</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u2"> For every Praetorian: +5 attack and +5 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_22" /><b>Short sword of the Imperian</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u3"> For every Imperian: +3 attack and +3 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_23" /><b>Sword of the Imperian</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u3"> For every Imperian: +4 attack and +4 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_24" /><b>Long sword of the Imperian</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u3"> For every Imperian: +5 attack and +5 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_25" /><b>Short sword of the Imperatoris</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u5"> For every Equites Imperatoris: +9 attack and +9 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_26" /><b>Sword of the Imperatoris</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u5"> For every Equites Imperatoris: +12 attack and +12 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_27" /><b>Long sword of the Imperatoris</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u5"> For every Equites Imperatoris: +15 attack and +15 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_28" /><b>Light lance of the Caesaris</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u6"> For every Equites Caesaris: +12 attack and +12 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_29" /><b>Lance of the Caesaris</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u6"> For every Equites Caesaris: +16 attack and +16 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_30" /><b>Heavy lance of the Caesaris</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u6"> For every Equites Caesaris: +20 attack and +20 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div></div>
+<h4><a href="#gauls-weapon-block" class="block">
+	<img src="img/x.gif" class="icon--scalable tribe tribe-3">Gauls</a></h4>
+<div id="gauls-weapon-block"><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_31" /><b>Spear of the Phalanx</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u21"> For every Phalanx: +3 attack and +3 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_32" /><b>Pike of the Phalanx</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u21"> For every Phalanx: +4 attack and +4 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_33" /><b>Lance of the Phalanx</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u21"> For every Phalanx: +5 attack and +5 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_34" /><b>Short sword of the Swordsman</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u22"> For every Swordsman: +3 attack and +3 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_35" /><b>Sword of the Swordsman</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u22"> For every Swordsman: +4 attack and +4 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_36" /><b>Long sword of the Swordsman</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u22"> For every Swordsman: +5 attack and +5 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_37" /><b>Short-bow of the Theutates</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u24"> For every Theutates Thunder: +6 attack and +6 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_38" /><b>Bow of the Theutates</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u24"> For every Theutates Thunder: +8 attack and +8 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_39" /><b>Long-bow of the Theutates</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u24"> For every Theutates Thunder: +10 attack and +10 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_40" /><b>Staff of the Druidrider</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u25"> For every Druidrider: +6 attack and +6 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_41" /><b>Great staff of the Druidrider</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u25"> For every Druidrider: +8 attack and +8 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_42" /><b>Fighting-staff of the Druidrider</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u25"> For every Druidrider: +10 attack and +10 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_43" /><b>Light lance of the Haeduan</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u26"> For every Haeduan: +9 attack and +9 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_44" /><b>Lance of the Haeduan</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u26"> For every Haeduan: +12 attack and +12 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_45" /><b>Heavy lance of the Haeduan</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u26"> For every Haeduan: +15 attack and +15 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div></div>
+<h4><a href="#teutons-weapon-block" class="block">
+	<img src="img/x.gif" class="icon--scalable tribe tribe-2">Teutons</a></h4>
+<div id="teutons-weapon-block"><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_46" /><b>Club of the Clubswinger</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u11"> For every Maceman: +3 attack and +3 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_47" /><b>Mace of the Clubswinger</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u11"> For every Maceman: +4 attack and +4 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_48" /><b>Morning star of the Clubswinger</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u11"> For every Maceman: +5 attack and +5 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_49" /><b>Spear of the Spearman</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u12"> For every Spearman: +3 attack and +3 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_50" /><b>Spike of the Spearman</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u12"> For every Spearman: +4 attack and +4 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_51" /><b>Lance of the Spearman</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u12"> For every Spearman: +5 attack and +5 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_52" /><b>Hatchet of the Axeman</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u13"> For every Axeman: +3 attack and +3 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_53" /><b>Axe of the Axeman</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u13"> For every Axeman: +4 attack and +4 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_54" /><b>Battle axe of the Axeman</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u13"> For every Axeman: +5 attack and +5 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_55" /><b>Light hammer of the Paladin</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u15"> For every Paladin: +6 attack and +6 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_56" /><b>Hammer of the Paladin</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u15"> For every Paladin: +8 attack and +8 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_57" /><b>Heavy hammer of the Paladin</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u15"> For every Paladin: +10 attack and +10 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_58" /><b>Short sword of the Teutonic Knight</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u16"> For every Teutonic Knight: +9 attack and +9 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_59" /><b>Sword of the Teutonic Knight</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u16"> For every Teutonic Knight: +12 attack and +12 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_60" /><b>Long sword of the Teutonic Knight</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u16"> For every Teutonic Knight: +15 attack and +15 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div></div>
+<h4><a href="#egyptians-weapon-block" class="block">
+	<img src="img/x.gif" class="icon--scalable tribe tribe-6">Egyptians</a></h4>
+<div id="egyptians-weapon-block"><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_115" /><b>Club of the Slave Militia</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u51"> For every Slave Militia: +3 attack and +3 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_116" /><b>Mace of the Slave Militia</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u51"> For every Slave Militia: +4 attack and +4 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_117" /><b>Morning Star of the Slave Militia</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u51"> For every Slave Militia: +5 attack and +5 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_118" /><b>Hatchet of the Ash Warden</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u52"> For every Ash Warden: +3 attack and +3 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_119" /><b>Axe of the Ash Warden</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u52"> For every Ash Warden: +4 attack and +4 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_120" /><b>Battle Axe of the Ash Warden</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u52"> For every Ash Warden: +5 attack and +5 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_121" /><b>Short Khopesh of the Warrior</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u53"> For every Khopesh Warrior: +3 attack and +3 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_122" /><b>Khopesh of the Warrior</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u53"> For every Khopesh Warrior: +4 attack and +4 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_123" /><b>Long Khopesh of the Warrior</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u53"> For every Khopesh Warrior: +5 attack and +5 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_124" /><b>Spear of the Anhor Guard</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u55"> For every Anhur Guard: +6 attack and +6 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_125" /><b>Spear of the Anhor Guard</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u55"> For every Anhur Guard: +8 attack and +8 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_126" /><b>Lance of the Anhor Guard</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u55"> For every Anhur Guard: +10 attack and +10 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_127" /><b>Short Bow of the Resheph Chariot</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u56"> For every Resheph Chariot: +9 attack and +9 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_128" /><b>Bow of the Resheph Chariot</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u56"> For every Resheph Chariot: +12 attack and +12 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_129" /><b>Long Bow of the Resheph Chariot</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u56"> For every Resheph Chariot: +15 attack and +15 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div></div>
+<h4><a href="#huns-weapon-block" class="block">
+	<img src="img/x.gif" class="icon--scalable tribe tribe-7">Huns</a></h4>
+<div id="huns-weapon-block"><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_130" /><b>Hatchet of the Mercenary</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u61"> For every Mercenary: +3 attack and +3 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_131" /><b>Axe of the Mercenary</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u61"> For every Mercenary: +4 attack and +4 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_132" /><b>Battle Axe of the Mercenary</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u61"> For every Mercenary: +5 attack and +5 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_133" /><b>Composite Short Bow of the Bowman</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u62"> For every Bowman: +3 attack and +3 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_134" /><b>Composite Bow of the Bowman</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u62"> For every Bowman: +4 attack and +4 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_135" /><b>Composite Long Bow of the Bowman</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u62"> For every Bowman: +5 attack and +5 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_136" /><b>Short Spatha Sword of the Steppe Rider</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u64"> For every Steppe Rider: +6 attack and +6 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_137" /><b>Spatha Sword of the Steppe Rider</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u64"> For every Steppe Rider: +8 attack and +8 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_138" /><b>Long Spatha Sword of the Steppe Rider</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u64"> For every Steppe Rider: +10 attack and +10 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_139" /><b>Composite Short Bow of the Marksman</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u65"> For every Marksman: +6 attack and +6 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_140" /><b>Composite Bow of the Marksman</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u65"> For every Marksman: +8 attack and +8 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_141" /><b>Composite Long Bow of the Marksman</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u65"> For every Marksman: +10 attack and +10 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_142" /><b>Short Spatha Sword of the Marauder</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u66"> For every Marauder: +9 attack and +9 defence</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_143" /><b>Spatha Sword of the Marauder</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u66"> For every Marauder: +12 attack and +12 defence</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_144" /><b>Long Spatha Sword of the Marauder</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p><p><img src="img/x.gif" class="icon--scalable unit u66"> For every Marauder: +15 attack and +15 defence</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div></div>
+
+<h3><img src="img/x.gif" class="icon--scalable itemCategory itemCategory_leftHand">
+	<a href="#left-block" class="block">Left-hand items</a></h3>
+<div id="left-block"><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_61" /><b>Small Map</b><p><img src="img/x.gif" class="icon--scalable stats speed"> 30% faster return</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_62" /><b>Map</b><p><img src="img/x.gif" class="icon--scalable stats speed"> 40% faster return</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_63" /><b>Large Map</b><p><img src="img/x.gif" class="icon--scalable stats speed"> 50% faster return</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_64" /><b>Small Pennant</b><p><img src="img/x.gif" class="icon--scalable stats speed"> 30% faster troops between own villages</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_65" /><b>Pennant</b><p><img src="img/x.gif" class="icon--scalable stats speed"> 40% faster troops between own villages</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_66" /><b>Great Pennant</b><p><img src="img/x.gif" class="icon--scalable stats speed"> 50% faster troops between own villages</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_67" /><b>Small Standard</b><p><img src="img/x.gif" class="icon--scalable stats speed"> 15% faster troops between alliance members</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_68" /><b>Standard</b><p><img src="img/x.gif" class="icon--scalable stats speed"> 20% faster troops between alliance members</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_69" /><b>Great Standard</b><p><img src="img/x.gif" class="icon--scalable stats speed"> 25% faster troops between alliance members</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_73" /><b>Pouch of the thief</b><p><img src="img/x.gif" class="icon--scalable stats cap"> +10% plunder bonus</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_74" /><b>Bag of the thief</b><p><img src="img/x.gif" class="icon--scalable stats cap"> +15% plunder bonus</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_75" /><b>Sack of the thief</b><p><img src="img/x.gif" class="icon--scalable stats cap"> +20% plunder bonus</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_76" /><b>Small shield</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_77" /><b>Shield</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_78" /><b>Large shield</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_79" /><b>Small horn of the Natarian</b><p><img src="img/x.gif" class="icon--scalable stats att_bonus"> +20% fighting strength against Natars</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_80" /><b>Horn of the Natarian</b><p><img src="img/x.gif" class="icon--scalable stats att_bonus"> +25% fighting strength against Natars</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_81" /><b>Large horn of the Natarian</b><p><img src="img/x.gif" class="icon--scalable stats att_bonus"> +30% fighting strength against Natars</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div></div>
+
+<h3><img src="img/x.gif" class="icon--scalable itemCategory itemCategory_body">
+	<a href="#armor-block" class="block">Armors (body)</a></h3>
+<div id="armor-block"><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_82" /><b>Light armour of Regeneration</b><p><img src="img/x.gif" class="icon--scalable stats health"> +20 health points/day</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_83" /><b>Armour of Regeneration</b><p><img src="img/x.gif" class="icon--scalable stats health"> +30 health points/day</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_84" /><b>Heavy armour of Regeneration</b><p><img src="img/x.gif" class="icon--scalable stats health"> +40 health points/day</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_85" /><b>Light scale armour</b><p><img src="img/x.gif" class="icon--scalable stats def_all"> Damage reduced by 4 health points</p><p><img src="img/x.gif" class="icon--scalable stats health"> +10 health points/day</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_86" /><b>Scale armour</b><p><img src="img/x.gif" class="icon--scalable stats def_all"> Damage reduced by 6 health points</p><p><img src="img/x.gif" class="icon--scalable stats health"> +15 health points/day</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_87" /><b>Heavy scale armour</b><p><img src="img/x.gif" class="icon--scalable stats def_all"> Damage reduced by 8 health points</p><p><img src="img/x.gif" class="icon--scalable stats health"> +20 health points/day</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_88" /><b>Light breastplate</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_89" /><b>Breastplate</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +1000 to hero strength</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_90" /><b>Heavy breastplate</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +4000 to hero strength</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_91" /><b>Light segmented armour</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +250 to hero strength</p><p><img src="img/x.gif" class="icon--scalable stats def_all"> Damage reduced by 3 health points</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_92" /><b>Segmented armour</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +500 to hero strength</p><p><img src="img/x.gif" class="icon--scalable stats def_all"> Damage reduced by 4 health points</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_93" /><b>Heavy segmented armour</b><p><img src="img/x.gif" class="icon--scalable unit uhero"> +750 to hero strength</p><p><img src="img/x.gif" class="icon--scalable stats def_all"> Damage reduced by 5 health points</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div></div>
+
+<h3><img src="img/x.gif" class="icon--scalable itemCategory itemCategory_shoes">
+	<a href="#boots-block" class="block">boots (feet)</a></h3>
+<div id="boots-block"><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_94" /><b>Boots of Regeneration</b><p><img src="img/x.gif" class="icon--scalable stats health"> +10 health points/day</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_95" /><b>Boots of Healthiness</b><p><img src="img/x.gif" class="icon--scalable stats health"> +15 health points/day</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_96" /><b>Boots of Healing</b><p><img src="img/x.gif" class="icon--scalable stats health"> +20 health points/day</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_97" /><b>Boots of the Mercenary</b><p><img src="img/x.gif" class="icon--scalable stats speed"> +25% army's speed for distances &gt; 20 fields</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_98" /><b>Boots of the Warrior</b><p><img src="img/x.gif" class="icon--scalable stats speed"> +50% army's speed for distances &gt; 20 fields</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_99" /><b>Boots of the Archon</b><p><img src="img/x.gif" class="icon--scalable stats speed"> +75% army's speed for distances &gt; 20 fields</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_100" /><b>Small spurs</b> <sup><a href="#note2">2</a></sup><p><img src="img/x.gif" class="icon--scalable stats speed"> hero speed +3</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_101" /><b>Spurs</b> <sup><a href="#note2">2</a></sup><p><img src="img/x.gif" class="icon--scalable stats speed"> hero speed +4</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_102" /><b>Nasty spurs</b> <sup><a href="#note2">2</a></sup><p><img src="img/x.gif" class="icon--scalable stats speed"> hero speed +5</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div></div>
+
+<h3><a href="#misc-block" class="block">Misc</a></h3>
+<div id="misc-block"><div class="item"><div class="tab1"><img src="img/x.gif" class="item-large" id="item_103" /><b>Gelding</b> <sup><a href="#note2">2</a>,<a href="#note3">3</a></sup><p><img src="img/x.gif" class="icon--scalable icon-horse"> Hero speed is 14</p></div><div class="tab2"><img src="img/x.gif" class="item-large" id="item_104" /><b>Thoroughbred</b> <sup><a href="#note2">2</a>,<a href="#note3">3</a></sup><p><img src="img/x.gif" class="icon--scalable icon-horse"> Hero speed is 17</p></div><div class="tab3"><img src="img/x.gif" class="item-large" id="item_105" /><b>Warhorse</b> <sup><a href="#note2">2</a>,<a href="#note3">3</a></sup><p><img src="img/x.gif" class="icon--scalable icon-horse"> Hero speed is 20</p></div><div class="tabs"><div tab="1">I</div><div tab="2">II</div><div tab="3">III</div></div></div><div class="item">
+			<img src="img/x.gif" class="item-large" id="item_106" />
+			<b>Ointment</b><br/>
+			<img src="img/x.gif" class="icon--scalable icon-106">Instantly heals hero for 1%<br/>Stackable</div><div class="item">
+			<img src="img/x.gif" class="item-large" id="item_107" />
+			<b>Scroll</b><br/>
+			<img src="img/x.gif" class="icon--scalable icon-107">Gives hero 10 experience<br/>Stackable</div><div class="item">
+			<img src="img/x.gif" class="item-large" id="item_108" />
+			<b>Bucket</b><br/>
+			<img src="img/x.gif" class="icon--scalable icon-108">Instantly ressurects hero</div><div class="item">
+			<img src="img/x.gif" class="item-large" id="item_109" />
+			<b>Table of law</b><br/>
+			<img src="img/x.gif" class="icon--scalable icon-109">+1% loyalty in village, max 125%<br/>Stackable</div><div class="item">
+			<img src="img/x.gif" class="item-large" id="item_110" />
+			<b>Book of Wisdom</b><br/>
+			<img src="img/x.gif" class="icon--scalable icon-110">Redistributes hero skills</div><div class="item">
+			<img src="img/x.gif" class="item-large" id="item_111" />
+			<b>Artwork <sup><a href="#note1">1</a></sup></b><br/>
+			<img src="img/x.gif" class="icon--scalable icon-111">Instantly gives amount of CP, equal to daily production, but not more than 2000. Cannot be found in adventure on first 15 days.<br/>Stackable</div><div class="item">
+			<img src="img/x.gif" class="item-large" id="item_112" />
+			<b>Small bandage</b><br/>
+			<img src="img/x.gif" class="icon--scalable icon-112">Heals 1 troop each, max 25%<br/>Stackable</div><div class="item">
+			<img src="img/x.gif" class="item-large" id="item_113" />
+			<b>Bandage</b><br/>
+			<img src="img/x.gif" class="icon--scalable icon-113">Heals 1 troop each, max 33%<br/>Stackable</div><div class="item">
+			<img src="img/x.gif" class="item-large" id="item_114" />
+			<b>Cage</b><br/>
+			<img src="img/x.gif" class="icon--scalable icon-114">1 animal can be caught in oases<br/>Stackable</div></div>
+
+<hr style="clear:both;" />
+<div id="note1" class="note" name="note1"><sup>1</sup> &mdash; Effect of this item is halved on 3x servers.</div><div id="note2" class="note" name="note2"><sup>2</sup> &mdash; Effect of this item is doubled on 3x servers.</div><div id="note3" class="note" name="note3"><sup>3</sup> &mdash; Gaulish heroes got +5 (+10 on 3x) to speed on horse.</div>
+</div>
+</div>
+<script type="text/javascript">
+var blocks = $$("a.block");
+blocks.forEach(function(link){
+	link.parentNode.nextElementSibling.style.display = 'none';
+});
+var oldBlock = null;
+var oldLink = null;
+if (location.hash) {
+	var id = location.hash.replace(/^#/, "");
+	if (!id.match(/^note\d+$/)) {
+		oldBlock = $(id);
+		oldLink = $$("a[href='"+location.hash+"']")[0];
+		oldBlock.style.display = 'block';
+		oldLink.classList.add('opened');
+	}
+}
+blocks.on('click', function (event) {
+	var id = this.href.replace(/^.*#/, "");
+	if (oldLink) oldLink.classList.remove('opened');
+	if (oldBlock) oldBlock.style.display = 'none';
+	oldBlock = $(id);
+	oldLink = this;
+	oldBlock.style.display = 'block';
+	oldLink.classList.add('opened');
+});
+$$("sup a").on('click', function (event) {
+	event.stopPropagation();
+	var id = this.href.replace(/^.*#/, "");
+	var elt = $(id);
+	window.scrollTo(this.offsetLeft, this.offsetTop);
+	elt.style.backgroundColor = "#cfc";
+	setTimeout(function () {
+		elt.style.backgroundColor = "#fff";
+	}, 500);
+});
+$$(".tab1").css('display', 'block');
+$$("*[tab='1']").addClass('active');
+
+$$(".content").on('click', function(event){
+	var elt = event.target;
+	var tab = elt.getAttribute("tab");
+	if (!tab) return true;
+	var tabContainer = elt.parentNode;
+	var tabElt = tabContainer.querySelector(".active");
+	var oldTab = tabElt.getAttribute("tab");
+	if (oldTab == tab) return false;
+	elt.classList.add('active');
+	tabElt.classList.remove('active');
+	var itemContainer = tabContainer.parentNode;
+	itemContainer.querySelector(".tab" + oldTab).style.display = '';
+	itemContainer.querySelector(".tab" + tab).style.display = 'block';
+});
+
+var content = $$(".content");
+$('sex').addEventListener('change', function(event){
+	content.toggleClass('female', !!+this.value);
+});
+</script>
+<div id="icons">
+	This is a site about browser online game „Travian”.<br/>
+	Which contains different tools and calculators,<br/>
+	helping you playing this wonderful MMOG.
+	<noscript><p style="background:red">It will works properly only if JavaScript is enabled!</p></noscript>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','../www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64635667-1', 'auto');
+  ga('set', 'language', document.documentElement.lang);
+  ga('send', 'pageview');
+
+</script>
+</body>
+
+<!-- Mirrored from travian.kirilloid.ru/items.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:03:55 GMT -->
+</html>

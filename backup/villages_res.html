@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from travian.kirilloid.ru/villages_res.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:01:29 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/ico" href="img/favicon.ico" sizes="16x16">
+<link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+<link rel="stylesheet" type="text/css" href="css/stylee167.css?e">
+<link rel="stylesheet" type="text/css" media="screen and (pointer: coarse)" href="css/touch.css">
+<link rel="stylesheet" type="text/css" href="css/ltr.css">
+
+<link rel="icon" sizes="192x192" href="img/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="img/icon-152.png">
+<script type="text/javascript">
+if (!window.$) {
+	$ = function (id) { return document.getElementById(id); };
+}
+var _overlay = null;
+function scriptLoadFail() {
+	if (_overlay) {
+		return;
+	}
+	var div = document.createElement('div');
+	div.className = "overlay";
+	div.innerHTML = "<button class='close' onclick='closeOverlay()'>&times;</button>"
+				  + "<p>There was an error loading JavaScript.</p>"
+				  + "<p>The page might work incorrectly.</p>"
+				  + "<p class='buttons'>"
+				  + "<button class='but' onclick='location.reload()'>🔁 Reload</button>"
+				  + "<button class='but' onclick='closeOverlay()'>❎ Ignore</button></p>";
+	$$(".page")[0].appendChild(div);
+	_overlay = div;
+	document.addEventListener('keyup', closeOverlayOnEsc);
+}
+function closeOverlay() {
+	_overlay.parentNode.removeChild(_overlay);
+	document.removeEventListener('keyup', closeOverlayOnEsc);
+	_overlay = null;
+}
+function closeOverlayOnEsc(e) {
+	if (e.keyCode === 27) {
+		closeOverlay();
+	}
+}
+document.addEventListener('keypress', function (e) {
+  if (e.key === '\n' && (e.ctrlKey || e.metaKey)) {
+	var original = document.getSelection().toString().trim();
+	if (!original) original = prompt("Nothing was selected, enter what to replace:");
+	if (!original) return alert("Still nothing. See you later.");
+	const result = prompt("How to better translate this?", original);
+	if (!result) return;
+	var img = new Image();
+	img.onload = function () { alert("Thanks!"); };
+	img.onerror = function () { alert("Failed! Did you suggest too long string?"); };
+	img.src = 'suggest_translation.html'
+	  + '?lang=' + document.documentElement.lang
+	  + '&path=' + encodeURIComponent(location.pathname)
+	  + '&original=' + encodeURIComponent(original)
+	  + '&suggest=' + encodeURIComponent(result)
+  }
+});
+Element.prototype.matches =
+	Element.prototype.matches ||
+	Element.prototype.msMatchesSelector || 
+	function(s) {
+		var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+			i = matches.length;
+		while (--i >= 0 && matches.item(i) !== this) {}
+		return i > -1;
+	};
+function findParent(e, s) {
+	if (e.closest) return e.closest(s);
+	while (e && e !== document) {
+		if (e.matches(s)) return e;
+		e = e.parentNode;
+	}
+	return null;
+}
+(function () {
+	function css(name, value) {
+		if (arguments.length === 1) { 
+			return this[0].style[name];
+		}
+		this.forEach(function (el) { el.style[name] = value; });
+	}
+	function prop(name, value) {
+		if (arguments.length === 1) { 
+			return this[0][name];
+		}
+		this.forEach(function (el) { el[name] = value; });
+	}
+	function on(event, handler) {
+		this.forEach(function (el) {
+			el.addEventListener(event, handler, false);
+		});
+		return this;
+	}
+	function addClass(cls) {
+		this.forEach(function (el) {
+			el.classList.add(cls);
+		});
+	}
+	function removeClass(cls) {
+		this.forEach(function (el) {
+			el.classList.remove(cls);
+		});
+	}
+	function toggleClass(cls, set) {
+		this.forEach(function (el) {
+			if (set) {
+				el.classList.add(cls);
+			} else if (set == null) {
+				el.classList.toggle(cls);
+			} else {
+				el.classList.remove(cls);
+			}
+		});
+	}
+	function find(selector) {
+		return wrap(this.reduce(function (a, el) {
+			return a.concat([].slice.call(el.querySelectorAll(selector)));
+		}, []));
+	}
+	function wrap(a) {
+		a.on = on;
+		a.css = css;
+		a.prop = prop;
+		a.addClass = addClass;
+		a.removeClass = removeClass;
+		a.toggleClass = toggleClass;
+		a.find = find;
+		a.parent = parent;
+		return a;
+	}
+	function query(ctx, selector) {
+		return [].slice.call(ctx.querySelectorAll(selector));
+	}
+	$$ = function (selector, context) {
+		if (context === undefined) { context = document; }
+		var a;
+		if (selector instanceof HTMLElement) {
+			a = [selector];
+		} else if (typeof selector === 'string') {
+			a = query(context, selector);
+		} else if (selector instanceof Array) {
+			a = selector;
+		} else {
+			throw new TypeError("Selector of wrong type: " + Object.prototype.toString.call(a));
+		}
+		return wrap(a);
+	};
+	Cookie = {
+		write: function (name, value, options) {
+			if (!options) options = {};
+			document.cookie = name + "=" + value
+				+ (options.duration ? ';max-age=' + (options.duration * 86400) : '');
+		},
+		read: function (name) {
+			var m = document.cookie.match(new RegExp("(^|; )" + name + "=(.*?)(; |$)"));
+			return m && m[2];
+		},
+		dispose: function (name) {
+			document.cookie = name + "=0;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		}
+	};
+	if (!window.Event) {
+		window.Event = function (type, params) {
+			var event = document.createEvent('Event');
+			event.initEvent(type, true, true);
+			return event;
+		};
+	}
+}());
+</script>
+<title>Travian :: resource development calculator</title>
+<style type="text/css">
+.rf {
+	z-index:  2;
+	display:  block;
+	position: absolute;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    background: #fdf8c1;
+    text-align: center;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 12px;
+}
+.t5 .rf {
+    width: 14px;
+    height: 14px;
+	line-height: 14px;
+	font-size: 9px;
+	border: 1px solid #0d648e;
+	border-top-color: #16a4e5;
+	background-color: white;
+}
+.rf1  { left:  92px; top:  25px }
+.rf2  { left: 155px; top:  25px }
+.rf3  { left: 215px; top:  39px }
+.rf4  { left:  37px; top:  57px }
+.rf5  { left: 129px; top:  66px }
+.rf6  { left: 194px; top:  86px }
+.rf7  { left: 252px; top:  79px }
+.rf8  { left:  22px; top: 110px }
+.rf9  { left:  73px; top: 103px }
+.rf10 { left: 204px; top: 134px }
+.rf11 { left: 259px; top: 137px }
+.rf12 { left:  32px; top: 163px }
+.rf13 { left:  83px; top: 156px }
+.rf14 { left: 150px; top: 176px }
+.rf15 { left: 229px; top: 191px }
+.rf16 { left:  78px; top: 209px }
+.rf17 { left: 131px; top: 221px }
+.rf18 { left: 181px; top: 225px }
+
+.t4 .rf1  { left:  95px; top:  55px; }
+.t4 .rf2  { left: 151px; top:  56px; }
+.t4 .rf3  { left: 208px; top:  63px; }
+.t4 .rf4  { left:  59px; top:  71px; }
+.t4 .rf5  { left: 136px; top:  83px; }
+.t4 .rf6  { left: 177px; top:  88px; }
+.t4 .rf7  { left: 232px; top:  88px; }
+.t4 .rf8  { left:  29px; top: 105px; }
+.t4 .rf9  { left:  87px; top: 105px; }
+.t4 .rf10 { left: 198px; top: 111px; }
+.t4 .rf11 { left: 246px; top: 112px; }
+.t4 .rf12 { left:  32px; top: 142px; }
+.t4 .rf13 { left:  78px; top: 135px; }
+.t4 .rf14 { left: 147px; top: 160px; }
+.t4 .rf15 { left: 236px; top: 140px; }
+.t4 .rf16 { left:  87px; top: 187px; }
+.t4 .rf17 { left: 155px; top: 195px; }
+.t4 .rf18 { left: 215px; top: 178px; }
+
+.t5 .rf1  { left:  75px; top:  72px; }
+.t5 .rf2  { left: 126px; top:  54px; }
+.t5 .rf3  { left: 183px; top:  62px; }
+.t5 .rf4  { left:  40px; top:  92px; }
+.t5 .rf5  { left: 120px; top:  86px; }
+.t5 .rf6  { left: 144px; top:  81px; }
+.t5 .rf7  { left: 219px; top:  81px; }
+.t5 .rf8  { left:  20px; top: 135px; }
+.t5 .rf9  { left:  60px; top: 129px; }
+.t5 .rf10 { left: 195px; top: 105px; }
+.t5 .rf11 { left: 255px; top: 105px; }
+.t5 .rf12 { left:  34px; top: 158px; }
+.t5 .rf13 { left:  76px; top: 141px; }
+.t5 .rf14 { left: 131px; top: 163px; }
+.t5 .rf15 { left: 216px; top: 140px; }
+.t5 .rf16 { left:  94px; top: 174px; }
+.t5 .rf17 { left: 134px; top: 190px; }
+.t5 .rf18 { left: 174px; top: 172px; }
+
+.f {
+	background: white none no-repeat center;
+	width: 300px;
+	height: 264px;
+    margin: 1px;
+    position: relative;
+    top: 3px;
+}
+.t4 .f { background-size: 300px 190px; }
+.t5 .f { background-size: 300px 192px; }
+.t2 #div1, .t3 #div1 { background-image: url('img/t3/f1.jpg'); }
+.t4 #div1 { background-image: url('img/t4/f1.jpg'); }
+.t5 #div1 { background-image: url('img/t5/f1.jpg'); }
+.t2 #div2, .t3 #div2 { background-image: url('img/t3/f2.jpg'); }
+.t4 #div2 { background-image: url('img/t4/f2.jpg'); }
+.t5 #div2 { background-image: url('img/t5/f2.jpg'); }
+.t2 #div3, .t3 #div3 { background-image: url('img/t3/f3.jpg'); }
+.t4 #div3 { background-image: url('img/t4/f3.jpg'); }
+.t5 #div3 { background-image: url('img/t5/f3.jpg'); }
+.t2 #div4, .t3 #div4 { background-image: url('img/t3/f4.jpg'); }
+.t4 #div4 { background-image: url('img/t4/f4.jpg'); }
+.t5 #div4 { background-image: url('img/t5/f4.jpg'); }
+.t2 #div5, .t3 #div5 { background-image: url('img/t3/f5.jpg'); }
+.t4 #div5 { background-image: url('img/t4/f5.jpg'); }
+.t5 #div5 { background-image: url('img/t5/f5.jpg'); }
+.t2 #div6, .t3 #div6 { background-image: url('img/t3/f6.jpg'); }
+.t4 #div6 { background-image: url('img/t4/f6.jpg'); }
+.t5 #div6 { background-image: url('img/t5/f6.jpg'); }
+.t2 #div7, .t3 #div7 { background-image: url('img/t3/f7.jpg'); }
+.t4 #div7 { background-image: url('img/t4/f7.jpg'); }
+.t5 #div7 { background-image: url('img/t5/f7.jpg'); }
+.t2 #div8, .t3 #div8 { background-image: url('img/t3/f8.jpg'); }
+.t4 #div8 { background-image: url('img/t4/f8.jpg'); }
+.t5 #div8 { background-image: url('img/t5/f8.jpg'); }
+.t2 #div9, .t3 #div9 { background-image: url('img/t3/f9.jpg'); }
+.t4 #div9 { background-image: url('img/t4/f9.jpg'); }
+.t5 #div9 { background-image: url('img/t5/f9.jpg'); }
+.t2 #div10, .t3 #div10 { background-image: url('img/t3/f10.jpg'); }
+.t4 #div10 { background-image: url('img/t4/f10.jpg'); }
+.t5 #div10 { background-image: url('img/t5/f10.jpg'); }
+.t2 #div11, .t3 #div11 { background-image: url('img/t3/f11.jpg'); }
+.t4 #div11 { background-image: url('img/t4/f11.jpg'); }
+.t5 #div11 { background-image: url('img/t5/f11.jpg'); }
+.t2 #div12, .t3 #div12 { background-image: url('img/t3/f12.jpg'); }
+.t4 #div12 { background-image: url('img/t4/f12.jpg'); }
+.t5 #div12 { background-image: url('img/t5/f12.jpg'); }
+.t4 #div13 { background-image: url('img/t4/f13.webp'); }
+@media screen and (min-resolution: 1.25dppx), (min-resolution: 120dpi), (-webkit-min-device-pixel-ratio: 1.25) {
+	.t5 #div1 { background-image: url('img/t5/f1%401.25x.jpg'); }
+    .t5 #div2 { background-image: url('img/t5/f2%401.25x.jpg'); }
+    .t5 #div3 { background-image: url('img/t5/f3%401.25x.jpg'); }
+    .t5 #div4 { background-image: url('img/t5/f4%401.25x.jpg'); }
+    .t5 #div5 { background-image: url('img/t5/f5%401.25x.jpg'); }
+    .t5 #div6 { background-image: url('img/t5/f6%401.25x.jpg'); }
+    .t5 #div7 { background-image: url('img/t5/f7%401.25x.jpg'); }
+    .t5 #div8 { background-image: url('img/t5/f8%401.25x.jpg'); }
+    .t5 #div9 { background-image: url('img/t5/f9%401.25x.jpg'); }
+    .t5 #div10 { background-image: url('img/t5/f10%401.25x.jpg'); }
+    .t5 #div11 { background-image: url('img/t5/f11%401.25x.jpg'); }
+    .t5 #div12 { background-image: url('img/t5/f12%401.25x.jpg'); }
+}
+@media screen and (min-resolution: 1.5dppx), (min-resolution: 144dpi), (-webkit-min-device-pixel-ratio: 1.5) {
+	.t5 #div1 { background-image: url('img/t5/f1%401.5x.jpg'); }
+    .t5 #div2 { background-image: url('img/t5/f2%401.5x.jpg'); }
+    .t5 #div3 { background-image: url('img/t5/f3%401.5x.jpg'); }
+    .t5 #div4 { background-image: url('img/t5/f4%401.5x.jpg'); }
+    .t5 #div5 { background-image: url('img/t5/f5%401.5x.jpg'); }
+    .t5 #div6 { background-image: url('img/t5/f6%401.5x.jpg'); }
+    .t5 #div7 { background-image: url('img/t5/f7%401.5x.jpg'); }
+    .t5 #div8 { background-image: url('img/t5/f8%401.5x.jpg'); }
+    .t5 #div9 { background-image: url('img/t5/f9%401.5x.jpg'); }
+    .t5 #div10 { background-image: url('img/t5/f10%401.5x.jpg'); }
+    .t5 #div11 { background-image: url('img/t5/f11%401.5x.jpg'); }
+    .t5 #div12 { background-image: url('img/t5/f12%401.5x.jpg'); }
+}
+@media screen and (min-resolution: 2dppx), (min-resolution: 192dpi), (-webkit-min-device-pixel-ratio: 2) {
+	.t5 #div1 { background-image: url('img/t5/f1%402x.jpg'); }
+    .t5 #div2 { background-image: url('img/t5/f2%402x.jpg'); }
+    .t5 #div3 { background-image: url('img/t5/f3%402x.jpg'); }
+    .t5 #div4 { background-image: url('img/t5/f4%402x.jpg'); }
+    .t5 #div5 { background-image: url('img/t5/f5%402x.jpg'); }
+    .t5 #div6 { background-image: url('img/t5/f6%402x.jpg'); }
+    .t5 #div7 { background-image: url('img/t5/f7%402x.jpg'); }
+    .t5 #div8 { background-image: url('img/t5/f8%402x.jpg'); }
+    .t5 #div9 { background-image: url('img/t5/f9%402x.jpg'); }
+    .t5 #div10 { background-image: url('img/t5/f10%402x.jpg'); }
+    .t5 #div11 { background-image: url('img/t5/f11%402x.jpg'); }
+    .t5 #div12 { background-image: url('img/t5/f12%402x.jpg'); }
+}
+@media screen and (min-resolution: 3dppx), (min-resolution: 288dpi), (-webkit-min-device-pixel-ratio: 3) {
+	.t5 #div1 { background-image: url('img/t5/f1%403x.jpg'); }
+    .t5 #div2 { background-image: url('img/t5/f2%403x.jpg'); }
+    .t5 #div3 { background-image: url('img/t5/f3%403x.jpg'); }
+    .t5 #div4 { background-image: url('img/t5/f4%403x.jpg'); }
+    .t5 #div5 { background-image: url('img/t5/f5%403x.jpg'); }
+    .t5 #div6 { background-image: url('img/t5/f6%403x.jpg'); }
+    .t5 #div7 { background-image: url('img/t5/f7%403x.jpg'); }
+    .t5 #div8 { background-image: url('img/t5/f8%403x.jpg'); }
+    .t5 #div9 { background-image: url('img/t5/f9%403x.jpg'); }
+    .t5 #div10 { background-image: url('img/t5/f10%403x.jpg'); }
+    .t5 #div11 { background-image: url('img/t5/f11%403x.jpg'); }
+    .t5 #div12 { background-image: url('img/t5/f12%403x.jpg'); }
+}
+table.squares tr { height: 12px; }
+table.squares tr td { width: 8px; }
+table.holder tr td { border: none; }
+
+body:not(.t5) .ol .mode5 {
+	display: none;
+}
+
+#switcher {
+	margin: 6px 0;
+	display: flex;
+    flex-wrap: wrap;
+	border: 1px solid silver;
+    border-width: 0 0 1px 1px;
+}
+.vil_cl {
+	box-sizing: border-box;
+	width: 33.33%;
+	padding: 4px;
+	cursor: pointer;
+	text-align: center;
+	border: 1px solid silver;
+    border-width: 1px 1px 0 0;
+}
+@media all and (min-width: 400px) {
+	.vil_cl { width: 25%; }
+}
+@media all and (min-width: 720px) {
+	.vil_cl { width: calc(100% / 6); }
+}
+.vil_cl:hover {
+	background: #ddd;
+}
+.vil_cl.selected {
+	background: #ccc;
+}
+
+option.ORLY {
+	background: yellow;
+	cursor: help;
+}
+*[data-fc] {
+	margin: 6px 2px;
+}
+.block-icon {
+	display: inline-block;
+	width: 8px;
+	height: 12px;
+}
+.block-icon--green {
+	background: #89D143;
+}
+.block-icon--orange {
+	background: #E7985A;
+}
+@media (prefers-color-scheme: dark) {
+	.vil_cl:hover { background: #333; }
+	.vil_cl.selected { background: #555; }
+	.f[id^=div] { mix-blend-mode: soft-light; }
+	.rf { background: hsla(60, 50%, 10%, .75); }
+}
+</style>
+</head>
+<body>
+<div class="ad"><style id="scaling">
+	.icon--scalable {
+		zoom: var(--scale-zoom);
+		transform: scale(var(--scale-transform));
+	}
+</style>
+<script type="text/javascript" async><!--
+(function () {
+	var urls = {};
+	window.onerror = function(msg, url, line, column, error) {
+		if ($ == window.jQuery) { msg = "jQuery sneaked here!"; }
+		var origin = location.protocol + '//' + location.host;
+		var params =
+			"?msg=" + encodeURIComponent(msg) +
+			"&url=" + encodeURIComponent(url) +
+			"&page=" + encodeURIComponent(location.href.replace(origin, '')) +
+			"&line=" + line +
+            "&lang=" + document.documentElement.lang +
+            "&column=" + (column === undefined ? 'n/a' : column) +
+            "&stack=" + encodeURIComponent(error && error.stack) +
+			"";
+		var url = "error.html"+ params;
+		if (urls[url] > 3) return false;
+		var img = new Image();
+		img.width = 1;
+		img.height = 1;
+		img.src = url;
+		document.body.appendChild(img);
+		urls[url] = (urls[url] || 0) + 1;
+		return false;
+	};
+	if (!window.devicePixelRatio) return;
+	Cookie.write('dpi', Math.round(devicePixelRatio * 96), { duration: 365 });
+	var oldValue = devicePixelRatio;
+	var zoomKind = window.CSS && CSS.supports('zoom', '1') ? 'zoom' : 'transform';
+	function setZoomLevel(zoomLevel) {
+		document.body.style.setProperty("--scale-" + zoomKind, zoomLevel);
+	}
+	function resize(currentScale) {
+		function f(n) {
+			return Math.abs(Math.log(currentScale / n));
+		}
+		var zoomLevels = [0.125, 0.25, 0.5, 1, 1.25, 1.5, 2, 2.5, 3, 4];
+		zoomLevels.sort(function (a, b) { return f(a) - f(b); });
+		setZoomLevel(zoomLevels[0] / currentScale);
+	}
+	window.addEventListener('resize', function () {
+		var newValue = devicePixelRatio;
+		if (newValue === oldValue) { return; }
+		resize(oldValue = newValue);
+	});
+	resize(devicePixelRatio);
+}());
+--></script>
+<!--[if lte IE 10]>
+    <div id="warning">
+        <a href="https://www.microsoft.com/en-us/WindowsForBusiness/End-of-IE-support">
+            Support for older versions of Internet Explorer ended on January 12th, 2016
+        </a>
+    </div>
+<![endif]-->
+</div>
+<div id="menu">
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="index.html" class="icon--scalable menuitem-index"></a><div>Home Page</div></div>
+	</span>
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="warsim2.html" class="icon--scalable menuitem-warsim2"></a><div>Extended Combat Simulator</div></div>
+		<div class="menutitle">Calculators</div>
+		<div class="menuitem"><a href="distance.html" class="icon--scalable menuitem-distance"></a><div>distance calculator</div></div>
+		<div class="menuitem"><a href="conq.html" class="icon--scalable menuitem-conq"></a><div>Conquering calculator</div></div>
+		<div class="menuitem"><a href="off_calc.html" class="icon--scalable menuitem-off_calc"></a><div>offense calculator</div></div>
+		<div class="menuitem"><a href="def_calc.html" class="icon--scalable menuitem-def_calc"></a><div>defense calculator</div></div>
+		<div class="menuitem"><a href="war.html" class="icon--scalable menuitem-war"></a><div>units' attributes calculator</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="build.html" class="icon--scalable menuitem-build"></a><div>buildings</div></div>
+		<div class="menutitle">Tables</div>
+		<div class="menuitem"><a href="villages_res.html" class="icon--scalable menuitem-villages_res"></a><div>resource development calculator</div></div>
+		<div class="menuitem"><a href="troops.html" class="icon--scalable menuitem-troops"></a><div>Troops</div></div>
+		<div class="menuitem"><a href="oases.html" class="icon--scalable menuitem-oases"></a><div>Oases</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="hero4.html" class="icon--scalable menuitem-hero4"></a><div>hero (T4)</div></div>
+		<div class="menutitle">hero</div>
+		<div class="menuitem"><a href="hero.html" class="icon--scalable menuitem-hero"></a><div>hero (T3)</div></div>
+		<div class="menuitem"><a href="items.html" class="icon--scalable menuitem-items"></a><div>items</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="report.html" class="icon--scalable menuitem-report"></a><div>logger</div></div>
+		<div class="menutitle">Misc</div>
+		<div class="menuitem"><a href="about.html" class="icon--scalable menuitem-about"></a><div>about this site</div></div>
+		<div class="menuitem"><a href="thanks.html" class="icon--scalable menuitem-thanks"></a><div>Acknowledgements</div></div>
+			</span>
+	
+</div>
+<div id="langbar">
+	<img alt="ar" src="img/x.gif" class="icon--scalable click flag ae">
+	<img alt="bg" src="img/x.gif" class="icon--scalable click flag bg">
+	<img alt="cs" src="img/x.gif" class="icon--scalable click flag cz">
+	<img alt="da" src="img/x.gif" class="icon--scalable click flag dk">
+	<img alt="de" src="img/x.gif" class="icon--scalable click flag de">
+	<img alt="ee" src="img/x.gif" class="icon--scalable click flag ee">
+	<img alt="el" src="img/x.gif" class="icon--scalable click flag gr">
+	<img alt="en" src="img/x.gif" class="icon--scalable click flag us">
+	<img alt="es" src="img/x.gif" class="icon--scalable click flag es">
+	<img alt="fa" src="img/x.gif" class="icon--scalable click flag ir">
+	<img alt="fr" src="img/x.gif" class="icon--scalable click flag fr">
+	<img alt="he" src="img/x.gif" class="icon--scalable click flag il">
+	<img alt="hu" src="img/x.gif" class="icon--scalable click flag hu">
+	<img alt="it" src="img/x.gif" class="icon--scalable click flag it">
+	<img alt="ja" src="img/x.gif" class="icon--scalable click flag jp">
+	<img alt="lt" src="img/x.gif" class="icon--scalable click flag lt">
+	<img alt="lv" src="img/x.gif" class="icon--scalable click flag lv">
+	<img alt="nl" src="img/x.gif" class="icon--scalable click flag nl">
+	<img alt="pl" src="img/x.gif" class="icon--scalable click flag pl">
+	<img alt="pt" src="img/x.gif" class="icon--scalable click flag pt">
+	<img alt="rs" src="img/x.gif" class="icon--scalable click flag rs">
+	<img alt="ru" src="img/x.gif" class="icon--scalable click flag ru">
+	<img alt="sl" src="img/x.gif" class="icon--scalable click flag si">
+	<img alt="sv" src="img/x.gif" class="icon--scalable click flag se">
+	<img alt="tr" src="img/x.gif" class="icon--scalable click flag tr">
+	<img alt="uk" src="img/x.gif" class="icon--scalable click flag ua">
+	</div>
+
+<script type="text/javascript">
+(function(){
+	var page = location.pathname.match(/(\w+)\.php$/) || [,'index'];
+	$$(".menuitem-" + page[1]).addClass('current');
+})();
+function switch_lang(lang_name) {
+	const d = new Date();
+	d.setYear(d.getYear() + 1);
+	document.cookie = "lang=" + lang_name + ';expires=' + d.toISOString();
+	window.location.reload();
+}
+$$(".flag").on('click', function(){ switch_lang(this.alt) });
+(function(){
+	var search = $$("#search input")[0];
+	if (!search || !window.fetch) return;
+	var index = [];
+	fetch('asearch.html')
+		.then(function (s) {
+			return s.json();
+		})
+		.then(function (obj) {
+			for (var k in obj) {
+				var item = obj[k];
+				if (typeof item.str === 'string') {
+					item.str = item.str.toLowerCase();
+					index.push(item);
+				} else {
+					item.str.forEach(function (s) {
+						var obj = {
+							ico: item.ico,
+							str: s.toLowerCase(),
+							url: item.url
+						};
+						if (item.ver) {
+							obj.ver = item.ver;
+						}
+						index.push(obj);
+					});
+				}
+			}
+		});
+	var lastResults = [];
+	var lastIndex = -1;
+	function matcher(term) {
+		return function(item) {
+			if (item.str.indexOf(term) !== -1) return true;
+			const letters = term.split('');
+			const words = item.str.split(' ');
+			if (words.length >= letters.length
+			&& letters.every(function (c, i) { return words[i][0] === c; })) {
+				return true;
+			}
+			return false;
+		}
+	}
+	search.oninput = function () {
+		var term = this.value.toLowerCase();
+		if (term.length < 2) {
+			window['search-results'].innerHTML = '';
+			return;
+		}
+		let termMatcher = matcher(term);
+		lastResults = index.filter(termMatcher).slice(0, 10);
+		if (lastResults.length > 0 && lastIndex === -1) {
+			lastIndex = 0;
+		}
+		window['search-results'].innerHTML = lastResults.map(function (item) {
+			return '<a href="' + item.url + '">'
+				+ '<img src="img/x.gif" class="' + item.ico + '"> '
+				+ item.str.replace(term, '<mark>$&</mark>')
+				+ '</a>';
+		}).join('');
+	};
+	search.onkeyup = function (e) {
+		if (e.keyCode === 38) {
+			// up
+			e.preventDefault();
+		}
+		if (e.keyCode === 40) {
+			// down
+			e.preventDefault();
+		}
+	}
+}());
+</script>
+
+<div class="page">
+<div class="content">
+<script type="text/javascript">
+/* data */
+var VIEW_FULL = 0;
+var VIEW_COMPACT = 1;
+var bo_1 =[	[1,10],			[1,10],			[1,10],			[1,10],			[1,10]			];
+var bo_3 =[	[1,10,2,8],		[1,10,2,8],		[1,10,2,8],		[1,10,2,9],		[1,11,2,10]		];
+var bo_4 =[	[1,10,3,8],		[1,10,3,8],		[1,10,3,8],		[1,10,2,9,1,8],	[4,10]			];
+var bo_5 =[	[1,10,4,8],		[1,10,4,8],		[1,10,4,8],		[1,10,4,8],		[1,10,4,9]		];
+var bo_6 =[	[5,6,1,5],		[6,7],			[6,8],			[6,9],			[1,10,5,9],
+			[1,10,5,9],		[1,10,5,9],		[3,10,3,9],		[6,11],			[5,12,1,11]		];
+var bo_6p=[	[4,6,2,5],		[6,7],			[6,8],			[6,9],			[1,10,5,9],
+			[1,10,5,9],		[1,10,5,9],		[3,10,3,9],		[6,11],			[5,12,1,11]		];
+var bo_7 =[	[3,6,4,5],		[6,7,1,6],		[5,8,2,7],		[7,9],			[1,10,6,9],
+			[1,10,6,9],		[1,10,6,9],		[1,10,6,9],		[3,11,4,10],	[2,12,5,11]		];
+var bo_7x=[	[3,6,4,5],		[3,7,4,6],		[4,8,3,7],		[7,9],			[1,10,6,9],
+			[1,10,6,9],		[1,10,6,9],		[1,10,6,9],		[3,11,4,10],	[2,12,5,11]		];
+var bo_7p=[	[3,6,4,5],		[6,7,1,6],		[4,8,3,7],		[7,9],			[1,10,6,9],
+			[1,10,6,9],		[1,10,6,9],		[1,10,6,9],		[3,11,4,10],	[2,12,5,11]		];
+var bo_9 =[ [9,5],			[9,6],			[9,7],			[1,10,4,9,4,8],	[1,10,4,9,4,8],
+			[1,10,4,9,4,8],	[1,10,4,9,4,8],	[1,10,8,9],		[9,10],			[9,11]			];
+var bo_9p=[ [9,5],			[2,7,7,6],		[9,7],			[1,10,3,9,5,8],	[1,10,3,9,5,8],
+			[1,10,3,9,5,8],	[1,10,3,9,5,8],	[1,10,8,9],		[9,10],			[9,11]			];
+var bo_9px=[[9,5],			[2,7,7,6],		[9,7],			[1,10,2,9,6,8],	[1,10,3,9,5,8],
+			[1,10,3,9,5,8],	[1,10,3,9,5,8],	[1,10,8,9],		[9,10],			[9,11]			];
+var bo_15=[	[2,5,13,4],		[13,6,2,5],		[15,6],			[1,10,4,8,10,7],[1,10,4,8,10,7],
+			[1,10,4,8,10,7],[1,10,4,8,10,7],[1,10,12,8,2,7],[1,10,14,9],	[1,11,14,10]	];
+var bo_18=[	[1,5,10,4,7,5],	[10,5,8,4],		[18,6],			[1,10,17,7],	[1,10,17,7],
+			[1,10,17,7],	[1,10,17,7],	[1,10,4,8,13,7],[1,10,14,9,3,8],[15,10,3,9]	];
+
+var build_order__3 = [ [], bo_1, [], bo_3, bo_4, bo_5, bo_6,  bo_7x, [], bo_9,  [], [], [], [], [], bo_15, [], [], bo_18 ];
+var build_order___ = [ [], bo_1, [], bo_3, bo_4, bo_5, bo_6,  bo_7,  [], bo_9,  [], [], [], [], [], bo_15, [], [], bo_18 ];
+var build_order_p_ = [ [], bo_1, [], bo_3, bo_4, bo_5, bo_6p, bo_7p, [], bo_9p, [], [], [], [], [], bo_15, [], [], bo_18 ];
+var build_order_p3 = [ [], bo_1, [], bo_3, bo_4, bo_5, bo_6,  bo_7x, [], bo_9px,[], [], [], [], [], bo_15, [], [], bo_18 ];
+
+var fields = [
+	[3, 3, 3, 9],
+	[3, 4, 5, 6],
+	[4, 4, 4, 6],
+	[4, 5, 3, 6],
+	[5, 3, 4, 6],
+	[1, 1, 1, 15],
+	[4, 4, 3, 7],
+	[3, 4, 4, 7],
+	[4, 3, 4, 7],
+	[3, 5, 4, 6],
+	[4, 3, 5, 6],
+	[5, 4, 3, 6],
+	[0, 0, 0, 18]
+];
+var resourceFieldsDistribution = [
+	[4, 4, 1, 4, 4, 2, 3, 4, 4, 3, 3, 4, 4, 1, 4, 2, 1, 2],
+	[3, 4, 1, 3, 2, 2, 3, 4, 4, 3, 3, 4, 4, 1, 4, 2, 1, 2],
+	[1, 4, 1, 3, 2, 2, 3, 4, 4, 3, 3, 4, 4, 1, 4, 2, 1, 2],
+	[1, 4, 1, 2, 2, 2, 3, 4, 4, 3, 3, 4, 4, 1, 4, 2, 1, 2],
+	[1, 4, 1, 3, 1, 2, 3, 4, 4, 3, 3, 4, 4, 1, 4, 2, 1, 2],
+	[4, 4, 1, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 4, 4],
+	
+	[1, 4, 4, 1, 2, 2, 3, 4, 4, 3, 3, 4, 4, 1, 4, 2, 1, 2],
+	[3, 4, 4, 1, 2, 2, 3, 4, 4, 3, 3, 4, 4, 1, 4, 2, 1, 2],
+	[3, 4, 4, 1, 1, 2, 3, 4, 4, 3, 3, 4, 4, 1, 4, 2, 1, 2],
+	
+	[3, 4, 1, 2, 2, 2, 3, 4, 4, 3, 3, 4, 4, 1, 4, 2, 1, 2],
+	[3, 1, 1, 3, 1, 4, 4, 3, 3, 2, 2, 3, 1, 4, 4, 2, 4, 4],
+	[1, 4, 1, 1, 2, 2, 3, 4, 4, 3, 3, 4, 4, 1, 4, 2, 1, 2],
+	
+	[4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+];
+var warehouses = [
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 5, 8, 13, 22, 36],
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 7, 11, 18, 29],
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 5, 8, 13, 22, 36],
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 5, 7, 12, 20, 33],
+];
+var granaries  = [
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 5,  8, 13, 22],
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4,  7, 11, 18],
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 5,  8, 13, 22],
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,  3,  5,  8],
+];
+var names = [
+	"9-cropper",
+	"6-cropper Iron",
+	"6-cropper balance",
+	"6-cropper Clay",
+	"6-cropper Lumber",
+	"15-cropper",
+	"7 -Iron",
+	"7 -Lumber",
+	"7 -Clay",
+	"6-cropper Clay",
+	"6-cropper Iron",
+	"6-cropper Lumber",
+	"18-cropper"];
+var abundance  = [
+//	1, 20, 30, 19, 19, 1,
+	1, 8, 31, 8, 8, 1,
+	3, 3,  3, 8, 8, 8,
+	0];
+var production = [2, 5, 9, 15, 22, 33, 50, 70, 100, 145, 200, 280, 375, 495, 635, 800, 1000, 1300, 1600, 2000, 2450, 3050];
+var crop_max = [
+	[15, 6, 9000, 0.0009],
+	[15, 5, 8250, 0.0018],
+	[15, 4, 7500, 0.0004],
+	[15, 3, 6750, 0.0048],
+	[15, 2, 6000, 0.0017],
+	[15, 1, 5250, 0.0005],
+	[ 9, 6, 5400, 0.0009],
+	[ 9, 5, 4950, 0.0018],
+	[ 9, 4, 4500, 0.0004],
+	[15, 0, 4500, 0.0001],
+	[ 7, 6, 4200, 0.0077],
+	[ 9, 3, 4050, 0.0048],
+	[ 7, 5, 3850, 0.0162],
+	[ 6, 6, 3600, 0.0674],
+	[ 9, 2, 3600, 0.0017],
+	[ 7, 4, 3500, 0.0032],
+	[ 6, 5, 3300, 0.1418],
+	[ 7, 3, 3150, 0.0431],
+	[ 9, 1, 3150, 0.0005],
+	[ 6, 4, 3000, 0.0284],
+	[ 7, 2, 2800, 0.0151],
+	[ 6, 3, 2700, 0.3780],
+	[ 9, 0, 2700, 0.0001],
+	[ 7, 1, 2450, 0.0041],
+	[ 6, 2, 2400, 0.1323],
+	[ 6, 1, 2100, 0.0363],
+	[ 7, 0, 2100, 0.0007],
+	[ 6, 0, 1800, 0.0060],
+];
+</script>
+
+<label for="server">server:</label>
+<style>
+    #serverHint {
+        position: relative;
+        display: inline-block;
+        z-index: 100;
+    }
+    #serverHint > div {
+        position: absolute;
+        border: 1px solid gray;
+        background: white;
+        padding: 4px;
+        width: 200px;
+        z-index: 1;
+        top: -12px;
+        box-shadow: 0 0 2px gray;
+        white-space: normal;
+    }
+    #serverHint .but {
+        font-size: 14px;
+    }
+    #serverVersionNew {
+        font-weight: bold;
+    }
+    #serverHintButtons {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 8px;
+    }
+</style>
+<select id="server">
+    <optgroup label="Kingdoms">
+        <option value="1.50">T5</option>
+        <option value="3.50">T5 3x</option>
+        <option value="5.50">T5 5x</option>
+    </optgroup>
+    <optgroup label="Legends">
+        <option value="1.45">T4.5 1x</option>
+        <option value="1.46">T4.6 1x</option>
+        <option value="2.46">T4.6 2x</option>
+        <option value="3.46">T4.6 3x</option>
+        <option value="5.46">T4.6 5x</option>
+        <option value="10.46">T4.6 10x</option>
+    </optgroup>
+    <optgroup label="Specials">
+        <option value="1.431" disabled>New Year Special</option>
+        <option value="1.432">Annual Special</option>
+        <option value="2.432">Annual Special 2x</option>
+        <option value="3.432">Annual Special 3x</option>
+    </optgroup>
+    <optgroup label="Classis">
+        <option value="1.36">T3.6</option>
+        <option value="3.36">T3.6 3x</option>
+        <option value="1.25">T2.5</option>
+    </optgroup>
+</select>
+<div id="serverHint" style="display: none;">
+    <div>
+        <div>You have changed version to <span id="serverVersionNew"></span> on another tab</div>
+        <div id="serverHintButtons">
+            <input type="button" class="but" value="use it" id="serverHintButtonUse">
+            <input type="button" class="but" value="discard" id="serverHintButtonDiscard">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+(function (server) {
+    if (!server) { return; }
+    var lastValue = null;
+    var lastNewValue = null;
+    function f() {
+        lastNewValue = lastValue = this.value;
+        var s = parseVersion(this.value);
+        document.body.className = 't' + s.major + ' t' + s.major + s.minor;
+    };
+    server.addEventListener('change', f);
+    window.addEventListener('load', function () {
+        setTimeout(f.bind(server), 0);
+    });
+    window.addEventListener('storage', function (event) {
+        if (event.key === 'v') {
+            lastNewValue = event.newValue;
+        }
+    });
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState !== 'visible') { return; }
+        if (lastNewValue === lastValue) { return; }
+        var option = [].filter.call(server.options, function (o) {
+            return o.value === lastNewValue;
+        })[0];
+        if (!option) return;
+        var fullVersion = option.parentNode.label + ' / ' + option.innerHTML;
+        $('serverVersionNew').innerHTML = fullVersion;
+        $('serverHint').style.display = '';
+    });
+    $('serverHintButtonUse').onclick = function () {
+        server.value = lastNewValue;
+        f.call(server);
+        $('serverHint').style.display = 'none';
+    };
+    $('serverHintButtonDiscard').onclick = function () {
+        $('serverHint').style.display = 'none';
+    };
+}(document.getElementById('server')));
+</script>
+
+<div id="switcher">
+    <div class="vil_cl"> 9(<img src="img/x.gif" class="icon--scalable res r4">)</div>
+	<div class="vil_cl"> 6(<img src="img/x.gif" class="icon--scalable res r3">|<img src="img/x.gif" class="icon--scalable res r2">)</div>
+	<div class="vil_cl"> 6(<img src="img/x.gif" class="icon--scalable res r6">)</div>
+	<div class="vil_cl"> 6(<img src="img/x.gif" class="icon--scalable res r2">|<img src="img/x.gif" class="icon--scalable res r1">)</div>
+	<div class="vil_cl"> 6(<img src="img/x.gif" class="icon--scalable res r1">|<img src="img/x.gif" class="icon--scalable res r3">)</div>
+	<div class="vil_cl">15(<img src="img/x.gif" class="icon--scalable res r4">)</div>
+	<div class="vil_cl"> 7(-<img src="img/x.gif" class="icon--scalable res r3">)</div>
+	<div class="vil_cl"> 7(-<img src="img/x.gif" class="icon--scalable res r1">)</div>
+	<div class="vil_cl"> 7(-<img src="img/x.gif" class="icon--scalable res r2">)</div>
+	<div class="vil_cl"> 6(<img src="img/x.gif" class="icon--scalable res r2">|<img src="img/x.gif" class="icon--scalable res r3">)</div>
+	<div class="vil_cl"> 6(<img src="img/x.gif" class="icon--scalable res r3">|<img src="img/x.gif" class="icon--scalable res r1">)</div>
+	<div class="vil_cl"> 6(<img src="img/x.gif" class="icon--scalable res r1">|<img src="img/x.gif" class="icon--scalable res r2">)</div>
+</div>
+
+<table width="100%" class="wire" id="main" cellspacing="0">
+<tr><td class="header" colspan=6 id="title"></td></tr>
+<tr><td colspan='3' valign="top" align="left">
+	<div style="position:relative;">
+      <span class="rf rf1"></span><span class="rf rf2"></span><span class="rf rf3"></span>
+	  <span class="rf rf4"></span><span class="rf rf5"></span><span class="rf rf6"></span>
+	  <span class="rf rf7"></span><span class="rf rf8"></span><span class="rf rf9"></span>
+	  <span class="rf rf10"></span><span class="rf rf11"></span><span class="rf rf12"></span>
+	  <span class="rf rf13"></span><span class="rf rf14"></span><span class="rf rf15"></span>
+	  <span class="rf rf16"></span><span class="rf rf17"></span><span class="rf rf18"></span>
+      <div style="display: none;" id="div1" class="f"></div>
+      <div style="display: none;" id="div2" class="f"></div>
+      <div style="display: none;" id="div3" class="f"></div>
+      <div style="display: none;" id="div4" class="f"></div>
+      <div style="display: none;" id="div5" class="f"></div>
+      <div style="display: none;" id="div6" class="f"></div>
+      <div style="display: none;" id="div7" class="f"></div>
+      <div style="display: none;" id="div8" class="f"></div>
+      <div style="display: none;" id="div9" class="f"></div>
+      <div style="display: none;" id="div10" class="f"></div>
+      <div style="display: none;" id="div11" class="f"></div>
+      <div style="display: none;" id="div12" class="f"></div>
+      <div style="display: none;" id="div13" class="f"></div>
+    </div>
+<!--	<div style="display: none;" id="div12"><img src="img/g/f13.jpg"></div> -->
+	</td><td colspan='3' align="center">
+	<table class="wire" id="info" cellspacing="0">
+	<tr><td colspan="5" id="text">abundance: X%</td></tr>
+	<tr><td></td>
+	<td><img src="img/x.gif" class="icon--scalable res r1"></td>
+		<td><img src="img/x.gif" class="icon--scalable res r2"></td>
+		<td><img src="img/x.gif" class="icon--scalable res r3"></td>
+		<td><img src="img/x.gif" class="icon--scalable res r4"></td>
+	</tr>
+	<tr><td>
+        <input type="checkbox" checked="checked" id="pp" data-pl="15">
+			<label for="pp">plus</label>
+		</td>
+		<td><input type="checkbox" checked="checked" id="p0" data-pl="1"></td>
+		<td><input type="checkbox" checked="checked" id="p1" data-pl="2"></td>
+		<td><input type="checkbox" checked="checked" id="p2" data-pl="4"></td>
+		<td><input type="checkbox" checked="checked" id="p3" data-pl="8"></td>
+	</tr>
+	<tr><td>fields</td><td>3</td><td>3</td><td>3</td><td>9</td></tr>
+	<tr><td>level</td>
+	<td><select id="fl0" onchange='fields_change(0)'><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option selected value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option></select></td>
+	<td><select id="fl1" onchange='fields_change(1)'><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option selected value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21" class="ORLY">21</option></select></td>
+	<td><select id="fl2" onchange='fields_change(2)'><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option selected value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option></select></td>
+	<td><select id="fl3" onchange='fields_change(3)'><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option selected value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21" class="ORLY">21</option></select></td></tr>
+	<tr><td>
+		<input type="checkbox" id="ff" data-fc="31">
+		<label for="ff">factories</label>
+	</td>
+	<td><input type="checkbox" id="f0" data-fc="1"><label for="f0"><img src="img/x.gif" class="icon--scalable building g5" alt="Sawmill"></label></td>
+	<td><input type="checkbox" id="f1" data-fc="2"><label for="f1"><img src="img/x.gif" class="icon--scalable building g6" alt="Brickyard"></label></td>
+	<td><input type="checkbox" id="f2" data-fc="4"><label for="f2"><img src="img/x.gif" class="icon--scalable building g7" alt="Iron Foundry"></label></td>
+	<td><input type="checkbox" id="f3" data-fc="8"><label for="f3"><img src="img/x.gif" class="icon--scalable building g8" alt="Grain Mill"></label>
+		<input type="checkbox" id="f4" data-fc="16"><label for="f4"><img src="img/x.gif" class="icon--scalable building g9" alt="Bakery"></label></td>
+	</tr>
+	<tr id="waterworks_wrapper">
+		<td>Waterworks</td>
+		<td colspan="4">
+			<input type="button" class="but" id="w0" value=" 0 " onclick="waterworks.value = 0; waterworks.onchange();">
+			<select id="waterworks">
+				<option value="0">+0%</option>
+				<option value="1">+5%</option>
+				<option value="2">+10%</option>
+				<option value="3">+15%</option>
+				<option value="4">+20%</option>
+				<option value="5">+25%</option>
+				<option value="6">+30%</option>
+				<option value="7">+35%</option>
+				<option value="8">+40%</option>
+				<option value="9">+45%</option>
+				<option value="10">+50%</option>
+				<option value="11">+55%</option>
+				<option value="12">+60%</option>
+				<option value="13">+65%</option>
+				<option value="14">+70%</option>
+				<option value="15">+75%</option>
+				<option value="16">+80%</option>
+				<option value="17">+85%</option>
+				<option value="18">+90%</option>
+				<option value="19">+95%</option>
+				<option value="20">+100%</option>
+			</select>
+			<input type="button" class="but" id="w20" value="20" onclick="waterworks.value = 20; waterworks.onchange();">
+		</td>
+	</tr>
+	<tr><td>Oases</td>
+				<td><select class="ol" id="ol0" onchange='oases_change(0)'>
+							<option value="0">0%</option>
+							<option value="5" class="mode5">5%</option>
+							<option value="10" class="mode5">10%</option>
+							<option value="15" class="mode5">15%</option>
+							<option value="20" class="mode5">20%</option>
+							<option value="25">25%</option>
+							<option value="30" class="mode5">30%</option>
+							<option value="35" class="mode5">35%</option>
+							<option value="40" class="mode5">40%</option>
+							<option value="45" class="mode5">45%</option>
+							<option value="50">50%</option>
+							<option value="55" class="mode5">55%</option>
+							<option value="60" class="mode5">60%</option>
+							<option value="65" class="mode5">65%</option>
+							<option value="70" class="mode5">70%</option>
+							<option value="75">75%</option>
+							<option value="80" class="mode5">80%</option>
+							<option value="85" class="mode5">85%</option>
+							<option value="90" class="mode5">90%</option>
+							<option value="95" class="mode5">95%</option>
+							<option value="100">100%</option>
+							<option value="105" class="mode5">105%</option>
+							<option value="110" class="mode5">110%</option>
+							<option value="115" class="mode5">115%</option>
+							<option value="120" class="mode5">120%</option>
+							<option value="125">125%</option>
+							<option value="130" class="mode5">130%</option>
+							<option value="135" class="mode5">135%</option>
+							<option value="140" class="mode5">140%</option>
+							<option value="145" class="mode5">145%</option>
+							<option value="150">150%</option>
+					</select></td>
+				<td><select class="ol" id="ol1" onchange='oases_change(1)'>
+							<option value="0">0%</option>
+							<option value="5" class="mode5">5%</option>
+							<option value="10" class="mode5">10%</option>
+							<option value="15" class="mode5">15%</option>
+							<option value="20" class="mode5">20%</option>
+							<option value="25">25%</option>
+							<option value="30" class="mode5">30%</option>
+							<option value="35" class="mode5">35%</option>
+							<option value="40" class="mode5">40%</option>
+							<option value="45" class="mode5">45%</option>
+							<option value="50">50%</option>
+							<option value="55" class="mode5">55%</option>
+							<option value="60" class="mode5">60%</option>
+							<option value="65" class="mode5">65%</option>
+							<option value="70" class="mode5">70%</option>
+							<option value="75">75%</option>
+							<option value="80" class="mode5">80%</option>
+							<option value="85" class="mode5">85%</option>
+							<option value="90" class="mode5">90%</option>
+							<option value="95" class="mode5">95%</option>
+							<option value="100">100%</option>
+							<option value="105" class="mode5">105%</option>
+							<option value="110" class="mode5">110%</option>
+							<option value="115" class="mode5">115%</option>
+							<option value="120" class="mode5">120%</option>
+							<option value="125">125%</option>
+							<option value="130" class="mode5">130%</option>
+							<option value="135" class="mode5">135%</option>
+							<option value="140" class="mode5">140%</option>
+							<option value="145" class="mode5">145%</option>
+							<option value="150">150%</option>
+					</select></td>
+				<td><select class="ol" id="ol2" onchange='oases_change(2)'>
+							<option value="0">0%</option>
+							<option value="5" class="mode5">5%</option>
+							<option value="10" class="mode5">10%</option>
+							<option value="15" class="mode5">15%</option>
+							<option value="20" class="mode5">20%</option>
+							<option value="25">25%</option>
+							<option value="30" class="mode5">30%</option>
+							<option value="35" class="mode5">35%</option>
+							<option value="40" class="mode5">40%</option>
+							<option value="45" class="mode5">45%</option>
+							<option value="50">50%</option>
+							<option value="55" class="mode5">55%</option>
+							<option value="60" class="mode5">60%</option>
+							<option value="65" class="mode5">65%</option>
+							<option value="70" class="mode5">70%</option>
+							<option value="75">75%</option>
+							<option value="80" class="mode5">80%</option>
+							<option value="85" class="mode5">85%</option>
+							<option value="90" class="mode5">90%</option>
+							<option value="95" class="mode5">95%</option>
+							<option value="100">100%</option>
+							<option value="105" class="mode5">105%</option>
+							<option value="110" class="mode5">110%</option>
+							<option value="115" class="mode5">115%</option>
+							<option value="120" class="mode5">120%</option>
+							<option value="125">125%</option>
+							<option value="130" class="mode5">130%</option>
+							<option value="135" class="mode5">135%</option>
+							<option value="140" class="mode5">140%</option>
+							<option value="145" class="mode5">145%</option>
+							<option value="150">150%</option>
+					</select></td>
+				<td><select class="ol" id="ol3" onchange='oases_change(3)'>
+							<option value="0">0%</option>
+							<option value="5" class="mode5">5%</option>
+							<option value="10" class="mode5">10%</option>
+							<option value="15" class="mode5">15%</option>
+							<option value="20" class="mode5">20%</option>
+							<option value="25">25%</option>
+							<option value="30" class="mode5">30%</option>
+							<option value="35" class="mode5">35%</option>
+							<option value="40" class="mode5">40%</option>
+							<option value="45" class="mode5">45%</option>
+							<option value="50">50%</option>
+							<option value="55" class="mode5">55%</option>
+							<option value="60" class="mode5">60%</option>
+							<option value="65" class="mode5">65%</option>
+							<option value="70" class="mode5">70%</option>
+							<option value="75">75%</option>
+							<option value="80" class="mode5">80%</option>
+							<option value="85" class="mode5">85%</option>
+							<option value="90" class="mode5">90%</option>
+							<option value="95" class="mode5">95%</option>
+							<option value="100">100%</option>
+							<option value="105" class="mode5">105%</option>
+							<option value="110" class="mode5">110%</option>
+							<option value="115" class="mode5">115%</option>
+							<option value="120" class="mode5">120%</option>
+							<option value="125">125%</option>
+							<option value="130" class="mode5">130%</option>
+							<option value="135" class="mode5">135%</option>
+							<option value="140" class="mode5">140%</option>
+							<option value="145" class="mode5">145%</option>
+							<option value="150">150%</option>
+					</select></td>
+			</tr>
+	<tr><td>Production</td><td>750</td><td>750</td><td>750</td><td>2700</td></tr>
+	<tr height="49">
+	<td></td>
+	<td colspan="4">
+		<img src="img/x.gif" class="icon--scalable building g10" alt="Warehouse">1
+		<img src="img/x.gif" class="icon--scalable building g11" alt="Granary">1</td></tr>
+	</table>
+</td></tr>
+<tr><td colspan="6" style='text-align: left;'>
+	<table id='bo_selector' cellspacing='0' width="100%"><tr>
+	<td onclick='view_t_change(0)'>
+		<div class="block-icon block-icon--green"></div>
+		<div class="block-icon block-icon--green"></div>
+		<div class="block-icon block-icon--green"></div>
+		<div class="block-icon block-icon--orange"></div>
+		<div class="block-icon block-icon--orange"></div>
+	</td>
+	<td onclick='view_t_change(1)'>
+		<div class="block-icon block-icon--green"></div>&times;3
+		<div class="block-icon block-icon--orange"></div>&times;2
+	</td>
+	<td style="text-align: center;">the most efficient order of resource buildings development	</td></tr>
+	</table>
+
+	<table class="wire" width="100%" id="bo" cellspacing="0">
+	<tr><td rowspan='2'>factories</td><td colspan='22'>fields</td></tr>
+	<tr><td colspan="9"><img src="img/x.gif" class="icon--scalable res r4"/></td><td rowspan="6"></td>
+		<td colspan="3"><img src="img/x.gif" class="icon--scalable res r1"/></td><td rowspan="6"></td>
+		<td colspan="3"><img src="img/x.gif" class="icon--scalable res r2"/></td><td rowspan="6"></td>
+		<td colspan="3"><img src="img/x.gif" class="icon--scalable res r3"/></td></tr>
+	</table>
+</td></tr>
+</table>
+
+</div>
+</div>
+<script type="text/javascript" src="js/utils4a8a.js?c"></script>
+<script type="text/javascript" src="js/server.js"></script>
+<script type="text/javascript">
+/* model */
+function arr_eq(a, b) {
+	return a.join(' ') == b.join(' ');
+}
+var xtable = $("info");
+var state = {
+	vt: 0,
+	pl: 15,
+	ol: [0,0,0,0],
+	fl: [10,10,10,10],
+	w: 0,
+	fs: 31,
+	view_t: 0,
+	s:  getMyVersion(),
+}
+StateSaver.bind( state,
+	{vt:'i', s:'s', pl:'i', ol:'a', fl:'a', view_t:'i', fs:'i', w:'i', plus: 'b' }
+);
+StateSaver.load(state);
+
+/* controller */
+if (state.plus && !state.pl) {
+	state.pl = 15;
+}
+$('pp').checked = state.pl;
+$('pp').indeterminate = (state.pl !== 15) && (state.pl !== 0);
+$('server').value = state.s;
+for(var r=0; r<4; r++){
+	$('p'+r).checked = state.pl & (1 << r);
+	$('ol'+r).value = state.ol[r];
+	$('fl'+r).value = state.fl[r];
+}
+for(var f=0; f<5; f++) {
+	$('f'+f).checked = state.fs & (1 << f);
+}
+$('ff').checked = !state.fs;
+$('ff').indeterminate = (state.fs !== 31) && (state.fs !== 0);
+
+function vt_change(new_vt) {
+	$("div" + (+state.vt + 1)).style.display = "none";
+	if (state.vt != 12) {
+		$$("#switcher .vil_cl")[state.vt].classList.remove('selected');
+	}
+	$("div" + (+new_vt + 1)).style.display = "block";
+	var cells = $('info').rows[3].cells;
+	for (var r = 0; r < 4; r++) {
+		cells[r+1].innerHTML = fields[new_vt][r];
+	}
+	$('title').innerHTML = names[new_vt];
+	$('text').innerHTML = 'abundance: ' + abundance[new_vt] + '%';
+	if (state.vt != 12) { $$("#switcher .vil_cl")[new_vt].classList.add('selected'); }
+	state.vt = new_vt;
+	reCalc();
+	reDrawBO();
+	update_fields();
+}
+
+function oases_change() {
+	for (var r = 0; r < 4; r++) {
+		state.ol[r] = +$('ol'+r).value;
+	}
+	var res_sum = state.ol[0] + state.ol[1] + state.ol[2];
+	xtable.rows[5].cells[0].style.backgroundColor = (res_sum > 6) ? "#fcc" : "white";
+	reCalc();
+}
+$('waterworks').onchange = function waterworks_change() {
+	state.w = +this.value;
+	reCalc();
+}
+function fields_change() {
+	for(var r = 0; r < 4; r++)
+		state.fl[r] = parseInt($('fl'+r).value);
+	reCalc();
+}
+$$("*[data-fc]").on('click', function (event) {
+	var fc = +this.dataset.fc;
+	if (fc == 31) {
+		state.fs = this.checked ? 31 : 0;
+		for (var f = 0; f < 5; f++) {
+			$('f' + f).checked = state.fs & (1 << f);
+		}
+	} else {
+		state.fs ^= fc;
+		$('ff').checked = state.fs !== 0;
+		$('ff').indeterminate = (state.fs !== 31) && (state.fs !== 0);
+	}
+	reCalc();
+});
+$$("*[data-pl]").on('click', function (event) {
+	var pl = +this.dataset.pl;
+	if (pl == 15) {
+		state.pl = this.checked ? 15 : 0;
+		for (var r = 0; r < 4; r++) {
+			$('p' + r).checked = state.pl & (1 << r);
+		}
+	} else {
+		state.pl ^= pl;
+		$('pp').checked = state.pl !== 0;
+		$('pp').indeterminate = (state.pl !== 15) && (state.pl !== 0);
+	}
+	reCalc();
+});
+function view_t_change(new_view_t) {
+	if (state.view_t == new_view_t) return;
+	$('bo_selector').rows[0].cells[state.view_t].style.background = 'none';
+	$('bo_selector').rows[0].cells[new_view_t].style.background = '#ccc';
+	state.view_t = new_view_t;
+	reDrawBO();
+}
+function speed_change(val) {
+	state.spd = val;
+	reCalc();
+	reDrawBO();
+}
+
+function update_fields() {
+	var field_distr = resourceFieldsDistribution[state.vt];
+	var lvls = $$("#main .rf");
+	for (var i = 0; i < 18; i++) {
+		var lvl = parseInt(state.fl[field_distr[i] - 1]);
+		lvls[i].innerHTML = lvl;
+	}
+}
+function reCalc() {
+	var wh = 1;
+	var gn = 1;
+    var v = parseVersion(state.s);
+	var spd = v.speed;
+	$('waterworks_wrapper').style.display = SERVER.hasExtraRaces ? '' : 'none';
+    if (v.major === 4) spd *= 1.4;
+	var res, total = 0;
+	var mul;
+	for (var r = 0; r < 4; r++) {
+		var plus = (state.pl & (1 << r)) ? 1.25 : 1;
+		wh = Math.max(wh, warehouses[r][state.fl[r]]);
+		gn = Math.max(gn, granaries[r][state.fl[r]]);
+		mul = 1;
+		// factories
+		if (state.fs & (1 << r)) { mul += 0.25; }
+		if ((state.fs & 0x10) && (r == 3)) { mul += 0.25; }
+		// oases & waterworks
+		var oasBonus = state.ol[r] / 100;
+		if (v.major === 4) oasBonus *= (1 + state.w / 20);
+		mul += oasBonus;
+		
+		total += res = Math.round(
+			xtable.rows[3].cells[r+1].innerHTML *
+			Math.round(production[state.fl[r]] * spd * mul) *
+			plus
+		);
+		xtable.rows[8].cells[r+1].innerHTML = res;
+	}
+	xtable.rows[9].cells[0].innerHTML = "&Sigma; = " + total;
+	update_fields();
+	var a = [];
+	if (wh + gn < 19) {
+		a.push(
+			'<img src="img/x.gif" class="icon--scalable building g10">' + wh + ' ' +
+			'<img src="img/x.gif" class="icon--scalable building g11">' + gn
+		);
+	}
+	if (wh + gn > 2) {
+		a.push(
+			'<img src="img/x.gif" class="icon--scalable building g38">' + Math.ceil(wh/3) + ' ' +
+			'<img src="img/x.gif" class="icon--scalable building g39">' + Math.ceil(gn/3)
+		);
+	}
+	xtable.rows[9].cells[1].innerHTML = a.join(' | ');
+	StateSaver.save();
+}
+
+function myInsert(row_idx) {
+	return bo_table.rows[row_idx+1].insertCell(cols[row_idx]++);
+}
+
+//bo_table.prototype.addCell = myInsert;
+
+function reDrawBO() { // BO = build order
+	var bo_selector = $('bo_selector');
+	while (bo_table.rows.length > 0) { bo_table.deleteRow(0) };
+	var bo = (state.pl ?
+		(state.spd > 1 ? build_order_p3 : build_order_p_)
+	:	(state.spd > 1 ? build_order__3 : build_order___)
+	);
+	for (var i = 0; i < 10; i++) cols[i] = 0;
+	var xcell;
+	switch (state.view_t) {
+		case VIEW_FULL: {
+			bo_selector.rows[0].cells[0].style.backgroundColor = '#ccc';
+			bo_selector.rows[0].cells[1].style.backgroundColor = '#fff';
+			bo_table.insertRow(0);
+			xcell = bo_table.rows[0].insertCell(0);
+			xcell.innerHTML = "factories";
+			xcell.rowSpan = 2;
+			xcell = bo_table.rows[0].insertCell(1);
+			xcell.innerHTML = "fields";
+			bo_table.rows[0].cells[1].colSpan = 22;
+			bo_table.insertRow(1);
+			for (var i = 0; i < 10; i++) {
+				bo_table.insertRow(i+2).insertCell(0).innerHTML = (i%5)+1;
+			}
+			offset = 0;
+			for (var i = 0; i < 4; i++) {
+				res_idx = (i + 3) % 4;
+				fields_amount = fields[state.vt][res_idx];
+				if (fields_amount === 0) continue;
+				bo_cur_res = bo[fields_amount];
+				
+				xcell = bo_table.rows[1].insertCell(i*2);
+				xcell.rowSpan = bo_cur_res.length + 1;
+				xcell.innerHTML = " ";
+				
+				xcell = bo_table.rows[1].insertCell(i*2+1);
+				if (state.view_t == VIEW_FULL) xcell.colSpan = fields_amount;
+				xcell.innerHTML = "<i"+"mg class='res r"+(res_idx+1)+"' src='img/x.gif'/>";
+				
+				for (var lvl = 0; lvl < bo_cur_res.length; lvl++) {
+					col = offset;
+					for (var pair = 0; pair < bo_cur_res[lvl].length; pair += 2)
+						for (var k = 0; k < bo_cur_res[lvl][pair]; k++)
+							bo_table.rows[lvl+2].insertCell(++col).innerHTML = bo_cur_res[lvl][pair+1];
+				}
+				offset += fields_amount;
+			}
+			xcell = bo_table.rows[7].insertCell(fields[state.vt][3]+1);
+			xcell.colSpan = 21 - fields[state.vt][3];
+			xcell.rowSpan = 5;
+		} break;
+		case VIEW_COMPACT: {
+			bo_selector.rows[0].cells[1].bgColor = '#cccccc';
+			bo_selector.rows[0].cells[0].bgColor = '#ffffff';
+			for (var i = 0; i < 11; i++) { bo_table.insertRow(i) }
+			for (var i = 0; i < 4; i++) {
+				res_idx = (i + 3) % 4;
+				fields_amount = fields[state.vt][res_idx];
+				if (fields_amount === 0) continue;
+				bo_cur_res = bo[fields_amount];
+				xcell = bo_table.rows[0].insertCell(i);
+				xcell.colSpan = 3;
+				xcell.innerHTML = '<i'+'mg src="img/x.gif" class="icon--scalable res r'+(res_idx+1)+'"/>&times;' + fields_amount;
+				for (var lvl = 0; lvl < bo_cur_res.length; lvl++) {
+					if (lvl % 5 == 0) {
+						xcell = myInsert(lvl);
+						xcell.rowSpan = 5;
+						xcell.innerHTML = '<i'+'mg src="img/x.gif" class="icon--scalable building g' + (5+res_idx+Math.floor(lvl/5)) + '"/>'; 
+					}
+					myInsert(lvl).innerHTML = (lvl % 5) + 1;
+					if ((lvl == 0) || !arr_eq(bo_cur_res[lvl], bo_cur_res[lvl-1])) {
+						str = "";
+						for (var pair = 0; pair < bo_cur_res[lvl].length; pair += 2) {
+							str += bo_cur_res[lvl][pair+1] + "lvl&nbsp;&times;&nbsp;" + bo_cur_res[lvl][pair];
+							if (pair < bo_cur_res[lvl].length - 2) str += "<br/>";
+						}	
+						xcell = myInsert(lvl)
+						xcell.innerHTML = str;
+						span = 0;
+						while ((span+lvl < bo_cur_res.length) && arr_eq(bo_cur_res[lvl], bo_cur_res[lvl+span])) { span++ }
+						xcell.rowSpan = span;
+					}
+				}
+			}
+			xcell = myInsert(5);
+			xcell.colSpan = 9;
+			xcell.rowSpan = 5;
+		} break;
+	}
+	xcell.innerHTML = " ";
+	StateSaver.save();
+}
+
+var idx = 0;
+$$('.vil_cl').forEach(function(elt){
+	elt.setAttribute('f', idx++);
+	elt.addEventListener('click', function(){
+		vt_change(elt.getAttribute('f'));
+	});
+});
+
+$("server").addEventListener('change', function () {
+    state.s = this.value;
+    reCalc();
+    reDrawBO();
+});
+
+var bo_table = $('bo');
+var cols = new Array(10);
+vt_change(state.vt);
+reCalc();
+</script>
+
+</body>
+
+<!-- Mirrored from travian.kirilloid.ru/villages_res.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:03:51 GMT -->
+</html>

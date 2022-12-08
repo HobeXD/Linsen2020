@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from travian.kirilloid.ru/warsim.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:04:01 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/ico" href="img/favicon.ico" sizes="16x16">
+<link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+<link rel="stylesheet" type="text/css" href="css/stylee167.css?e">
+<link rel="stylesheet" type="text/css" media="screen and (pointer: coarse)" href="css/touch.css">
+<link rel="stylesheet" type="text/css" href="css/ltr.css">
+
+<link rel="icon" sizes="192x192" href="img/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="img/icon-152.png">
+<script type="text/javascript">
+if (!window.$) {
+	$ = function (id) { return document.getElementById(id); };
+}
+var _overlay = null;
+function scriptLoadFail() {
+	if (_overlay) {
+		return;
+	}
+	var div = document.createElement('div');
+	div.className = "overlay";
+	div.innerHTML = "<button class='close' onclick='closeOverlay()'>&times;</button>"
+				  + "<p>There was an error loading JavaScript.</p>"
+				  + "<p>The page might work incorrectly.</p>"
+				  + "<p class='buttons'>"
+				  + "<button class='but' onclick='location.reload()'>🔁 Reload</button>"
+				  + "<button class='but' onclick='closeOverlay()'>❎ Ignore</button></p>";
+	$$(".page")[0].appendChild(div);
+	_overlay = div;
+	document.addEventListener('keyup', closeOverlayOnEsc);
+}
+function closeOverlay() {
+	_overlay.parentNode.removeChild(_overlay);
+	document.removeEventListener('keyup', closeOverlayOnEsc);
+	_overlay = null;
+}
+function closeOverlayOnEsc(e) {
+	if (e.keyCode === 27) {
+		closeOverlay();
+	}
+}
+document.addEventListener('keypress', function (e) {
+  if (e.key === '\n' && (e.ctrlKey || e.metaKey)) {
+	var original = document.getSelection().toString().trim();
+	if (!original) original = prompt("Nothing was selected, enter what to replace:");
+	if (!original) return alert("Still nothing. See you later.");
+	const result = prompt("How to better translate this?", original);
+	if (!result) return;
+	var img = new Image();
+	img.onload = function () { alert("Thanks!"); };
+	img.onerror = function () { alert("Failed! Did you suggest too long string?"); };
+	img.src = 'suggest_translation.html'
+	  + '?lang=' + document.documentElement.lang
+	  + '&path=' + encodeURIComponent(location.pathname)
+	  + '&original=' + encodeURIComponent(original)
+	  + '&suggest=' + encodeURIComponent(result)
+  }
+});
+Element.prototype.matches =
+	Element.prototype.matches ||
+	Element.prototype.msMatchesSelector || 
+	function(s) {
+		var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+			i = matches.length;
+		while (--i >= 0 && matches.item(i) !== this) {}
+		return i > -1;
+	};
+function findParent(e, s) {
+	if (e.closest) return e.closest(s);
+	while (e && e !== document) {
+		if (e.matches(s)) return e;
+		e = e.parentNode;
+	}
+	return null;
+}
+(function () {
+	function css(name, value) {
+		if (arguments.length === 1) { 
+			return this[0].style[name];
+		}
+		this.forEach(function (el) { el.style[name] = value; });
+	}
+	function prop(name, value) {
+		if (arguments.length === 1) { 
+			return this[0][name];
+		}
+		this.forEach(function (el) { el[name] = value; });
+	}
+	function on(event, handler) {
+		this.forEach(function (el) {
+			el.addEventListener(event, handler, false);
+		});
+		return this;
+	}
+	function addClass(cls) {
+		this.forEach(function (el) {
+			el.classList.add(cls);
+		});
+	}
+	function removeClass(cls) {
+		this.forEach(function (el) {
+			el.classList.remove(cls);
+		});
+	}
+	function toggleClass(cls, set) {
+		this.forEach(function (el) {
+			if (set) {
+				el.classList.add(cls);
+			} else if (set == null) {
+				el.classList.toggle(cls);
+			} else {
+				el.classList.remove(cls);
+			}
+		});
+	}
+	function find(selector) {
+		return wrap(this.reduce(function (a, el) {
+			return a.concat([].slice.call(el.querySelectorAll(selector)));
+		}, []));
+	}
+	function wrap(a) {
+		a.on = on;
+		a.css = css;
+		a.prop = prop;
+		a.addClass = addClass;
+		a.removeClass = removeClass;
+		a.toggleClass = toggleClass;
+		a.find = find;
+		a.parent = parent;
+		return a;
+	}
+	function query(ctx, selector) {
+		return [].slice.call(ctx.querySelectorAll(selector));
+	}
+	$$ = function (selector, context) {
+		if (context === undefined) { context = document; }
+		var a;
+		if (selector instanceof HTMLElement) {
+			a = [selector];
+		} else if (typeof selector === 'string') {
+			a = query(context, selector);
+		} else if (selector instanceof Array) {
+			a = selector;
+		} else {
+			throw new TypeError("Selector of wrong type: " + Object.prototype.toString.call(a));
+		}
+		return wrap(a);
+	};
+	Cookie = {
+		write: function (name, value, options) {
+			if (!options) options = {};
+			document.cookie = name + "=" + value
+				+ (options.duration ? ';max-age=' + (options.duration * 86400) : '');
+		},
+		read: function (name) {
+			var m = document.cookie.match(new RegExp("(^|; )" + name + "=(.*?)(; |$)"));
+			return m && m[2];
+		},
+		dispose: function (name) {
+			document.cookie = name + "=0;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		}
+	};
+	if (!window.Event) {
+		window.Event = function (type, params) {
+			var event = document.createEvent('Event');
+			event.initEvent(type, true, true);
+			return event;
+		};
+	}
+}());
+</script>
+<title>Travian :: Extended Combat Simulator</title>
+<link type="text/css" href="css/log.css" rel="stylesheet">
+<style type="text/css">
+.d7 { width: 50px; }
+.d2 { width: 50px; }
+.fm:disabled {
+	background:white;
+	color:#CECBBD;
+	border-color:#CECBBD;
+}
+input.up {
+	width: 1.5em;
+}
+tr.top td {
+	text-align: center;
+}
+table.carcass {
+	border: solid 1px;
+	border-collapse: collapse;
+	border-color: silver;
+	border-width: 0;
+}
+table.carcass tr {
+	font: "Verdana";
+	font-size: 10 pt;
+}
+table.carcass th {
+	font-size: 14 pt;
+}
+table.carcass td {
+	border: solid 1px;
+	border-color: silver;
+}
+table.blank { border: solid 0px; }
+table.blank td { border: solid 0px; }
+table.blank th { font-size: 14px; }
+table.blank2 td { border: 0; padding: 2px; }
+#history {
+	position: absolute;
+	left: 1010px;
+	border: 1px solid silver;
+	background: white;
+	text-align: right;
+}
+#jsdata { display:none; }
+#report .log {
+    display: block;
+	clear: both;
+	margin-bottom: 3px;
+}
+</style>
+</head>
+<body class="t3">
+<div class="ad"><style id="scaling">
+	.icon--scalable {
+		zoom: var(--scale-zoom);
+		transform: scale(var(--scale-transform));
+	}
+</style>
+<script type="text/javascript" async><!--
+(function () {
+	var urls = {};
+	window.onerror = function(msg, url, line, column, error) {
+		if ($ == window.jQuery) { msg = "jQuery sneaked here!"; }
+		var origin = location.protocol + '//' + location.host;
+		var params =
+			"?msg=" + encodeURIComponent(msg) +
+			"&url=" + encodeURIComponent(url) +
+			"&page=" + encodeURIComponent(location.href.replace(origin, '')) +
+			"&line=" + line +
+            "&lang=" + document.documentElement.lang +
+            "&column=" + (column === undefined ? 'n/a' : column) +
+            "&stack=" + encodeURIComponent(error && error.stack) +
+			"";
+		var url = "error.html"+ params;
+		if (urls[url] > 3) return false;
+		var img = new Image();
+		img.width = 1;
+		img.height = 1;
+		img.src = url;
+		document.body.appendChild(img);
+		urls[url] = (urls[url] || 0) + 1;
+		return false;
+	};
+	if (!window.devicePixelRatio) return;
+	Cookie.write('dpi', Math.round(devicePixelRatio * 96), { duration: 365 });
+	var oldValue = devicePixelRatio;
+	var zoomKind = window.CSS && CSS.supports('zoom', '1') ? 'zoom' : 'transform';
+	function setZoomLevel(zoomLevel) {
+		document.body.style.setProperty("--scale-" + zoomKind, zoomLevel);
+	}
+	function resize(currentScale) {
+		function f(n) {
+			return Math.abs(Math.log(currentScale / n));
+		}
+		var zoomLevels = [0.125, 0.25, 0.5, 1, 1.25, 1.5, 2, 2.5, 3, 4];
+		zoomLevels.sort(function (a, b) { return f(a) - f(b); });
+		setZoomLevel(zoomLevels[0] / currentScale);
+	}
+	window.addEventListener('resize', function () {
+		var newValue = devicePixelRatio;
+		if (newValue === oldValue) { return; }
+		resize(oldValue = newValue);
+	});
+	resize(devicePixelRatio);
+}());
+--></script>
+<!--[if lte IE 10]>
+    <div id="warning">
+        <a href="https://www.microsoft.com/en-us/WindowsForBusiness/End-of-IE-support">
+            Support for older versions of Internet Explorer ended on January 12th, 2016
+        </a>
+    </div>
+<![endif]-->
+</div>
+<div id="menu">
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="index.html" class="icon--scalable menuitem-index"></a><div>Home Page</div></div>
+	</span>
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="warsim2.html" class="icon--scalable menuitem-warsim2"></a><div>Extended Combat Simulator</div></div>
+		<div class="menutitle">Calculators</div>
+		<div class="menuitem"><a href="distance.html" class="icon--scalable menuitem-distance"></a><div>distance calculator</div></div>
+		<div class="menuitem"><a href="conq.html" class="icon--scalable menuitem-conq"></a><div>Conquering calculator</div></div>
+		<div class="menuitem"><a href="off_calc.html" class="icon--scalable menuitem-off_calc"></a><div>offense calculator</div></div>
+		<div class="menuitem"><a href="def_calc.html" class="icon--scalable menuitem-def_calc"></a><div>defense calculator</div></div>
+		<div class="menuitem"><a href="war.html" class="icon--scalable menuitem-war"></a><div>units' attributes calculator</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="build.html" class="icon--scalable menuitem-build"></a><div>buildings</div></div>
+		<div class="menutitle">Tables</div>
+		<div class="menuitem"><a href="villages_res.html" class="icon--scalable menuitem-villages_res"></a><div>resource development calculator</div></div>
+		<div class="menuitem"><a href="troops.html" class="icon--scalable menuitem-troops"></a><div>Troops</div></div>
+		<div class="menuitem"><a href="oases.html" class="icon--scalable menuitem-oases"></a><div>Oases</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="hero4.html" class="icon--scalable menuitem-hero4"></a><div>hero (T4)</div></div>
+		<div class="menutitle">hero</div>
+		<div class="menuitem"><a href="hero.html" class="icon--scalable menuitem-hero"></a><div>hero (T3)</div></div>
+		<div class="menuitem"><a href="items.html" class="icon--scalable menuitem-items"></a><div>items</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="report.html" class="icon--scalable menuitem-report"></a><div>logger</div></div>
+		<div class="menutitle">Misc</div>
+		<div class="menuitem"><a href="about.html" class="icon--scalable menuitem-about"></a><div>about this site</div></div>
+		<div class="menuitem"><a href="thanks.html" class="icon--scalable menuitem-thanks"></a><div>Acknowledgements</div></div>
+			</span>
+	
+</div>
+<div id="langbar">
+	<img alt="ar" src="img/x.gif" class="icon--scalable click flag ae">
+	<img alt="bg" src="img/x.gif" class="icon--scalable click flag bg">
+	<img alt="cs" src="img/x.gif" class="icon--scalable click flag cz">
+	<img alt="da" src="img/x.gif" class="icon--scalable click flag dk">
+	<img alt="de" src="img/x.gif" class="icon--scalable click flag de">
+	<img alt="ee" src="img/x.gif" class="icon--scalable click flag ee">
+	<img alt="el" src="img/x.gif" class="icon--scalable click flag gr">
+	<img alt="en" src="img/x.gif" class="icon--scalable click flag us">
+	<img alt="es" src="img/x.gif" class="icon--scalable click flag es">
+	<img alt="fa" src="img/x.gif" class="icon--scalable click flag ir">
+	<img alt="fr" src="img/x.gif" class="icon--scalable click flag fr">
+	<img alt="he" src="img/x.gif" class="icon--scalable click flag il">
+	<img alt="hu" src="img/x.gif" class="icon--scalable click flag hu">
+	<img alt="it" src="img/x.gif" class="icon--scalable click flag it">
+	<img alt="ja" src="img/x.gif" class="icon--scalable click flag jp">
+	<img alt="lt" src="img/x.gif" class="icon--scalable click flag lt">
+	<img alt="lv" src="img/x.gif" class="icon--scalable click flag lv">
+	<img alt="nl" src="img/x.gif" class="icon--scalable click flag nl">
+	<img alt="pl" src="img/x.gif" class="icon--scalable click flag pl">
+	<img alt="pt" src="img/x.gif" class="icon--scalable click flag pt">
+	<img alt="rs" src="img/x.gif" class="icon--scalable click flag rs">
+	<img alt="ru" src="img/x.gif" class="icon--scalable click flag ru">
+	<img alt="sl" src="img/x.gif" class="icon--scalable click flag si">
+	<img alt="sv" src="img/x.gif" class="icon--scalable click flag se">
+	<img alt="tr" src="img/x.gif" class="icon--scalable click flag tr">
+	<img alt="uk" src="img/x.gif" class="icon--scalable click flag ua">
+	</div>
+
+<script type="text/javascript">
+(function(){
+	var page = location.pathname.match(/(\w+)\.php$/) || [,'index'];
+	$$(".menuitem-" + page[1]).addClass('current');
+})();
+function switch_lang(lang_name) {
+	const d = new Date();
+	d.setYear(d.getYear() + 1);
+	document.cookie = "lang=" + lang_name + ';expires=' + d.toISOString();
+	window.location.reload();
+}
+$$(".flag").on('click', function(){ switch_lang(this.alt) });
+(function(){
+	var search = $$("#search input")[0];
+	if (!search || !window.fetch) return;
+	var index = [];
+	fetch('asearch.html')
+		.then(function (s) {
+			return s.json();
+		})
+		.then(function (obj) {
+			for (var k in obj) {
+				var item = obj[k];
+				if (typeof item.str === 'string') {
+					item.str = item.str.toLowerCase();
+					index.push(item);
+				} else {
+					item.str.forEach(function (s) {
+						var obj = {
+							ico: item.ico,
+							str: s.toLowerCase(),
+							url: item.url
+						};
+						if (item.ver) {
+							obj.ver = item.ver;
+						}
+						index.push(obj);
+					});
+				}
+			}
+		});
+	var lastResults = [];
+	var lastIndex = -1;
+	function matcher(term) {
+		return function(item) {
+			if (item.str.indexOf(term) !== -1) return true;
+			const letters = term.split('');
+			const words = item.str.split(' ');
+			if (words.length >= letters.length
+			&& letters.every(function (c, i) { return words[i][0] === c; })) {
+				return true;
+			}
+			return false;
+		}
+	}
+	search.oninput = function () {
+		var term = this.value.toLowerCase();
+		if (term.length < 2) {
+			window['search-results'].innerHTML = '';
+			return;
+		}
+		let termMatcher = matcher(term);
+		lastResults = index.filter(termMatcher).slice(0, 10);
+		if (lastResults.length > 0 && lastIndex === -1) {
+			lastIndex = 0;
+		}
+		window['search-results'].innerHTML = lastResults.map(function (item) {
+			return '<a href="' + item.url + '">'
+				+ '<img src="img/x.gif" class="' + item.ico + '"> '
+				+ item.str.replace(term, '<mark>$&</mark>')
+				+ '</a>';
+		}).join('');
+	};
+	search.onkeyup = function (e) {
+		if (e.keyCode === 38) {
+			// up
+			e.preventDefault();
+		}
+		if (e.keyCode === 40) {
+			// down
+			e.preventDefault();
+		}
+	}
+}());
+</script>
+
+<div class="page">
+<div class="content">
+<h2>Extended Combat Simulator 1.0</h2>
+<script type="text/javascript" src="js/utils8277.js?d"></script>
+<div id="report"></div>
+<form onsubmit="form_request(); return false;" action="http://travian.kirilloid.ru/warsim.php" style="clear:both;">
+<input type='hidden' name='ahu' id='ahu' value='0'/>
+<input type='hidden' name='dhu' id='dhu' value='0'/>
+<table class="carcass" cellpadding="0" width="100%">
+<tr class="top">
+	<td><b>offense</b></td>
+	<td rowspan="3" style='width:50px;'></td>
+	<td>attack type</td>
+	<td rowspan="5" style='width:50px;'></td>
+	<td colspan="2"><b>defense</b></td>
+</tr><tr>
+<td>	<div>
+		<input type="radio" name="ar" class="ar" id="ar0"
+			onclick="ar_change(value)" value="0" />
+		<label for="ar0">Romans</label>
+	</div>
+			<div>
+		<input type="radio" name="ar" class="ar" id="ar1"
+			onclick="ar_change(value)" value="1" />
+		<label for="ar1">Teutons</label>
+	</div>
+			<div>
+		<input type="radio" name="ar" class="ar" id="ar2"
+			onclick="ar_change(value)" value="2" />
+		<label for="ar2">Gauls</label>
+	</div>
+			<div>
+		<input type="radio" name="ar" class="ar" id="ar4"
+			onclick="ar_change(value)" value="4" />
+		<label for="ar4">Natar</label>
+	</div>
+			</td>
+<td><div id="atk_normal" style="display:block">
+		<input type="radio" name="at" value="0" id="at0" checked="checked">
+		<label for="at0">normal</label>
+	</div>
+	<div>
+		<input type="radio" name="at" value="1" id="at1">
+		<label for="at1">raid</label>
+	</div></td>
+
+<td colspan="2">
+	<table class="blank" cellspacing="0" cellpadding="0">
+	<tr><td><small>&nbsp;Troops</small></td>
+		<td><small>&nbsp;villages</small></td></tr>
+		<tr><td>
+		<input type="checkbox" name="dr[0]" id="dr0" value="1" onclick='rp_change(0)' />
+		<label for="dr0">Romans</label>
+	</td><td>
+		<input type="radio" name="pb" id="pb0" value="0" onclick='pb_change(value)' />
+		<label for="pb0">Romans</label>
+	</td></tr>
+		<tr><td>
+		<input type="checkbox" name="dr[1]" id="dr1" value="1" onclick='rp_change(1)' />
+		<label for="dr1">Teutons</label>
+	</td><td>
+		<input type="radio" name="pb" id="pb1" value="1" onclick='pb_change(value)' />
+		<label for="pb1">Teutons</label>
+	</td></tr>
+		<tr><td>
+		<input type="checkbox" name="dr[2]" id="dr2" value="1" onclick='rp_change(2)' />
+		<label for="dr2">Gauls</label>
+	</td><td>
+		<input type="radio" name="pb" id="pb2" value="2" onclick='pb_change(value)' />
+		<label for="pb2">Gauls</label>
+	</td></tr>
+		<tr><td>
+		<input type="checkbox" name="dr[3]" id="dr3" value="1" onclick='rp_change(3)' />
+		<label for="dr3">Nature</label>
+	</td><td>
+		<input type="radio" name="pb" id="pb3" value="3" onclick='pb_change(value)' />
+		<label for="pb3">Oases</label>
+	</td></tr>
+		<tr><td>
+		<input type="checkbox" name="dr[4]" id="dr4" value="1" onclick='rp_change(4)' />
+		<label for="dr4">Natar</label>
+	</td><td>
+		<input type="radio" name="pb" id="pb4" value="4" onclick='pb_change(value)' />
+		<label for="pb4">Natar</label>
+	</td></tr>
+		</table>
+	</td>
+</tr>
+<tr><td>
+<!-- <table cellspacing="0" cellpadding="0"> -->
+<table class="blank"><tr>
+	<td>
+			<div style="display:none;" id="attacker_0">
+			<table class="blank2" cellspacing="0">
+							<tr><td><img class="unit u1"
+							src="img/x.gif" alt="Legionnaire" /></td></tr>
+							<tr><td><img class="unit u2"
+							src="img/x.gif" alt="Praetorian" /></td></tr>
+							<tr><td><img class="unit u3"
+							src="img/x.gif" alt="Imperian" /></td></tr>
+							<tr><td><img class="unit u4"
+							src="img/x.gif" alt="Equites Legati" /></td></tr>
+							<tr><td><img class="unit u5"
+							src="img/x.gif" alt="Equites Imperatoris" /></td></tr>
+							<tr><td><img class="unit u6"
+							src="img/x.gif" alt="Equites Caesaris" /></td></tr>
+							<tr><td><img class="unit u7"
+							src="img/x.gif" alt="Battering ram" /></td></tr>
+							<tr><td><img class="unit u8"
+							src="img/x.gif" alt="Fire Catapult" /></td></tr>
+							<tr><td><img class="unit u9"
+							src="img/x.gif" alt="Senator" /></td></tr>
+							<tr><td><img class="unit u10"
+							src="img/x.gif" alt="Settler" /></td></tr>
+						</table>
+		</div>
+				<div style="display:none;" id="attacker_1">
+			<table class="blank2" cellspacing="0">
+							<tr><td><img class="unit u11"
+							src="img/x.gif" alt="Maceman" /></td></tr>
+							<tr><td><img class="unit u12"
+							src="img/x.gif" alt="Spearman" /></td></tr>
+							<tr><td><img class="unit u13"
+							src="img/x.gif" alt="Axeman" /></td></tr>
+							<tr><td><img class="unit u14"
+							src="img/x.gif" alt="Scout" /></td></tr>
+							<tr><td><img class="unit u15"
+							src="img/x.gif" alt="Paladin" /></td></tr>
+							<tr><td><img class="unit u16"
+							src="img/x.gif" alt="Teutonic Knight" /></td></tr>
+							<tr><td><img class="unit u17"
+							src="img/x.gif" alt="Ram" /></td></tr>
+							<tr><td><img class="unit u18"
+							src="img/x.gif" alt="Catapult" /></td></tr>
+							<tr><td><img class="unit u19"
+							src="img/x.gif" alt="Chief" /></td></tr>
+							<tr><td><img class="unit u20"
+							src="img/x.gif" alt="Settler" /></td></tr>
+						</table>
+		</div>
+				<div style="display:none;" id="attacker_2">
+			<table class="blank2" cellspacing="0">
+							<tr><td><img class="unit u21"
+							src="img/x.gif" alt="Phalanx" /></td></tr>
+							<tr><td><img class="unit u22"
+							src="img/x.gif" alt="Swordsman" /></td></tr>
+							<tr><td><img class="unit u23"
+							src="img/x.gif" alt="Pathfinder" /></td></tr>
+							<tr><td><img class="unit u24"
+							src="img/x.gif" alt="Theutates Thunder" /></td></tr>
+							<tr><td><img class="unit u25"
+							src="img/x.gif" alt="Druidrider" /></td></tr>
+							<tr><td><img class="unit u26"
+							src="img/x.gif" alt="Haeduan" /></td></tr>
+							<tr><td><img class="unit u27"
+							src="img/x.gif" alt="Ram" /></td></tr>
+							<tr><td><img class="unit u28"
+							src="img/x.gif" alt="Trebuchet" /></td></tr>
+							<tr><td><img class="unit u29"
+							src="img/x.gif" alt="Chieftain" /></td></tr>
+							<tr><td><img class="unit u30"
+							src="img/x.gif" alt="Settler" /></td></tr>
+						</table>
+		</div>
+				<div style="display:none;" id="attacker_4">
+			<table class="blank2" cellspacing="0">
+							<tr><td><img class="unit u41"
+							src="img/x.gif" alt="Pikeman" /></td></tr>
+							<tr><td><img class="unit u42"
+							src="img/x.gif" alt="Thorned Warrior" /></td></tr>
+							<tr><td><img class="unit u43"
+							src="img/x.gif" alt="Guardsman" /></td></tr>
+							<tr><td><img class="unit u44"
+							src="img/x.gif" alt="Birds Of Prey" /></td></tr>
+							<tr><td><img class="unit u45"
+							src="img/x.gif" alt="Axerider" /></td></tr>
+							<tr><td><img class="unit u46"
+							src="img/x.gif" alt="Natarian Knight" /></td></tr>
+							<tr><td><img class="unit u47"
+							src="img/x.gif" alt="Warelephant" /></td></tr>
+							<tr><td><img class="unit u48"
+							src="img/x.gif" alt="Ballista" /></td></tr>
+							<tr><td><img class="unit u49"
+							src="img/x.gif" alt="Natarian Emperor" /></td></tr>
+							<tr><td><img class="unit u50"
+							src="img/x.gif" alt="Settler" /></td></tr>
+						</table>
+		</div>
+			</td>
+	<td>
+		<table class="blank" cellspacing="1" cellpadding="0" id="attacker">
+				<tr>
+				<td><input class='fm' type='text' name='a0'
+							maxlength='7' size='5' /></td>
+				<td>
+							<input class='fm up' type='text' name='au0'
+							maxlength='2' size='2' title="troops' upgrades" />
+		</td>
+			</tr>
+				<tr>
+				<td><input class='fm' type='text' name='a1'
+							maxlength='7' size='5' /></td>
+				<td>
+							<input class='fm up' type='text' name='au1'
+							maxlength='2' size='2' title="troops' upgrades" />
+		</td>
+			</tr>
+				<tr>
+				<td><input class='fm' type='text' name='a2'
+							maxlength='7' size='5' /></td>
+				<td>
+							<input class='fm up' type='text' name='au2'
+							maxlength='2' size='2' title="troops' upgrades" />
+		</td>
+			</tr>
+				<tr>
+				<td><input class='fm' type='text' name='a3'
+							maxlength='7' size='5' /></td>
+				<td>
+							<input class='fm up' type='text' name='au3'
+							maxlength='2' size='2' title="troops' upgrades" />
+		</td>
+			</tr>
+				<tr>
+				<td><input class='fm' type='text' name='a4'
+							maxlength='7' size='5' /></td>
+				<td>
+							<input class='fm up' type='text' name='au4'
+							maxlength='2' size='2' title="troops' upgrades" />
+		</td>
+			</tr>
+				<tr>
+				<td><input class='fm' type='text' name='a5'
+							maxlength='7' size='5' /></td>
+				<td>
+							<input class='fm up' type='text' name='au5'
+							maxlength='2' size='2' title="troops' upgrades" />
+		</td>
+			</tr>
+				<tr>
+				<td><input class='fm' type='text' name='a6'
+							maxlength='7' size='5' /></td>
+				<td>
+							<input class='fm up' type='text' name='au6'
+							maxlength='2' size='2' title="troops' upgrades" />
+		</td>
+			</tr>
+				<tr>
+				<td><input class='fm' type='text' name='a7'
+							maxlength='7' size='5' /></td>
+				<td>
+							<input class='fm up' type='text' name='au7'
+							maxlength='2' size='2' title="troops' upgrades" />
+		</td>
+			</tr>
+				<tr>
+				<td><input class='fm' type='text' name='a8'
+							maxlength='7' size='5' /></td>
+				<td>
+		</td>
+			</tr>
+				<tr>
+				<td><input class='fm' type='text' name='a9'
+							maxlength='7' size='5' /></td>
+				<td>
+		</td>
+			</tr>
+			</table>
+	</td>
+</tr></table>	
+</td>
+<td rowspan="1">&nbsp;</td>
+<td style="padding:0px;" colspan="2">
+	<table class="blank" cellspacing="0" cellpadding="0"  style="margin-left:5px;"><tr>
+			<td><div style="display:none;" id="defender_0">
+			<table class="blank" cellspacing="1" cellpadding="0">
+			<tr><th colspan="3" style="text-align: center;">Romans</th></tr>
+					<tr>
+				<td><img class="unit u1" src="img/x.gif" alt="Legionnaire" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d0_0' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du0_0'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u2" src="img/x.gif" alt="Praetorian" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d0_1' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du0_1'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u3" src="img/x.gif" alt="Imperian" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d0_2' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du0_2'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u4" src="img/x.gif" alt="Equites Legati" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d0_3' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du0_3'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u5" src="img/x.gif" alt="Equites Imperatoris" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d0_4' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du0_4'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u6" src="img/x.gif" alt="Equites Caesaris" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d0_5' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du0_5'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u7" src="img/x.gif" alt="Battering ram" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d0_6' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du0_6'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u8" src="img/x.gif" alt="Fire Catapult" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d0_7' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du0_7'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u9" src="img/x.gif" alt="Senator" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d0_8' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u10" src="img/x.gif" alt="Settler" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d0_9' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					</table>
+			</div>
+		</td>
+			<td><div style="display:none;" id="defender_1">
+			<table class="blank" cellspacing="1" cellpadding="0">
+			<tr><th colspan="3" style="text-align: center;">Teutons</th></tr>
+					<tr>
+				<td><img class="unit u11" src="img/x.gif" alt="Maceman" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d1_0' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du1_0'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u12" src="img/x.gif" alt="Spearman" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d1_1' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du1_1'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u13" src="img/x.gif" alt="Axeman" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d1_2' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du1_2'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u14" src="img/x.gif" alt="Scout" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d1_3' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du1_3'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u15" src="img/x.gif" alt="Paladin" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d1_4' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du1_4'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u16" src="img/x.gif" alt="Teutonic Knight" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d1_5' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du1_5'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u17" src="img/x.gif" alt="Ram" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d1_6' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du1_6'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u18" src="img/x.gif" alt="Catapult" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d1_7' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du1_7'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u19" src="img/x.gif" alt="Chief" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d1_8' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u20" src="img/x.gif" alt="Settler" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d1_9' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					</table>
+			</div>
+		</td>
+			<td><div style="display:none;" id="defender_2">
+			<table class="blank" cellspacing="1" cellpadding="0">
+			<tr><th colspan="3" style="text-align: center;">Gauls</th></tr>
+					<tr>
+				<td><img class="unit u21" src="img/x.gif" alt="Phalanx" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d2_0' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du2_0'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u22" src="img/x.gif" alt="Swordsman" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d2_1' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du2_1'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u23" src="img/x.gif" alt="Pathfinder" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d2_2' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du2_2'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u24" src="img/x.gif" alt="Theutates Thunder" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d2_3' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du2_3'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u25" src="img/x.gif" alt="Druidrider" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d2_4' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du2_4'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u26" src="img/x.gif" alt="Haeduan" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d2_5' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du2_5'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u27" src="img/x.gif" alt="Ram" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d2_6' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du2_6'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u28" src="img/x.gif" alt="Trebuchet" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d2_7' maxlength='7' size='5' /></td>
+				<td>					<input class='fm up' type='text' name='du2_7'
+						maxlength='2' size='2' title="troops' upgrades" />
+					</td>
+			</tr>
+					<tr>
+				<td><img class="unit u29" src="img/x.gif" alt="Chieftain" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d2_8' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u30" src="img/x.gif" alt="Settler" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d2_9' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					</table>
+			</div>
+		</td>
+			<td><div style="display:none;" id="defender_3">
+			<table class="blank" cellspacing="1" cellpadding="0">
+			<tr><th colspan="3" style="text-align: center;">Nature</th></tr>
+					<tr>
+				<td><img class="unit u31" src="img/x.gif" alt="Rat" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d3_0' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u32" src="img/x.gif" alt="Spider" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d3_1' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u33" src="img/x.gif" alt="Serpent" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d3_2' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u34" src="img/x.gif" alt="Bat" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d3_3' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u35" src="img/x.gif" alt="Wild boar" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d3_4' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u36" src="img/x.gif" alt="Wolf" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d3_5' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u37" src="img/x.gif" alt="Bear" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d3_6' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u38" src="img/x.gif" alt="Crocodile" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d3_7' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u39" src="img/x.gif" alt="Tiger" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d3_8' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u40" src="img/x.gif" alt="Elephant" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d3_9' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					</table>
+			</div>
+		</td>
+			<td><div style="display:none;" id="defender_4">
+			<table class="blank" cellspacing="1" cellpadding="0">
+			<tr><th colspan="3" style="text-align: center;">Natar</th></tr>
+					<tr>
+				<td><img class="unit u41" src="img/x.gif" alt="Pikeman" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d4_0' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u42" src="img/x.gif" alt="Thorned Warrior" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d4_1' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u43" src="img/x.gif" alt="Guardsman" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d4_2' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u44" src="img/x.gif" alt="Birds Of Prey" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d4_3' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u45" src="img/x.gif" alt="Axerider" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d4_4' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u46" src="img/x.gif" alt="Natarian Knight" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d4_5' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u47" src="img/x.gif" alt="Warelephant" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d4_6' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u48" src="img/x.gif" alt="Ballista" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d4_7' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u49" src="img/x.gif" alt="Natarian Emperor" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d4_8' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					<tr>
+				<td><img class="unit u50" src="img/x.gif" alt="Settler" />&nbsp;</td>
+				<td><input class='fm' type='text' name='d4_9' maxlength='7' size='5' /></td>
+				<td></td>
+			</tr>
+					</table>
+			</div>
+		</td>
+		</tr></table>
+</td></tr>
+<tr><td rowspan="2">
+	<table class="blank" width="90%">
+	<tr><td>Population</td>
+		<td><input class="fm" type="text" name="ap" value="1" maxlength="5" size="3" title="Total population" /></td></tr>		
+	<tr><td style='width:80%'>plus-<img class="stats" src="img/x.gif" alt="offense" /> (+10%)</td>
+		<td><input type="checkbox" name="aplus" value="1" /></td></tr>
+	</table>
+	<div id="catas_tgt">
+	<table class="blank" style='width:100%'>
+	<tr><td>level buildings</td>		<td style='width:60px;'><input class="fm" type="text" name="bl" id="bl" maxlength="2" size="2" style="float:left;"/><div title="ignore durability artifact"><input type="checkbox" name="bia" id="bia" /></div></td></tr>
+	<tr><td>second target <input type="checkbox" id="cat2" onclick="$('st').style.display = this.checked ? 'block' : 'none';"></td><td><div id="st" style="display:none;"><input class="fm" type="text" name="bl2" maxlength="2" size="2" /></div></td></tr>
+	<tr><td style='width:80%'>Scouting artifact</td>
+	<td><select name="sao">
+		<option value="10">10x</option>
+		<option value="5">5x</option>
+		<option value="3">3x</option>
+		<option value="1" selected="selected">&mdash;</option>
+		<option value="-3">0.33x</option>
+		<option value="-5">0.2x</option>
+		<option value="-10">0.1x</option>
+	</select></td></tr>
+	<tr><td>Big party</td>
+		<td><input type="checkbox" name="abp"></td></tr>
+	</table>
+	</div>
+	<table class="blank" width="90%">
+	<tr id="brew"><td style='width:80%'>Brewery</td>
+		<td><input class="fm" maxlength="2" size="2" type="text" name="brew"></td></tr>
+	</table>
+</td>
+	<td align="center" colspan="2" height="20">
+		<label for="ah">
+			<img src="img/x.gif" class="unit uhero" alt="" />
+			hero		</label>
+		<input type="checkbox" name="ah" id="ah" value="1" onclick="update_hero(this)"/></td>
+	<td rowspan="2">
+		<table class="blank hero" style='width:90%'>
+		<tr><td style='width:80%'><label for="dp">Population</label></td>
+			<td><input class="fm" type="text" name="dp" id="dp" value="1" maxlength="5" size="3" onkeyup="battle.dp=value" title="Total population" /></td></tr>
+		<tr id="plus_def"><td style='width:90%'>
+			<label for="dplus">plus-<img class="stats def_all" src="img/x.gif" alt="defense" /> (+10%)</label>
+		</td>
+			<td><input type="checkbox" name="dplus" id="dplus" value="1" /></td></tr>	
+		</table>
+		<div id='not_oas'>
+		<table class="blank" style='width:90%'>
+		<tr id="wall_row"><td id="w">Earth Wall</td>
+			<td><input class="fm" type="text" name="w" maxlength="2" size="2" title="level" /></td></tr>
+		<tr><td>Residence/Palace</td>
+			<td><input class="fm" type="text" name="rp" maxlength="2" size="2" title="level" /></td></tr>
+		<tr><td>Stonemason</td>
+			<td><input class="fm" type="text" name="dl" maxlength="2" size="2" title="level" /></td></tr>
+		<tr><td style='width:80%'>Durability artifact</td>
+			<td><select name="art">
+				<option value="5">5x</option>
+				<option value="4">4x</option>
+				<option value="3">3x</option>
+				<option value="2">2x</option>
+				<option value="1" selected="selected">&mdash;</option>
+				<option value="-2">0.5x</option>
+				<option value="-3">0.33x</option>
+				<option value="-4">0.25x</option>
+				<option value="-5">0.2x</option>
+			</select></td></tr>
+		<tr><td style='width:80%'>Scouting artifact</td>
+			<td><select name="sad">
+				<option value="10">10x</option>
+				<option value="5">5x</option>
+				<option value="3">3x</option>
+				<option value="1" selected="selected">&mdash;</option>
+				<option value="-3">0.33x</option>
+				<option value="-5">0.2x</option>
+				<option value="-10">0.1x</option>
+			</select></td></tr>
+		<tr id="traps_row">
+			<td>Traps</td>
+			<td><input class="fm" type="text" name="tr" maxlength="4" size="2" title="amount" /></td></tr>
+		<tr><td style='width:80%'>Big party</td><td><input type="checkbox" name="dbp"></td></tr>
+		</table>
+		</div>
+		<div id='natar_selection' style="display:none; padding-left:3px;">
+			<div>WW: <a href="#natar_selection" onclick="n_set_ww(1)">1x</a> | <a href="#natar_selection" onclick="n_set_ww(2)">2x</a> | <a href="#natar_selection" onclick="n_set_ww(3)">3x</a> | <a href="#natar_selection" onclick="n_set_ww(5)">5x</a></div>
+			<div>~art: <a href="#natar_selection" onclick="n_set_art(50)">[·]</a> | <a href="#natar_selection" onclick="n_set_art(110)">[▪]</a> | <a href="#natar_selection" onclick="n_set_art(180)">[•]</a></div>
+		</div>
+	</td>
+<td align="center" height="20">
+	<label for="dh">
+		<img src="img/x.gif" class="unit uhero" alt="" />
+		hero	</label>
+	<input type="checkbox" name="dh" id="dh" value='1' onclick='update_hero(this)'/>
+</td></tr>
+<tr>
+<td colspan="2">
+	<table class="blank hero" id="ah_" style="display:none;">
+	<tr><td colspan="3" style="cursor:pointer;">
+			<table class="carcass" cellpadding="3" border="1" id="a_hero_0" style="display:none;"><tr>
+					<td onclick="switch_hero('a', 0)">
+				<img class="unit u1" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('a', 1)">
+				<img class="unit u2" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('a', 2)">
+				<img class="unit u3" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('a', 3)">
+				<img class="unit u5" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('a', 4)">
+				<img class="unit u6" src="img/x.gif" alt=""/>
+			</td>
+						</tr></table>
+			<table class="carcass" cellpadding="3" border="1" id="a_hero_1" style="display:none;"><tr>
+					<td onclick="switch_hero('a', 0)">
+				<img class="unit u11" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('a', 1)">
+				<img class="unit u12" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('a', 2)">
+				<img class="unit u13" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('a', 3)">
+				<img class="unit u15" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('a', 4)">
+				<img class="unit u16" src="img/x.gif" alt=""/>
+			</td>
+						</tr></table>
+			<table class="carcass" cellpadding="3" border="1" id="a_hero_2" style="display:none;"><tr>
+					<td onclick="switch_hero('a', 0)">
+				<img class="unit u21" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('a', 1)">
+				<img class="unit u22" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('a', 2)">
+				<img class="unit u24" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('a', 3)">
+				<img class="unit u25" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('a', 4)">
+				<img class="unit u26" src="img/x.gif" alt=""/>
+			</td>
+						</tr></table>
+		</td></tr>
+	<tr><td> </td>
+		<td>Points</td>
+		<td> </td></tr>
+	<tr><td>&nbsp;<img class="stats att_all" src="img/x.gif" alt="offense" /></td>
+		<td><input class="fm" type="text" name="ahs" id="ahs" maxlength="3" size="2"/></td>
+		<td id="ahs_val"></td></tr>
+	<tr><td>&nbsp;<img class="stats att_all" src="img/x.gif" alt="Off-Bonus" />-%</td>
+		<td><input class="fm" type="text" name="ahb" id="ahb" maxlength="3" size="2"/></td>
+		<td id="ahb_val"></td></tr>
+	<tr><td>&nbsp;<img src="img/a/heart.html" alt="health" id="ahh_i"/></td>
+		<td><input class="fm" type="text" name="ahh" id="ahh" maxlength="3" size="2" value="100"/></td>
+		<td id="ahh_val"></td></tr>
+	</table>
+</td>
+<td>
+	<table class="blank" id="dh_" style="display:none;">
+	<tr><td colspan="3" style="cursor:pointer;">
+			<table class="carcass" cellpadding="3" border="1" id="d_hero_0" style="display:none;"><tr>
+					<td onclick="switch_hero('d', 0)">
+				<img class="unit u1" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('d', 1)">
+				<img class="unit u2" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('d', 2)">
+				<img class="unit u3" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('d', 3)">
+				<img class="unit u5" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('d', 4)">
+				<img class="unit u6" src="img/x.gif" alt=""/>
+			</td>
+						</tr></table>
+			<table class="carcass" cellpadding="3" border="1" id="d_hero_1" style="display:none;"><tr>
+					<td onclick="switch_hero('d', 0)">
+				<img class="unit u11" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('d', 1)">
+				<img class="unit u12" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('d', 2)">
+				<img class="unit u13" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('d', 3)">
+				<img class="unit u15" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('d', 4)">
+				<img class="unit u16" src="img/x.gif" alt=""/>
+			</td>
+						</tr></table>
+			<table class="carcass" cellpadding="3" border="1" id="d_hero_2" style="display:none;"><tr>
+					<td onclick="switch_hero('d', 0)">
+				<img class="unit u21" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('d', 1)">
+				<img class="unit u22" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('d', 2)">
+				<img class="unit u24" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('d', 3)">
+				<img class="unit u25" src="img/x.gif" alt=""/>
+			</td>
+							<td onclick="switch_hero('d', 4)">
+				<img class="unit u26" src="img/x.gif" alt=""/>
+			</td>
+						</tr></table>
+		</td></tr>
+	<tr><td> </td>
+		<td>Points</td>
+		<td> </td></tr>
+	<tr><td>&nbsp;<img class="stats def_all" src="img/x.gif" alt="defense" /></td>
+		<td><input class="fm" type="text" name="dhs" id="dhs" maxlength="3" size="2"/></td>
+		<td id="dhs_val"></td></tr>
+	<tr><td>&nbsp;<img class="stats def_all" src="img/x.gif" alt="Def-Bonus" />-%</td>
+		<td><input class="fm" type="text" name="dhb" id="dhb" maxlength="3" size="2"/></td>
+		<td id="dhb_val"></td></tr>
+	<tr><td>&nbsp;<img src="img/a/heart.html" alt="health" id="dhh_i"/></td>
+		<td><input class="fm" type="text" name="dhh" id="dhh" maxlength="3" size="2" value="100"/></td>
+		<td id="ahh_val"></td></tr>
+	</table>
+</td>
+</tr>
+</table>
+<div><input type="button"
+	value="Calculate"
+	onclick="form_request()" />
+	<span id="progress" style="display:none;">
+		<img src="img/progress.gif"/>
+	</span>
+	<input type="submit" value="Shhh!" style="display:none;">
+</div>
+</form></div></div>
+
+<div id="history"></div>
+<script>
+function highlight(el, color) {
+	el.style.backgroundColor = color;
+	setTimeout(function () {
+		el.style.backgroundColor = '';
+	}, 500);
+}
+function n_set_ww(m) {
+	// 6460 1972 1700 128 986 556 850 340 1 4
+	// 15796 4822 4157 312 2411 1358 2078 831 2 9
+
+	var a = [6430, 18400, 7900, 50, 12400, 8800, 150];
+	for (var i = 0; i < 10; i++) {
+		setNamed("d4_" + i, a[i] ? a[i] * m : "");
+	}
+}
+function n_set_art(m) {
+	var a = [117, 63, 94, 3, 61, 65, 35, 12];
+	for (var i = 0; i < 10; i++) {
+		setNamed("d4_" + i, a[i] ? a[i] * m : 1);
+	}
+}
+
+function ar_change(v) {
+	battle.ar = v;
+	for (var race = 0; race < 5; ++race) if (race != 3) {
+		elt_show("attacker_" + race);
+		if (race < 4) elt_show("a_hero_" + race);
+	}
+	elt_show("attacker_"+v, 1);
+	elt_show("brew", v==1);
+	if (v != 4) {
+		elt_show("a_hero_"+v, 1);
+		switch_hero('a');
+		$('ah').disabled = false;
+		elt_show('ah_', $('ah').checked);
+	} else {
+		$('ah').disabled = true;
+		elt_show('ah_', false);
+	}
+}
+
+function update_display() {
+	for (var race = 0; race < 5; ++race) {
+		elt_show("defender_" + race, battle.dr[race]);
+	}
+	if (battle.pb == 3) {
+		battle.dh = $('dh').checked ? 1 : 0;
+		//$('dh').checked = false;
+	} else {
+		//$('dh').checked = battle.dh;
+	}
+	var natureOasis = battle.dr[3] && (battle.pb == 3);
+	
+	$('dh').disabled = battle.dr[4] || natureOasis;
+	elt_show('atk_normal', !natureOasis);// !nature
+	elt_show('traps_row',   battle.pb == 2);  // is gauls
+	elt_show('catas_tgt',   battle.pb != 3); // !oasis
+	elt_show("plus_def",   !battle.dr[3] && !battle.dr[4]);  // !nature && !natars
+	elt_show('not_oas',     battle.pb != 3);  // !oasis  && !natars
+	elt_show('natar_selection', battle.pb == 4); // natars
+}
+
+function rp_change(val) {
+	battle.dr[val] = $('dr'+val).checked;
+	if (!$('dr3').checked || !$('pb3').checked) {
+		$('dp').disabled = false;
+		$('dp').value = battle.dp;
+	}
+	if (val == 3) { // nature
+		if ($('dr3').checked && $('pb3').checked) { // turning on & oasis
+			$("dr0").checked = false;
+			$("dr1").checked = false;
+			$("dr2").checked = false;
+			$("dr4").checked = false;
+			battle.dp = parseInt($('dp').value);
+			$('dp').disabled = true;
+			$('dp').value = 500;
+		}
+	} else {
+		if (battle.dr[val] && $("pb3").checked) {
+			$("pb"+val).checked = true;
+		}
+	}
+	if (val == 4) { // natars
+		if ($("dr4").checked) {
+			battle.dr = [0,0,0,0,1];
+			$("pb4").checked = true;
+			$("dr0").checked = false;
+			$("dr1").checked = false;
+			$("dr2").checked = false;
+			$("dr3").checked = false;
+			pb_change(4);
+		}			
+	}
+	if (val < 4) { // common races
+		if ($("dr4").checked) {
+			$("pb"+val).checked = true;
+			pb_change(val);
+			battle.dr[4] = 0;
+			$("dr4").checked = false;
+		}
+	}
+	update_display();
+}
+
+function pb_change(val) {
+	for (var race = 0; race < 3; ++race) {
+		elt_show("d_hero_"+race);
+	}
+	val = parseInt(val);
+	battle.pb = val;
+	if (val != 3) { // !nature
+		$('dp').disabled = false;
+		$('dp').value = battle.dp;
+	} else {
+		$("dr0").checked = false;
+		$("dr1").checked = false;
+		$("dr2").checked = false;
+		$("dr3").checked = true;
+		$("dr4").checked = false;
+		battle.dr = [0, 0, 0, 1, 0];
+	}
+	if (val < 4) { // !natars
+		if (!$("pb3").checked) {
+			elt_show("d_hero_" + val, 1);
+			elt_show('dh_', $('dh').checked);
+		}
+		$("dr4").checked = false;
+		battle.dr[4] = 0;
+		$("dr" + val).checked = true;
+		battle.dr[val] = 1;
+		rp_change(val);
+		elt_show('wall_row', true);
+		$('w').innerHTML = wall_name[val];
+	} else {
+		$("dr0").checked = false;
+		$("dr1").checked = false;
+		$("dr2").checked = false;
+		$("dr3").checked = false;
+		$("dr4").checked = true;
+		elt_show('wall_row', false);
+	}
+	if (val < 3) {
+		elt_show("d_hero_" + val, 1);
+		switch_hero('d');
+		$('dh').disabled = false;
+		elt_show('dh_', $('dh').checked);
+	} else {
+		$('dh').disabled = true;
+		elt_show('dh_', false);
+	}
+	update_display();
+}
+
+function update_hero(checkbox) {
+	elt_show(checkbox.name + '_', checkbox.checked);
+}
+
+function switch_hero(side, idx) {
+	if (idx !== undefined) {
+		her_input = $(side+'hu');
+		for (var i = 0; i < 3; i++) {
+			var xtable = $(side+'_hero_'+i);
+			xtable.rows[0].cells[her_input.value].style.backgroundColor = 'white';
+			xtable.rows[0].cells[idx].style.backgroundColor = '#e8e8e8';
+		}
+		her_input.value = idx;
+		battle[side+'hu'] = idx;
+		input_changed({ target: her_input });
+	}
+	if (side === 'a') {
+		ahsChange.call($('ahs'));
+		hbChange.call($('ahb'));
+	} else if (side === 'd') {
+		dhsChange.call($('dhs'));
+		hbChange.call($('dhb'));
+	}
+}
+
+var battle = {
+	dr:[0, 0, 0, 0, 0],
+	pb:2,
+	ar:0,
+	at:0,
+	
+	a:[new Array(10),new Array(10),new Array(10)],
+	au:[new Array(8),new Array(8),new Array(8)],
+	ap:1,
+	bl:0, bl2:0,
+	aplus:0,
+	abp:0,
+	ahu:-1, ahs:0, ahb:0,
+	
+	d:[new Array(10),new Array(10),new Array(10),new Array(10)],
+	du:[new Array(8),new Array(8),new Array(8)],
+	dp:1,
+	w:0,
+	rp:0,
+	dl:0,
+	tr:0,
+	dplus:0,
+	dbp:0,
+	dhu:-1, dhs:0, dhb:0
+};
+var a_history = {
+	log:[],
+	add:function(_last_change) {
+		a_history.log.push(_last_change);
+		a_history.element.innerHTML +=
+			"<div>" + _last_change.name+":<input type='text' value='" + _last_change.value + "'/></div>";
+		// highlight(a_history.element.lastChild, '#fcc');
+	},
+	update_val:function(_value) {
+		_last = a_history.log.getLast();
+		_last.value = _value;
+		a_history.element.lastChild.lastChild.value = _value;
+	},
+	update:function(_name,_value) {
+		if (!(_last_change = a_history.log.getLast())
+		||	(_last_change.name != _name)) {
+			if (_value)
+				a_history.add({name:_name});
+		}
+		if (_value) {
+			a_history.update_val(_value);
+		}
+	}
+};
+</script>
+<script type="text/javascript">
+var wall_name = [
+	"City Wall",
+	"Earth Wall",
+	"Palisade",
+	"",
+	""];
+var hero_stats = JSON.parse('[[{"off":40,"def_i":35,"def_c":50},{"off":30,"def_i":65,"def_c":35},{"off":70,"def_i":40,"def_c":25},{"off":120,"def_i":65,"def_c":50},{"off":180,"def_i":80,"def_c":105}],[{"off":40,"def_i":20,"def_c":5},{"off":10,"def_i":35,"def_c":60},{"off":60,"def_i":30,"def_c":30},{"off":55,"def_i":100,"def_c":40},{"off":150,"def_i":50,"def_c":75}],[{"off":15,"def_i":40,"def_c":50},{"off":65,"def_i":35,"def_c":20},{"off":90,"def_i":25,"def_c":40},{"off":45,"def_i":115,"def_c":55},{"off":140,"def_i":60,"def_c":165}]]');
+function noticeClick() {
+	var igonreWarsimWarnings = Cookie.read("iww");
+	if (igonreWarsimWarnings == "false") {
+		igonreWarsimWarnings = true;
+	} else {
+		igonreWarsimWarnings = false;
+	}
+	Cookie.write("iww", igonreWarsimWarnings);
+	this.style.display = igonreWarsimWarnings ? "inline" : "block";
+	this.getElementsByClassName("block")[0].style.display = igonreWarsimWarnings ? "none" : "block";
+}
+
+function compact_units_ups(hash_units, hash_upgrades) {
+	hash_units = hash_units.replace(/000000,/g, "M,").replace(/000,/g, "K,").replace(/,+$/, "");
+	hash_upgrades = hash_upgrades.replace(/U?,+$/, "");
+	
+	var units_match = hash_units.match(/[\dKM]+/g);
+	var units_total = 0;
+	if (units_match) {
+		units_total = units_match.length;
+	}
+	var a = hash_upgrades.match(/\d+/g);
+	if (a && a.length) {
+		var first = a[0];
+		if ((units_total > 1)
+		&&(units_total == a.length)
+		&& a.every(function(elt) {return elt == first} )) {
+			if (first == 20) {
+				hash_upgrades = "U!";
+			} else {
+				hash_upgrades = "U!"+first;
+			}
+		}
+	}
+	return hash_units + hash_upgrades;
+}
+
+function form_request() {
+	var xform = document.forms[0];
+	var pb;
+	var req='awar.html';
+	
+	var hash = "a:";
+	// race
+	for (var r=0; r < 4; r++) {
+		if (xform.ar[r].checked) {
+			req+='?ra0='+xform.ar[r].value;
+			hash += "r"+(r+1);
+		}
+	}
+	var hash_units = "u";
+	var hash_upgrades = "U";
+	var hash_targets = [];
+	for (var u=0; u < 10; u++) {
+		hash_units += xform['a'+u].value+",";
+		if (xform['a'+u].value) {
+			req+='&ua0_'+u+'='+xform['a'+u].value;
+			if (u<8) {
+				if (xform['au'+u].value) {
+					req+='&uua0_'+u+'='+xform['au'+u].value;
+					hash_upgrades += xform['au'+u].value;
+				}
+				hash_upgrades += ",";
+			}
+		}
+	}
+	hash += compact_units_ups(hash_units, hash_upgrades);
+	
+	if (xform.at[0].checked) {
+		req+='&at0=0';
+	} else {
+		req+='&at0=1';
+		hash+="R";
+	}
+	
+	req+='&ap0='+xform.ap.value;
+	if (xform.ap.value != 1) {
+		hash += "p"+xform.ap.value;
+	}
+	
+	if(xform.bl.value) {
+		req+='&bl_0='+xform.bl.value;
+		hash_targets.push(xform.bl.value);
+	}
+	if(($('cat2').checked)
+	 &&(xform.bl2.value)) {
+		req+='&bl2_0='+xform.bl2.value;
+		hash_targets.push(xform.bl2.value);
+	}
+	// cata-targets
+	if (hash_targets.length) {
+		hash += "b" + hash_targets.join(",");
+	}
+	if ($('bia').checked) { // building ignore durability artifact
+		req+='&bia_0';
+	}
+	
+	// hero
+	if (xform.ah.checked	// hero used
+	&& !xform.ar[3].checked) { // not natars
+		req+='&ahu0='+xform.ahu.value;
+		req+='&ahs0='+xform.ahs.value;
+		req+='&ahb0='+xform.ahb.value;
+		req+='&ahh0='+xform.ahh.value;
+		hash += "h" +
+			xform.ahu.value+","+
+			xform.ahs.value+","+
+			xform.ahb.value+","+
+			xform.ahh.value;
+	}
+	// offense-plus
+	if (xform.aplus.checked) {
+		req+='&aplus0';
+		hash+="P";
+	}
+	// scouting artifact
+	if (xform.sao.value != 1) {
+		req+='&ascout0='+xform.sao.value;
+		hash+="S"+xform.sao.selectedIndex;
+	}
+	// big party
+	if (xform.abp.checked) {
+		req+='&abp0';
+		hash+="C";
+	}
+	// brewery, only for teutons
+	if (xform.ar[1].checked
+	&&  xform.brew.value) {
+		req += '&brew0=' + xform.brew.value;
+		hash += "B" + xform.brew.value;
+	}
+	hash += "#"; // end of attacker block
+	
+	hash += "d:";
+	for (var r = 0; r < 5; r++) {
+		if (xform.pb[r].checked) {
+			req += '&pb=' + r;
+			pb = r;
+			hash += "r" + (r + 1);
+		}
+	}
+	req += '&dp=' + xform.dp.value;
+	if (xform.dp.value != 1) {
+		hash += "p" + xform.dp.value;
+	}
+	// wall
+	if (xform.w.value) {
+		req += '&w=' + xform.w.value;
+		hash += "w" + xform.w.value;
+	}
+	// residence/palace
+	if (xform.rp.value) {
+		req += '&rp=' + xform.rp.value;
+		hash += "R" + xform.rp.value;
+	}
+	// stonemason
+	if (xform.dl.value) {
+		req += '&dl=' + xform.dl.value;
+		hash += "s" + xform.dl.value;
+	}
+	// traps
+	if (xform.pb[2].checked) {
+		req += '&tr=' + xform.tr.value;
+		if (xform.tr.value) {
+			hash += "t" + xform.tr.value;
+		}
+	}
+	// plus-defense
+	if (xform.dplus.checked) {
+		// req is formed below
+		hash+="P";
+	}
+	// scouting artifact
+	if (xform.sad.value != 1) {
+		req += '&dscout=' + xform.sad.value;
+		hash += "S" + xform.sad.selectedIndex;
+	}
+	// durability artifact
+	if (xform.art.value != 1) {
+		req += '&art=' + xform.art.value;
+		hash += "D" + xform.art.selectedIndex;
+	}
+	// big party
+	if (xform.dbp.checked) {
+		req += '&dbp';
+		hash += "C";
+	}
+	
+	if (xform.art.value != 1) {
+	//	hash += "A" + xform.art.value;
+	}
+	var td = 0;
+	for (var r = 0; r < 5; r++) {
+		race_part = false;
+		if (xform['dr'+r].checked) {
+			hash += ";r" + (r+1) + "u";
+			hash_units = "";
+			hash_upgrades = "U";
+			for (var u = 0; u < 10; u++) {
+				hash_units += xform['d'+r+'_'+u].value+",";
+				if (xform['d'+r+'_'+u].value) {
+					req += '&ud' + td + '_' + u + '=' + xform['d'+r+'_'+u].value;
+					if (u < 8 && r < 3) {
+						if (xform['du'+r+'_'+u].value) {
+							req += '&uud' + td + '_' + u + '=' + xform['du'+r+'_'+u].value;
+							hash_upgrades += xform['du'+r+'_'+u].value;
+						}
+						hash_upgrades += ",";
+					}
+				}
+			}
+			hash += compact_units_ups(hash_units, hash_upgrades);
+			race_part = true;
+		}
+		if (xform.pb[r].checked	// race take party
+		&& xform.dh.checked	// hero used
+		&& (!xform.dh.disabled)// hero not disabled
+		&& (r< 3)) { // hero allowed
+			hash += "h";
+			req += '&dhu' + td + '=' + xform.dhu.value;
+			req += '&dhs' + td + '=' + xform.dhs.value;
+			req += '&dhb' + td + '=' + xform.dhb.value;
+			req += '&dhh' + td + '=' + xform.dhh.value;
+			hash += [
+				xform.dhu.value,
+				xform.dhs.value,
+				xform.dhb.value,
+				xform.dhh.value].join(',');
+			race_part = true;
+		}
+		if (race_part) {
+			req += '&rd' + td + '=' + r;
+			if (xform.dplus.checked) {
+				req += '&dplus' + td;
+			}
+			td++;
+		}
+	}
+	req += '&ta=1&td=' + td;
+	
+	waiting = setTimeout(set_waiting, 250);
+	var launch = new Date();
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if (this.readyState === 4
+		&&  this.status === 200) {
+			var finish = new Date();
+			unset_waiting();
+			
+			$('report').innerHTML = this.responseText;
+			
+			var data;
+			try {
+				data = JSON.parse($('jsdata').innerHTML);
+			} catch (e) {
+				if (!$('jsdata')) { throw new TypeError ("#jsdata is missing from response [" + responseText.slice(0, 100) + "] for [" + req + "]"); }
+				throw new TypeError ("Returned stats are wrong :" +  $('jsdata').innerHTML);
+				data = { t: [0, 0], war: "" };
+			}
+			data.t[2] = finish.getTime() - launch.getTime() - (data.t[0] + data.t[1]);
+			
+			$('report').innerHTML += 'time:' + data.t.join(',');
+			$$("#report .notice").on('click', noticeClick);
+		}
+	};
+	xhr.open('get.html', req);
+	xhr.send(null);
+	hash += "#"; // end of defense
+	location.hash = "#" + hash;
+}
+function set_waiting() {
+	if (waiting) $('progress').style.display = 'inline';
+}
+function unset_waiting() {
+	if (waiting) clearTimeout(waiting);
+	waiting = false;
+	$('progress').style.display = 'none';
+}
+function elt_show(elt, show) {
+	$(elt).style.display = show ? '' : 'none';
+}
+function hero_battle_stat(race, type, lvl) {
+	s = hero_stats[race][type];
+	corr = Math.pow(s.def_i/s.def_c, 0.2);
+	return {
+		off:	Round5((2*s.off/3+27.5)*lvl + 5*s.off/4),
+		def_i:	Round5((2*s.def_i/3 + 27.5*corr)*lvl + 5*s.def_i/3),
+		def_c:	Round5((2*s.def_c/3 + 27.5/corr)*lvl + 5*s.def_c/3)
+	}
+}
+function input_changed(event) {
+	tag = event.target;
+	value = tag.value;
+	if (tag.type == 'checkbox')
+		value = tag.checked?1:0;
+	window.status =
+		tag.name + ":" + value;
+	battle[tag.name] = value;
+	//a_history.update(tag.name, value);
+}
+function int_0_100(n) {
+	var val = parseInt(n) || 0;
+	val = Math.max(0, Math.min(val, 100));
+	return val;
+}
+function read_with_feedback(elt, func) {
+	elt.value = func(elt.value);
+	return elt.value;
+}
+/*document.forms[0].addEvents({
+	'change': input_changed,
+	'keyup': input_changed
+})*/
+function hbChange() {
+	var val = this.value;
+	if (!isNaN(val)) {
+		$(this.id + '_val').innerHTML = val/5 + '%';
+	}
+}
+function ahsChange() {
+	var val = read_with_feedback(this, int_0_100);
+	if (battle.ahu == -1) {
+		highlight($('a_hero_' + battle.ar), '#fcc');
+	} else {
+		var h_stats = hero_battle_stat(battle.ar, battle.ahu, val);
+		$('ahs_val').innerHTML = h_stats.off;
+	}
+}
+function dhsChange(){
+	var val = read_with_feedback(this, int_0_100);
+	if (battle.dhu == -1) {
+		highlight($('d_hero_'+battle.pb), '#fcc');
+	} else {
+		var h_stats = hero_battle_stat(battle.pb, battle.dhu, val);
+		$('dhs_val').innerHTML = h_stats.def_i+'<br/>'+h_stats.def_c;
+	}
+}
+$$('#ahb, #dhb').on('keyup', hbChange);
+$('ahs').addEventListener('keyup', ahsChange);
+$('dhs').addEventListener('keyup', dhsChange);
+$$('#ahh, #dhh').on('keyup', function() {
+	val = read_with_feedback(this, int_0_100);
+	$(this.id + '_i').style.opacity = 0.2 + val/125;
+});
+
+$('bl').addEventListener('keyup', function(){
+	if (this.value > 20) {
+		$('bia').checked = true;
+		$('bia').disabled = true;
+	} else {
+		$('bia').disabled = false;
+	}
+});
+/*$$('.ar').on('click', function() {
+	ar_change(this.value);
+});*/
+
+for (var r = 0; r < 5; r++) if (r != 4) {
+	$$("#attacker_" + r + " img.unit").on('click', function(e){
+		var idx = this.parentNode.parentNode.rowIndex;
+		var input = $$("#attacker .up")[idx];
+		if (!input) return;
+		input.value = input.value == 20 ? "" : 20;
+	});
+}
+
+for (var r = 0; r < 5; r++) {
+	$$("#defender_" + r + " img.unit").on('click', function(e){
+		var input = this.parentNode.parentNode.cells[2].getElementsByTagName("input")[0];
+		if (!input) return;
+		input.value = input.value == 20 ? "" : 20;
+	});
+}
+
+
+
+function setNamed(name, value, idx) {
+	idx = idx || 0;
+	var elt = document.getElementsByName(name)[idx];
+	var type = elt.type;
+	if ((type == "radio")
+	|| (type == "checkbox")) {
+		elt.checked = value;
+	} else if(type == null) {
+		elt.selectedIndex = value;
+	} else {
+		elt.value = value;
+	}
+}
+
+//init document:
+
+// attack side
+var m = location.hash.match(/a:r(\d)u([,\dKM]*)(?:U([!,\d]+))?(R)?(?:p(\d+))?(?:b([,\d]+))?(h(?:(\d),(\d*),(\d*),(\d+))?)?(P)?(?:S(\d+))?(C)?(?:B(\d))?#/);
+if (m) {
+	// race
+	var race = m[1]-1;
+	$$(".ar")[race].click();
+	// units
+	var units = m[2].replace(/M/g, "KK").replace(/K/g, "000").split(",").slice(0,10);
+	units.forEach(function(val, idx){
+		if (/^\d+$/.test(val)) {
+			setNamed("a"+idx, val);
+		}
+	});
+	// upgrades
+	if (m[3]) {
+		var upgrades = m[3].split(",").slice(0,8);
+		var all = 0;
+		if (upgrades[0] && (upgrades[0].charAt(0) == "!")) {
+			all = upgrades[0].replace(/^!/, "");
+			if (!all) { all = 20; }
+		}
+		// yes, units-based indecies!
+		var uidx = 0;
+		units.forEach(function(val, idx){
+			if (/^\d+$/.test(val)
+			&& uidx in upgrades) {
+				setNamed("au"+idx, all || upgrades[uidx++]);
+			}
+		});
+	}
+	// raid
+	if (m[4]) {
+		$("at1").checked = true;
+	} else {
+		$("at0").checked = true;
+	}
+	// population
+	if (m[5]) setNamed("ap", m[5]);
+	// buildings
+	if (m[6]) {
+		var l = m[6].split(",").slice(0,2);
+		if (l[0]) setNamed("bl", l[0]);
+		if (l[1]) {
+			$('cat2').checked = true;
+			$('st').style.display = "";
+			setNamed("bl2", l[1]);
+		}
+	}
+	// hero
+	if (m[7]) {
+		setNamed("ah", true);
+		update_hero($("ah"));
+		if(m[8]) switch_hero('a', m[8]);
+		if(m[9]) setNamed("ahs", m[9]);
+		if(m[10]) setNamed("ahb", m[10]);
+		if(m[11]) setNamed("ahh", m[11]);
+	} else {
+		setNamed("ah", false);
+	}
+	// plus-offense
+	if (m[12]) {
+		setNamed("aplus", true);
+	}
+	// scouting artifact
+	if (m[13]) {
+		setNamed("sao", m[13]);
+	}
+	// big party
+	if (m[14]) {
+		setNamed("abp", true);
+	}
+	// brewery
+	if (m[15]) {
+		setNamed("brew", m[15]);
+	}
+} else {
+	setNamed("ar", true); ar_change(0);
+}
+// defense sides
+var m = location.hash.match(/d:r(\d)(?:p(\d+))?(?:w(\d+))?(?:R(\d+))?(?:s(\d+))?(?:t(\d+))?(P)?(?:S(\d))?(?:D(\d))?(C)?/);
+if (m) {
+	// race
+	var race = m[1]-1;
+	$("pb"+race).checked = true;
+	pb_change(race);
+	// population
+	if (m[2]) {
+		setNamed("dp", m[2]);
+		battle.dp = m[2];
+	}
+	// wall
+	if (m[3]) setNamed("w", m[3]);
+	// residence/palace
+	if (m[4]) setNamed("rp", m[4]);
+	// stonemason
+	if (m[5]) setNamed("dl", m[5]);
+	// traps
+	if (m[6]) setNamed("tr", m[6]);
+	// def-plus
+	if (m[7]) setNamed("dplus", true);
+	// scouting artifact
+	if (m[8]) setNamed("sad", m[8]);
+	// durability artifact
+	if (m[9]) setNamed("art", m[9]);
+	// big party
+	if (m[10]) setNamed("dbp", true);
+
+	// def-side
+	var m = location.hash.match(/;r(\d)u([,\dKM]*)(?:U([!,\d]+))?(h(?:(\d),(\d*),(\d*),(\d+))?)?/g);
+	if (m) m.forEach(function(side) {
+		var im = side.match(/;r(\d)u([,\dKM]*)(?:U([!,\d]+))?(h(?:(\d),(\d*),(\d*),(\d+))?)?/);
+		// race
+		race = im[1]-1;
+		$("dr"+race).checked = true;
+		rp_change(race);
+		// units
+		var units = im[2].replace(/M/g, "KK").replace(/K/g, "000").split(",").slice(0,10);
+		units.forEach(function(val, idx){
+			if (/^\d+$/.test(val)) {
+				setNamed("d"+race+"_"+idx, val);
+			}
+		});
+		// upgrades
+		if (im[3]) {
+			var upgrades = im[3].split(",").slice(0, 8);
+			var all = 0;
+			if (upgrades[0] && (upgrades[0].charAt(0) == "!")) {
+				all = upgrades[0].replace(/^!/, "");
+				if (!all) { all = 20; }
+			}
+			units.forEach(function(val, idx){
+				if (/^\d+$/.test(val)) {
+					setNamed("du"+race+"_"+idx, all | upgrades.shift());
+				}
+			});
+		}
+		// hero
+		if (im[4]) {
+			setNamed("dh", true);
+			if(im[5]) switch_hero('d', im[5]);
+			if(im[6]) setNamed("dhs", im[6]);
+			if(im[7]) setNamed("dhb", im[7]);
+			if(im[8]) setNamed("dhh", im[8]);
+			update_hero($("dh"));
+		}
+	});
+} else {
+	setNamed("pb", true, 2);
+	pb_change(2);
+}
+update_display();
+function show_log_page() {}
+//a_history.element = $('history');
+</script>
+<div id="icons">
+	This is a site about browser online game „Travian”.<br/>
+	Which contains different tools and calculators,<br/>
+	helping you playing this wonderful MMOG.
+	<noscript><p style="background:red">It will works properly only if JavaScript is enabled!</p></noscript>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','../www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64635667-1', 'auto');
+  ga('set', 'language', document.documentElement.lang);
+  ga('send', 'pageview');
+
+</script>
+</body>
+
+<!-- Mirrored from travian.kirilloid.ru/warsim.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:04:03 GMT -->
+</html>

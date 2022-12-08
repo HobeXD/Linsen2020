@@ -1,0 +1,1538 @@
+* {
+	direction: inherit;
+}
+
+/* Page background, links */
+body {
+	color: #000000;
+	background-color: #f4f4f4;
+	font-size: 14px;
+	margin: 0 auto;
+	text-align: center;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+a {
+	text-decoration: none;
+	font-weight: bold;
+}
+
+label {
+	font-size: 100%;
+}
+
+div.ad, div#icons { margin: 0 auto; }
+
+a:link, a:visited { color: #71D000; }
+a:active { color: #FF8000; }
+a:hover { color: #00BC00; }
+
+/* layout */
+#warning {
+	width: 790px;
+	text-align: center;
+	margin: 4px auto;
+	padding: 3px;
+	background-color: #fee;
+	border: 1px solid #630;
+    color: #600;
+}
+#notice {
+	width: 790px;
+	text-align: center;
+	margin: 4px 205px;
+	padding: 3px;
+	background-color: #efe;
+	border: 1px solid silver;
+    color: #030;
+}
+
+.something {
+    width: 790px;
+    margin: 5px auto 0;
+    border: 1px solid silver;
+    overflow: hidden;
+    padding: 4px;
+    background-color: white;
+    text-align: left;
+    line-height: 150%;
+}
+
+.page {
+	background-color: white;
+	border: 1px solid silver;
+	max-width: 798px;
+	margin: 0 0 0 5px;
+	position: relative;
+}
+
+.content {
+	margin: 5px;
+	position: relative;
+}
+.overlay {
+	/* position */
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 100;
+	/* vbox */
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+	/* background */
+	background: rgba(255, 255, 255, 0.875);
+	border: 3px solid rgba(0, 0, 0, 0.5);
+	-webkit-backdrop-filter: blur(3px);
+	/* text */
+	font-size: 200%;
+	text-align: center;
+}
+.overlay p {
+	margin: 0.25em 0;
+	line-height: 1.5;
+}
+.overlay .buttons {
+	margin-top: 0.5em;
+	display: flex;
+	justify-content: space-evenly;
+}
+.overlay .but {
+	font-size: 75%;
+}
+.overlay .close {
+	position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 150%;
+
+	line-height: 0.8;
+	font-weight: bold;
+
+    background: transparent;
+    border: none;
+}
+@media all and (max-width: 550px) {
+	.overlay {
+		font-size: calc(5vw);
+	}
+}
+
+div#menu td {
+	overflow: hidden;
+}
+
+#icons {
+	clear: both;
+	padding: 5px;
+	direction: ltr;
+	font-size: 11px;
+}
+.ad {
+	text-align: left;
+}
+
+.wire {
+	border-right: solid 1px silver;
+	border-bottom: solid 1px silver;
+/*	border-collapse: collapse;
+	border-color: silver;
+	border-width: 0; */
+}
+.wire tr {
+	font-size: 14px;
+	text-align: center;
+}
+.wire tr td.header {
+	font-size: 18px;
+}
+.wire td {
+/*	border: solid 1px;
+	border-color: silver;*/
+	border-left: solid 1px silver;
+	border-top: solid 1px silver;
+	padding: 4px;
+}
+table.wire td.c {
+	color: silver;
+}
+tr.sum td {
+	font-weight: bold;
+}
+
+/* background image table header */
+.rbg {
+	background-color: #eee;
+	font-weight: bold;
+}
+
+.fm {
+	border: solid #C0D0C0 1px;
+	font-size: 12px;
+}
+
+img {
+	margin: 0;
+	padding: 0;
+	vertical-align: middle;
+	border: 0;
+}
+
+.but {
+	font-weight: bold;
+	border: 1px solid silver;
+	background-color: #f4f4f4;
+    padding: 0 0.3em;
+	border-radius: 0.2em;
+	white-space: nowrap;
+}
+.but:hover, .but:focus {
+	border-color: hsl(87, 100%, 40%);
+	background-color: hsl(87, 80%, 95%);
+}
+.but:active {
+	border-color: hsl(30, 100%, 50%);;
+	background-color: hsl(30, 100%, 87.5%);
+	position: relative;
+	top: 1px;
+}
+
+.click, .but {
+	cursor: pointer;
+}
+
+.button-group {
+	display: inline-block;
+}
+.button-group > button {
+	border: 1px solid gray;
+	background: transparent;
+	padding: 0 2px;
+	min-width: 16px;
+	font-weight: bold;
+}
+.button-group > button:hover {
+	border-color: hsl(87, 100%, 40%);
+	background-color: hsl(87, 80%, 95%);
+}
+.button-group > button:focus {
+	z-index: 1;
+}
+.button-group > button:hover + button {
+	border-left-color: hsl(87, 100%, 40%);
+}
+.button-group > button.active {
+	color: hsl(30, 100%, 50%);
+	border-color: hsl(30, 100%, 50%);
+	background: hsl(30, 100%, 87.5%);
+}
+.button-group > button.active + button {
+	border-left-color: hsl(30, 100%, 50%);
+}
+
+.button-group.crystals {
+	font-size: 0;
+}
+.button-group.crystals > button {
+	border-width: 0;
+	padding: 0;
+}
+.button-group.crystals > button:focus {
+	outline: 1px solid gray;
+}
+.cross {
+	font-size: 200%;
+    color: red;
+    line-height: 60%;
+    vertical-align: middle;
+}
+.cross--disabled {
+	color: gray;
+}
+
+#report .notice {
+	height: 100%;
+	display: block;
+	padding: 2px 2px 4px;
+	border: 1px solid silver;
+	cursor: pointer;
+	position: relative;
+}
+
+#report .notice::before {
+    content: '\26a0\fe0f';
+    position: absolute;
+    left: 0;
+    width: 41px;
+    text-align: center;
+}
+
+/* menu */
+#menu {
+	font-size: 0;
+}
+#menu table.wire {
+	z-index: 1000;
+	border-width: 0 1px;
+}
+#menu table.wire td {
+	font-size: 90%;
+	border-width: 1px 0;
+	padding: 0;
+}
+#menu a {
+	color: black;
+}
+#menu a:hover {
+	background-color: #dfd;
+}
+
+#menu table.wire tr.here a {
+	background: #ddd;
+}
+#menu table.wire td.ico {
+	text-align: center;
+	font-size: 140%;
+}
+.flag {
+	width: 18px;
+	height: 12px;
+	background-image: url("../img/flags.png");
+	box-shadow: 0 0 2px #777;
+	margin: 2px;
+}
+.flag.ae { background-position: 0    0; }
+.flag.ar { background-position: 0  -12px; }
+.flag.au { background-position: 0  -24px; }
+.flag.ba { background-position: 0  -36px; }
+.flag.bg { background-position: 0  -48px; }
+.flag.br { background-position: 0  -60px; }
+.flag.cl { background-position: 0  -72px; }
+.flag.cz { background-position: 0  -84px; }
+.flag.de { background-position: 0  -96px; }
+.flag.dk { background-position: 0 -108px; }
+.flag.ee { background-position: 0 -120px; }
+.flag.eg { background-position: 0 -132px; }
+.flag.com{ background-position: 0 -144px; }
+.flag.es { background-position: 0 -156px; }
+.flag.fi { background-position: 0 -168px; }
+.flag.fr { background-position: 0 -180px; }
+.flag.gr { background-position: 0 -192px; }
+.flag.hk { background-position: 0 -204px; }
+.flag.hr { background-position: 0 -216px; }
+.flag.hu { background-position: 0 -228px; }
+.flag.id { background-position: 0 -240px; }
+.flag.il { background-position: 0 -252px; }
+.flag.in,
+.flag.ine{ background-position: 0 -264px; }
+.flag.ir { background-position: 0 -276px; }
+.flag.it { background-position: 0 -288px; }
+.flag.jp { background-position: 0 -300px; }
+.flag.kr { background-position: 0 -312px; }
+.flag.lt { background-position: 0 -324px; }
+.flag.lv { background-position: 0 -336px; }
+.flag.ma { background-position: 0 -348px; }
+.flag.mx { background-position: 0 -360px; }
+.flag.my { background-position: 0 -372px; }
+.flag.nl { background-position: 0 -384px; }
+.flag.no { background-position: 0 -396px; }
+.flag.ph { background-position: 0 -408px; }
+.flag.pk { background-position: 0 -420px; }
+.flag.pl { background-position: 0 -432px; }
+.flag.pt { background-position: 0 -444px; }
+.flag.ro { background-position: 0 -456px; }
+.flag.rs { background-position: 0 -468px; }
+.flag.ru { background-position: 0 -480px; }
+.flag.sa { background-position: 0 -492px; }
+.flag.se { background-position: 0 -504px; }
+.flag.si { background-position: 0 -516px; }
+.flag.sk { background-position: 0 -528px; }
+.flag.sy { background-position: 0 -540px; }
+.flag.th { background-position: 0 -552px; }
+.flag.tr { background-position: 0 -564px; }
+.flag.tw { background-position: 0 -576px; }
+.flag.ua { background-position: 0 -588px; }
+.flag.gb { background-position: 0 -600px; }
+.flag.uk { background-position: 0 -600px; }
+.flag.us { background-position: 0 -612px; }
+.flag.vn { background-position: 0 -624px; }
+.flag.ye { background-position: 0 -636px; }
+.flag.za { background-position: 0 -648px; }
+.flag.cn { background-position: 0 -660px; }
+
+/** selectors */
+input[type=range] {
+	-webkit-appearance: none;
+	margin: 0;
+	border-radius: 2px;
+}
+input[type=range]::-webkit-slider-runnable-track {
+	width: 100%;
+	height: 16px;
+	cursor: pointer;
+	box-shadow: none;
+	background: #eee;
+	border: none;
+	border-radius: 2px;
+}
+input[type=range]::-webkit-slider-thumb {
+	box-shadow: none;
+	width: 16px;
+	height: 16px;
+	border-radius: 2px;
+	border: none;
+	background: #777;
+	cursor: pointer;
+	-webkit-appearance: none;
+}
+input[type=range]:disabled::-webkit-slider-thumb {
+	cursor: default;
+	background: #999;
+}
+input[type=range]:hover::-webkit-slider-thumb { background: #71D000; }
+input[type=range]:active::-webkit-slider-thumb { background: #FF8000; }
+input[type=range]:focus::-webkit-slider-runnable-track {
+	background: #eee;
+}
+
+input[type=range]::-moz-range-track {
+	width: 100%;
+	height: 16px;
+	cursor: pointer;
+	animate: 0.2s;
+	box-shadow: none;
+	background: #eee;
+	border-radius: 0;
+	border: none;
+}
+input[type=range]::-moz-range-thumb:hover { background: #71D000; }
+input[type=range]::-moz-range-thumb:active { background: #FF8000; }
+input[type=range]::-moz-range-thumb {
+	box-shadow: none;
+	border: none;
+	height: 16px;
+	width: 16px;
+	border-radius: 0;
+	background: #777;
+	cursor: pointer;
+}
+input[type=range]:disabled::-moz-range-thumb {
+	cursor: default;
+	background: #999;
+}
+input[type=range]::-ms-track {
+	width: 100%;
+	height: 16px;
+	cursor: pointer;
+	animate: 0.2s;
+	background: transparent;
+	border-color: transparent;
+	border-width: 16px 0;
+	color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+	background: #eee;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+}
+input[type=range]::-ms-fill-upper {
+	background: #eee;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+}
+input[type=range]::-ms-thumb {
+	box-shadow: none;
+	width: 16px;
+	height: 16px;
+	border-radius: 0;
+	background: #777;
+	cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower,
+input[type=range]:focus::-ms-fill-upper {
+	background: #eee;
+}
+input[type=range]:disabled::-moz-range-thumb {
+	cursor: default;
+	background: #999;
+}
+
+input[type=number][max=3] { width: 2em; }
+input[type=number][max=99999] { width: 5em; }
+
+/* logs */
+#report .version {
+	color: silver;
+	font-size: 75%;
+}
+.log_side {
+	width: 500px;
+}
+.log_side thead td { background-color: #F3F3F3; }
+.log_side thead td.role { font-weight: bold; width: 23%; }
+
+.attacker .role { color: #FF8000; }
+.defender .role { color: #71D000; }
+.log_page {
+	width: 100%;
+}
+.log_tab {
+	float: left;
+	border: solid silver 1px;
+	padding: 1px;
+}
+#log_pages {
+	clear: left;
+}
+
+table#news {
+	direction: ltr;
+	width: 100%;
+	text-align: center;
+}
+
+/* resources */
+img.res {
+	width: 20px;
+	height: 12px;
+	background-image: url("../img/t4/res2.png");
+}
+img.r6 { height: 16px; }
+.r1 { background-position: center    0;   }
+.r2 { background-position: center  -20px; }
+.r3 { background-position: center  -40px; }
+.r4 { background-position: center  -60px; }
+.r5 { background-position: center  -80px; }
+.r6 { background-position: center -100px; }
+.r7 { background-position: center -120px; }
+
+.t2 img.res { background-image: url("../img/t2/res2.png"); }
+.t3 img.res { background-image: url("../img/t3/res2.png"); }
+.t5 img.res { background-image: url("../img/t5/res2.png");
+			  width: 16px;
+			  height: 16px; }
+
+/* units */
+.unit, .stats { width: 16px; height: 16px; }
+.unit { background-size: 200px 16px; }
+.t5 .unit { width: 20px; height: 20px; }
+.t5 .unit { background-size: 200px 20px; }
+ .u1,  .u2,  .u3,  .u4,  .u5,  .u6,  .u7,  .u8,  .u9, .u10 { background-image: url("../img/t4/romans.png"); }
+.u11, .u12, .u13, .u14, .u15, .u16, .u17, .u18, .u19, .u20 { background-image: url("../img/t4/teutons.png"); }
+.u21, .u22, .u23, .u24, .u25, .u26, .u27, .u28, .u29, .u30 { background-image: url("../img/t4/gauls.png"); }
+.u31, .u32, .u33, .u34, .u35, .u36, .u37, .u38, .u39, .u40 { background-image: url("../img/t4/nature.png"); }
+.u41, .u42, .u43, .u44, .u45, .u46, .u47, .u48, .u49, .u50 { background-image: url("../img/t4/natars.png"); }
+.u51, .u52, .u53, .u54, .u55, .u56, .u57, .u58, .u59, .u60 { background-image: url("../img/t4/egyptians.png"); }
+.u61, .u62, .u63, .u64, .u65, .u66, .u67, .u68, .u69, .u70 { background-image: url("../img/t4/huns.png"); }
+.u71, .u72, .u73, .u74, .u75, .u76, .u77, .u78, .u79, .u80 { background-image: url("../img/t4/spartans.png"); }
+.uhab, .ucata, .uhero, .uexp, .uunits, .ugeb, .utraps, .ab_phi, .ab_rec, .ab_com, .ab_met {
+	background-image: url("../img/t4/specials.png");
+	background-size: 80px 60px;
+}
+
+.tribe {
+	width: 16px;
+	height: 16px;
+	background: url("../img/t4/tribes.png") no-repeat center;
+	background-size: 160px 16px;
+}
+.t2 .tribe { background-position: -160px 0; background-size: 200px 16px; }
+.t3 .tribe { background-position: -160px 0; background-size: 200px 16px; }
+.t4 .tribe { background-image: url("../img/t4/tribes.png"); }
+.t5 .tribe { background-image: url("../img/t5/tribes.png"); }
+.tribe-1 { background-position:    0   0; }
+.tribe-2 { background-position:  -20px 0; }
+.tribe-3 { background-position:  -40px 0; }
+.tribe-4 { background-position:  -60px 0; }
+.tribe-5 { background-position:  -80px 0; }
+.tribe-6 { background-position: -100px 0; }
+.tribe-7 { background-position: -120px 0; }
+.tribe-8 { background-position: -140px 0; }
+
+.t2 .tribe-1 { background-image: url("../img/t2/romans.png"); }
+.t3 .tribe-1 { background-image: url("../img/t3/romans.png"); }
+.t2 .tribe-2 { background-image: url("../img/t2/teutons.png"); }
+.t3 .tribe-2 { background-image: url("../img/t3/teutons.png"); }
+.t2 .tribe-3 { background-image: url("../img/t2/gauls.png"); }
+.t3 .tribe-3 { background-image: url("../img/t3/gauls.png"); }
+/* .t2 .tribe-4 { background-image: url("../img/t2/nature.png"); } */
+.t3 .tribe-4 { background-image: url("../img/t3/nature.png"); }
+.t2 .tribe-5 { background-image: url("../img/t2/natars.png"); }
+.t3 .tribe-5 { background-image: url("../img/t3/natars.png"); }
+
+.t2 .u1,  .t2 .u2,  .t2 .u3,  .t2 .u4,  .t2 .u5,  .t2 .u6,  .t2 .u7,  .t2 .u8,  .t2 .u9,  .t2 .u10 { background-image: url("../img/t2/romans.png"); }
+.t2 .u11, .t2 .u12, .t2 .u13, .t2 .u14, .t2 .u15, .t2 .u16, .t2 .u17, .t2 .u18, .t2 .u19, .t2 .u20 { background-image: url("../img/t2/teutons.png"); }
+.t2 .u21, .t2 .u22, .t2 .u23, .t2 .u24, .t2 .u25, .t2 .u26, .t2 .u27, .t2 .u28, .t2 .u29, .t2 .u30 { background-image: url("../img/t2/gauls.png"); }
+.t2 .u41, .t2 .u42, .t2 .u43, .t2 .u44, .t2 .u45, .t2 .u46, .t2 .u47, .t2 .u48, .t2 .u49, .t2 .u50 { background-image: url("../img/t2/natars.png"); }
+.t2 .uhab, .t2 .ucata, .t2 .uhero, .t2 .uexp, .t2 .uunits, .t2 .ugeb { background-image: url("../img/t2/specials.png"); }
+
+.t3 .u1,  .t3 .u2,  .t3 .u3,  .t3 .u4,  .t3 .u5,  .t3 .u6,  .t3 .u7,  .t3 .u8,  .t3 .u9,  .t3 .u10 { background-image: url("../img/t3/romans.png"); }
+.t3 .u11, .t3 .u12, .t3 .u13, .t3 .u14, .t3 .u15, .t3 .u16, .t3 .u17, .t3 .u18, .t3 .u19, .t3 .u20 { background-image: url("../img/t3/teutons.png"); }
+.t3 .u21, .t3 .u22, .t3 .u23, .t3 .u24, .t3 .u25, .t3 .u26, .t3 .u27, .t3 .u28, .t3 .u29, .t3 .u30 { background-image: url("../img/t3/gauls.png"); }
+.t3 .u31, .t3 .u32, .t3 .u33, .t3 .u34, .t3 .u35, .t3 .u36, .t3 .u37, .t3 .u38, .t3 .u39, .t3 .u40 { background-image: url("../img/t3/nature.png"); }
+.t3 .u41, .t3 .u42, .t3 .u43, .t3 .u44, .t3 .u45, .t3 .u46, .t3 .u47, .t3 .u48, .t3 .u49, .t3 .u50 { background-image: url("../img/t3/natars.png"); }
+.t3 .uhab, .t3 .ucata, .t3 .uhero, .t3 .uexp, .t3 .uunits, .t3 .ugeb, .t3 .utraps { background-image: url("../img/t3/specials.png"); }
+
+.t5 .u1,  .t5 .u2,  .t5 .u3,  .t5 .u4,  .t5 .u5,  .t5 .u6,  .t5 .u7,  .t5 .u8,  .t5 .u9,  .t5 .u10 { background-image: url("../img/t5/romans.png"); }
+.t5 .u11, .t5 .u12, .t5 .u13, .t5 .u14, .t5 .u15, .t5 .u16, .t5 .u17, .t5 .u18, .t5 .u19, .t5 .u20 { background-image: url("../img/t5/teutons.png"); }
+.t5 .u21, .t5 .u22, .t5 .u23, .t5 .u24, .t5 .u25, .t5 .u26, .t5 .u27, .t5 .u28, .t5 .u29, .t5 .u30 { background-image: url("../img/t5/gauls.png"); }
+.t5 .u31, .t5 .u32, .t5 .u33, .t5 .u34, .t5 .u35, .t5 .u36, .t5 .u37, .t5 .u38, .t5 .u39, .t5 .u40 { background-image: url("../img/t5/nature.png"); }
+.t5 .u41, .t5 .u42, .t5 .u43, .t5 .u44, .t5 .u45, .t5 .u46, .t5 .u47, .t5 .u48, .t5 .u49, .t5 .u50 { background-image: url("../img/t5/natars.png"); }
+.t5 .uhab, .t5 .ucata, .t5 .uhero, .t5 .uexp, .t5 .uunits, .t5 .ugeb, .t5 .utraps {
+	background-image: url("../img/t5/specials.png");
+	background-size: 80px 60px;
+}
+.uhab, .ucata, .uhero, .uexp, .uunits, .ugeb, .utraps {
+	width: 16px; height: 16px;
+}
+
+.t5 .uhero { width: 20px; height: 20px; }
+
+.stats { background-repeat: no-repeat; }
+.t2 .stats { background-image: url("../img/t2/stats.png"); }
+.t3 .stats { background-image: url("../img/t3/stats.png"); }
+.stats { background-image: url("../img/t4/stats.png"); }
+.t5 .stats { background-image: url("../img/t5/stats.min.svg"); }
+ .u1, .u11, .u21, .u31, .u41, .u51, .u61, .u71, .uhab,	.att_all { background-position: 0 0; }
+ .u2, .u12, .u22, .u32, .u42, .u52, .u62, .u72, .ucata,	.att_i   { background-position: -20px 0; }
+ .u3, .u13, .u23, .u33, .u43, .u53, .u63, .u73, .uhero,   .att_c   { background-position: -40px 0; }
+ .u4, .u14, .u24, .u34, .u44, .u54, .u64, .u74, .uunits,  .def_all { background-position: -60px 0; }
+ .u5, .u15, .u25, .u35, .u45, .u55, .u65, .u75,           .def_i   { background-position: -80px 0; }
+ .u6, .u16, .u26, .u36, .u46, .u56, .u66, .u76,           .def_c   { background-position: -100px 0; }
+ .u7, .u17, .u27, .u37, .u47, .u57, .u67, .u77,           .eye     { background-position: -120px 0; }
+ .u8, .u18, .u28, .u38, .u48, .u58, .u68, .u78,           .def_s   { background-position: -140px 0; }
+ .u9, .u19, .u29, .u39, .u49, .u59, .u69, .u79,           .point   { background-position: -160px 0; }
+.u10, .u20, .u30, .u40, .u50, .u60, .u70, .u80,           .cap     { background-position: -180px 0; }
+.att_bonus, .utraps { background-position:  0     -20px; }
+            .ufree  { background-position: -20px  -20px; }
+			.uexp   { background-position: -40px  -20px; }
+.def_bonus, .ugeb   { background-position: -60px  -20px; }
+.att_plus           { background-position: -80px  -20px; }
+.def_plus           { background-position: -100px -20px; }
+.speed              { background-position: -160px -20px; }
+.health             { background-position: -180px -20px; }
+
+.ab_phi, .ab_rec, .ab_com, .ab_met { width: 18px; height: 18px; }
+.ab_phi { background-position:  0     -40px; }
+.ab_rec { background-position: -20px  -40px; }
+.ab_com { background-position: -40px  -40px; }
+.ab_met { background-position: -60px  -40px; }
+
+img.art { width: 16px; height: 16px; }
+img.art { background-image: url("../img/kirilloid/artefacts.png"); }
+img.art1 { background-position: 0 0; }
+img.art2 { background-position: -20px 0; }
+img.art3 { background-position: -40px 0; }
+img.art4 { background-position: -60px 0; }
+img.art5 { background-position: -80px 0; }
+img.art6 { background-position: -100px 0; }
+img.art7 { background-position: -120px 0; }
+img.art8 { background-position: -140px 0; }
+img.art9 { background-position: -160px 0; }
+
+/* slider */
+div.slider {
+	text-align: left;
+	width: 200px;
+	height: 16px;
+	background: #eee;
+	direction: ltr;
+}
+div.slider div.knob {
+	background: #555;
+	position: relative;
+	width: 16px;
+	height: 16px;
+	direction: ltr;
+	cursor: pointer;
+}
+
+
+/* server announcer */
+#servers {
+	width: 65%;
+	font-size: 14px;
+}
+
+/* date and current day appearance */
+#servers tr.date td { border-top: 1px solid silver; }
+/*#servers tr.current td {
+	border-top: 1px solid silver;
+	font-weight: bold;
+}*/
+#servers tr td.date { padding: 3px 10px; }
+#servers tr.current td.date {
+	font-weight: bold;
+	padding: 3px 9px;
+}
+
+/* month separator */
+#servers tr.month { background: #eee; }
+#servers tr.month td {
+	border-top: 1px solid #ccc;
+	font-weight: bold;
+	color: #999;
+	text-shadow: 0 1px 1px #ddd;
+}
+#servers tr.month td.date {
+	color: black;
+	text-shadow: 0 1px 1px #c4c4c4;
+}
+
+/* future's cells */
+#servers .future td {
+	opacity: 0.5;
+}
+#servers tr.future td { border-color: gray; }
+
+
+/* mark specific servers like speed or classic */
+#servers td.mainstream { color: #555; }
+#servers td.non-typical { font-weight: bold; }
+#servers .speed {
+	font-style: italic;
+	text-shadow:
+		1px 0 0 #aaa,
+		2px 0 0 #c8c8c8,
+		3px 0 0 #dadada,
+		4px 0 0 #e8e8e8,
+		5px 0 0 #f0f0f0,
+		6px 0 0 #f6f6f6,
+		7px 0 0 #fafafa;
+}
+
+/* off_calc */
+#page-off_calc span.line { white-space: no-wrap; }
+#page-off_calc #t4_items select { font-size: 80%; }
+#page-off_calc .weapon .unnecesary { color: gray; }
+#page-off_calc #army { margin-top: 8px; width: 400px; }
+#page-off_calc #warsim { clear: left; margin-top: 5px; }
+#page-off_calc div.title {
+	position: absolute;
+	top: -16px;
+	cursor: auto;
+}
+#page-off_calc div.title div div { position: absolute; }
+
+/* new T4 hero */
+img.itemCategory {
+    background-image: url("../img/t4/items.png");
+	background-size: 160px 40px;
+    width: 16px;
+    height: 16px;
+}
+.t5 img.itemCategory {
+    background-image: url("../img/t5/items.png");
+}
+img.itemCategory_helmet 		{ background-position:  0     0;    }
+img.itemCategory_body 			{ background-position:  0    -20px; }
+img.itemCategory_leftHand 		{ background-position: -20px  0;    }
+img.itemCategory_rightHand 		{ background-position: -20px -20px; }
+img.itemCategory_shoes 			{ background-position: -40px  0;    }
+img.itemCategory_horse 			{ background-position: -40px -20px; }
+img.itemCategory_bandage25  	{ background-position: -60px  0;    }
+img.itemCategory_bandage33  	{ background-position: -60px -20px; }
+img.itemCategory_scroll 		{ background-position: -80px  0;    }
+img.itemCategory_bookOfWisdom 	{ background-position: -80px -20px; }
+img.itemCategory_ointment 		{ background-position:-100px  0;    }
+img.itemCategory_bucketOfWater 	{ background-position:-100px -20px; }
+img.itemCategory_cage 			{ background-position:-120px  0;    }
+img.itemCategory_lawTables 		{ background-position:-120px -20px; }
+img.itemCategory_artWork 		{ background-position:-140px  0;    }
+
+img.crystal {
+    background-image: url("../img/t5/crystals.png");
+	background-size: 120px 16px;
+    width: 16px;
+    height: 16px;
+}
+img.crystal_helmet      { background-position:  -20px 0; }
+img.crystal_body   	    { background-position:  -40px 0; }
+img.crystal_leftHand    { background-position:  -60px 0; }
+img.crystal_rightHand   { background-position:  -80px 0; }
+img.crystal_shoes       { background-position: -100px 0; }
+
+/* items */
+#page-items h3, #page-items h4 {
+	clear: both;
+	margin: 0;
+	padding: 0.5em 0 0;
+}
+#page-items .tabs {
+	font-family: Arial;
+	position: absolute;
+    top: 0;
+}
+#page-items .item {
+	position: relative;
+	width: 97%;
+	max-width: 380px;
+	height: 80px;
+	line-height: 115%;
+	border: 1px solid #bbb;
+	margin: 5px;
+	font-size: 85%;
+}
+#page-items .item img { margin: 0; }
+#page-items .item ol {
+	margin: 5px 0;
+	font-size: 12px;
+}
+#page-items .item ol li { list-style: upper-roman; }
+#page-items a.block.opened:before { content: "\25bc"; }
+#page-items .tab1, #page-items .tab2, #page-items .tab3 {
+	display: none;
+}
+
+#page-items .item .tabs div {
+	text-align: center;
+	border: 1px solid silver;
+	cursor: pointer;
+	width: 27px;
+    height: 26px;
+    font-size: 20px;
+    line-height: 26px;
+    font-family: serif;
+}
+#page-items .item .tabs div.active {
+	background-color: #cfa;
+	width: 30px;
+	margin: 0;
+}
+/* items */
+.item-large {
+	width: 80px;
+	height: 80px;
+}
+#item_1, #item_2, #item_3,
+#item_4, #item_5, #item_6,
+#item_7, #item_8, #item_9,
+#item_10, #item_11, #item_12,
+#item_13, #item_14, #item_15 {
+	background-image: url('../img/hero/blocks/helms.png');
+}
+#item_16, #item_17, #item_18,
+#item_19, #item_20, #item_21,
+#item_22, #item_23, #item_24,
+#item_25, #item_26, #item_27,
+#item_28, #item_29, #item_30 {
+	background-image: url('../img/hero/blocks/roman-weapons.png');
+}
+#item_31, #item_32, #item_33,
+#item_34, #item_35, #item_36,
+#item_37, #item_38, #item_39,
+#item_40, #item_41, #item_42,
+#item_43, #item_44, #item_45 {
+	background-image: url('../img/hero/blocks/gaul-weapons.png');
+}
+#item_46, #item_47, #item_48,
+#item_49, #item_50, #item_51,
+#item_52, #item_53, #item_54,
+#item_55, #item_56, #item_57,
+#item_58, #item_59, #item_60 {
+	background-image: url('../img/hero/blocks/teuton-weapons.png');
+}
+#item_115, #item_116, #item_117,
+#item_118, #item_119, #item_120,
+#item_121, #item_122, #item_123,
+#item_124, #item_125, #item_126,
+#item_127, #item_128, #item_129 {
+	background-image: url('../img/hero/blocks/egypt-weapons.png');
+}
+#item_130, #item_131, #item_132,
+#item_133, #item_134, #item_135,
+#item_136, #item_137, #item_138,
+#item_139, #item_140, #item_141,
+#item_142, #item_143, #item_144 {
+	background-image: url('../img/hero/blocks/hun-weapons.png');
+}
+#item_61, #item_62, #item_63,
+#item_64, #item_65, #item_66,
+#item_67, #item_68, #item_69,
+#item_73, #item_74, #item_75,
+#item_76, #item_77, #item_78,
+#item_79, #item_80, #item_81 {
+	background-image: url('../img/hero/blocks/left-hand.png');
+}
+#item_82, #item_83, #item_84,
+#item_85, #item_86, #item_87,
+#item_88, #item_89, #item_90,
+#item_91, #item_92, #item_93 {
+	background-image: url('../img/hero/blocks/armors.png');
+}
+#item_94, #item_95, #item_96,
+#item_97, #item_98, #item_99,
+#item_100, #item_101, #item_102 {
+	background-image: url('../img/hero/blocks/boots.png');
+}
+#item_103, #item_104, #item_105,
+#item_106, #item_107, #item_108,
+#item_109, #item_110, #item_111,
+#item_112, #item_113, #item_114 {
+	background-image: url('../img/hero/blocks/misc.png');
+}
+.female #item_1, .female #item_2, .female #item_3,
+.female #item_4, .female #item_5, .female #item_6,
+.female #item_7, .female #item_8, .female #item_9,
+.female #item_10, .female #item_11, .female #item_12,
+.female #item_13, .female #item_14, .female #item_15 {
+	background-image: url('../img/hero/blocks/helmsf.png');
+}
+.female #item_16, .female #item_17, .female #item_18,
+.female #item_19, .female #item_20, .female #item_21,
+.female #item_22, .female #item_23, .female #item_24,
+.female #item_25, .female #item_26, .female #item_27,
+.female #item_28, .female #item_29, .female #item_30 {
+	background-image: url('../img/hero/blocks/roman-weaponsf.png');
+}
+.female #item_31, .female #item_32, .female #item_33,
+.female #item_34, .female #item_35, .female #item_36,
+.female #item_37, .female #item_38, .female #item_39,
+.female #item_40, .female #item_41, .female #item_42,
+.female #item_43, .female #item_44, .female #item_45 {
+	background-image: url('../img/hero/blocks/gaul-weaponsf.png');
+}
+.female #item_46, .female #item_47, .female #item_48,
+.female #item_49, .female #item_50, .female #item_51,
+.female #item_52, .female #item_53, .female #item_54,
+.female #item_55, .female #item_56, .female #item_57,
+.female #item_58, .female #item_59, .female #item_60 {
+	background-image: url('../img/hero/blocks/teuton-weaponsf.png');
+}
+.female #item_115, .female #item_118, .female #item_117,
+.female #item_118, .female #item_119, .female #item_120,
+.female #item_121, .female #item_122, .female #item_123,
+.female #item_124, .female #item_125, .female #item_124,
+.female #item_127, .female #item_128, .female #item_129 {
+	background-image: url('../img/hero/blocks/egypt-weaponsf.png');
+}
+.female #item_130, .female #item_131, .female #item_132,
+.female #item_133, .female #item_134, .female #item_135,
+.female #item_136, .female #item_137, .female #item_138,
+.female #item_139, .female #item_140, .female #item_141,
+.female #item_142, .female #item_143, .female #item_144 {
+	background-image: url('../img/hero/blocks/hun-weaponsf.png');
+}
+
+.female #item_61, .female #item_62, .female #item_63,
+.female #item_64, .female #item_65, .female #item_66,
+.female #item_67, .female #item_68, .female #item_69,
+.female #item_73, .female #item_74, .female #item_75,
+.female #item_76, .female #item_77, .female #item_78,
+.female #item_79, .female #item_80, .female #item_81 {
+	background-image: url('../img/hero/blocks/left-handf.png');
+}
+.female #item_82, .female #item_83, .female #item_84,
+.female #item_85, .female #item_86, .female #item_87,
+.female #item_88, .female #item_89, .female #item_90,
+.female #item_91, .female #item_92, .female #item_93 {
+	background-image: url('../img/hero/blocks/armorsf.png');
+}
+.female #item_94, .female #item_95, .female #item_96,
+.female #item_97, .female #item_98, .female #item_99,
+.female #item_100, .female #item_101, .female #item_102 {
+	background-image: url('../img/hero/blocks/bootsf.png');
+}
+
+#item_1,  #item_16, #item_31, #item_46, #item_61, #item_82,  #item_94,  #item_103, #item_115, #item_130 { background-position: 0 0; }
+#item_2,  #item_17, #item_32, #item_47, #item_62, #item_83,  #item_95,  #item_104, #item_116, #item_131 { background-position: -80px 0; }
+#item_3,  #item_18, #item_33, #item_48, #item_63, #item_84,  #item_96,  #item_105, #item_117, #item_132 { background-position: -160px 0; }
+#item_4,  #item_19, #item_34, #item_49, #item_64, #item_85,  #item_97,  #item_106, #item_118, #item_133 { background-position: 0 -80px; }
+#item_5,  #item_20, #item_35, #item_50, #item_65, #item_86,  #item_98,  #item_107, #item_119, #item_134 { background-position: -80px -80px; }
+#item_6,  #item_21, #item_36, #item_51, #item_66, #item_87,  #item_99,  #item_108, #item_120, #item_135 { background-position: -160px -80px; }
+#item_7,  #item_22, #item_37, #item_52, #item_67, #item_88,  #item_100, #item_109, #item_121, #item_136 { background-position: 0 -160px; }
+#item_8,  #item_23, #item_38, #item_53, #item_68, #item_89,  #item_101, #item_110, #item_122, #item_137 { background-position: -80px -160px; }
+#item_9,  #item_24, #item_39, #item_54, #item_69, #item_90,  #item_102, #item_111, #item_123, #item_138 { background-position: -160px -160px; }
+#item_10, #item_25, #item_40, #item_55, #item_73, #item_91,  #item_112, #item_124, #item_139 { background-position: 0 -240px; }
+#item_11, #item_26, #item_41, #item_56, #item_74, #item_92,  #item_113, #item_125, #item_140 { background-position: -80px -240px; }
+#item_12, #item_27, #item_42, #item_57, #item_75, #item_93,  #item_114, #item_126, #item_141 { background-position: -160px -240px; }
+#item_13, #item_28, #item_43, #item_58, #item_76, #item_127, #item_142 { background-position: 0 -320px; }
+#item_14, #item_29, #item_44, #item_59, #item_77, #item_128, #item_143 { background-position: -80px -320px; }
+#item_15, #item_30, #item_45, #item_60, #item_78, #item_129, #item_144 { background-position: -160px -320px; }
+#item_79 { background-position: 0 -400px; }
+#item_80 { background-position: -80px -400px; }
+#item_81 { background-position: -160px -400px; }
+
+/* buildiings */
+img.building { 
+	width: 16px;
+	height: 16px;
+	background: transparent url("../img/t4/buildings.png") no-repeat scroll;
+}
+.t2 img.building {
+	width: 20px;
+	height: 20px;
+	background-image: url("../img/t3/buildings.png");
+}
+.t3 img.building {
+	width: 20px;
+	height: 20px;
+	background-image: url("../img/t3/buildings.png");	
+}
+.t5 img.building {
+	width: 25px;
+	height: 25px;
+	background-image: url("../img/t5/buildings.png");	
+}
+img.g1  { background-position:    0   0; }
+img.g2  { background-position:  -20px 0; }
+img.g3  { background-position:  -40px 0; }
+img.g4  { background-position:  -60px 0; }
+img.g5  { background-position:  -80px 0; }
+img.g6  { background-position: -100px 0; }
+img.g7  { background-position: -120px 0; }
+img.g8  { background-position: -140px 0; }
+img.g9  { background-position: -160px 0; }
+img.g10 { background-position: -180px 0; }
+img.g11 { background-position: -200px 0; }
+img.g38 { background-position: -220px 0; }
+img.g39 { background-position: -240px 0; }
+
+img.g12 { background-position:    0   -20px; }
+img.g13 { background-position:  -20px -20px; }
+img.g14 { background-position:  -40px -20px; }
+img.g16 { background-position:  -60px -20px; }
+img.g19 { background-position:  -80px -20px; }
+img.g20 { background-position: -100px -20px; }
+img.g21 { background-position: -120px -20px; }
+img.g22 { background-position: -140px -20px; }
+img.g29 { background-position: -160px -20px; }
+img.g30 { background-position: -180px -20px; }
+img.g36 { background-position: -200px -20px; }
+img.g37 { background-position: -220px -20px; }
+img.g42 { background-position: -240px -20px; }
+
+img.g15 { background-position:    0   -40px; }
+img.g17 { background-position:  -20px -40px; }
+img.g18 { background-position:  -40px -40px; }
+img.g23 { background-position:  -60px -40px; }
+img.g24 { background-position:  -80px -40px; }
+img.g25 { background-position: -100px -40px; }
+img.g26 { background-position: -120px -40px; }
+img.g27 { background-position: -140px -40px; }
+img.g28 { background-position: -160px -40px; }
+img.g34 { background-position: -180px -40px; }
+img.g35 { background-position: -200px -40px; }
+img.g41 { background-position: -220px -40px; }
+img.g40 { background-position: -240px -40px; }
+
+img.g31 { background-position:    0   -60px; }
+img.g32 { background-position:  -20px -60px; }
+img.g33 { background-position:  -40px -60px; }
+img.g42 { background-position:  -60px -60px; }
+img.g43 { background-position:  -80px -60px; }
+img.g44 { background-position: -100px -60px; }
+img.g45 { background-position: -140px -60px; }
+img.g46 { background-position: -160px -60px; }
+img.g47 { background-position: -180px -60px; }
+
+.t5 img.g1  { background-position:    0   0; }
+.t5 img.g2  { background-position:  -30px 0; }
+.t5 img.g3  { background-position:  -60px 0; }
+.t5 img.g4  { background-position:  -90px 0; }
+.t5 img.g5  { background-position: -120px 0; }
+.t5 img.g6  { background-position: -150px 0; }
+.t5 img.g7  { background-position: -180px 0; }
+.t5 img.g8  { background-position: -210px 0; }
+.t5 img.g9  { background-position: -240px 0; }
+.t5 img.g10 { background-position: -270px 0; }
+.t5 img.g11 { background-position: -300px 0; }
+.t5 img.g38 { background-position: -330px 0; }
+.t5 img.g39 { background-position: -360px 0; }
+
+.t5 img.g12 { background-position:    0   -30px; }
+.t5 img.g13 { background-position:  -30px -30px; }
+.t5 img.g14 { background-position:  -60px -30px; }
+.t5 img.g16 { background-position:  -90px -30px; }
+.t5 img.g19 { background-position: -120px -30px; }
+.t5 img.g20 { background-position: -150px -30px; }
+.t5 img.g21 { background-position: -180px -30px; }
+.t5 img.g22 { background-position: -210px -30px; }
+.t5 img.g29 { background-position: -240px -30px; }
+.t5 img.g30 { background-position: -270px -30px; }
+.t5 img.g36 { background-position: -300px -30px; }
+.t5 img.g37 { background-position: -330px -30px; }
+
+.t5 img.g15 { background-position:    0   -60px; }
+.t5 img.g17 { background-position:  -30px -60px; }
+.t5 img.g18 { background-position:  -60px -60px; }
+.t5 img.g23 { background-position:  -90px -60px; }
+.t5 img.g24 { background-position: -120px -60px; }
+.t5 img.g25 { background-position: -150px -60px; }
+.t5 img.g26 { background-position: -180px -60px; }
+.t5 img.g27 { background-position: -210px -60px; }
+.t5 img.g28 { background-position: -240px -60px; }
+.t5 img.g34 { background-position: -270px -60px; }
+.t5 img.g35 { background-position: -300px -60px; }
+.t5 img.g41 { background-position: -330px -60px; }
+.t5 img.g40 { background-position: -360px -60px; }
+
+.t5 img.g31 { background-position:    0   -90px; }
+.t5 img.g32 { background-position:  -30px -90px; }
+.t5 img.g33 { background-position:  -60px -90px; }
+.t5 img.g42 { background-position:  -90px -90px; }
+.t5 img.g43 { background-position: -180px -90px; }
+.t5 img.g45 { background-position: -210px -90px; }
+.t5 img.g44 { background-position: -300px -90px; }
+
+/* new layout */
+.page  {
+	float: none;
+	margin: 5px auto 0;
+}
+
+#menu {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: start;
+    max-width: 800px;
+    margin: 0 auto;
+	justify-content: center;
+	position: relative;
+	z-index: 1000;
+}
+
+#menu a {
+	opacity: 0.75;
+	border: none;
+}
+
+.menuitem-large a {
+	width: 48px;
+	height: 48px;
+}
+
+#menu a + div {
+	position: absolute;
+	left: -1px;
+	top: 55px;
+	color: #444;
+	display: none;
+	font-size: 12px;
+	font-weight: normal;
+	padding: 4px 0;
+	width: 100%;
+	border-radius: 3px;
+	background: #eee;
+	box-shadow: 0 0 3px black;
+	z-index: 1;
+}
+#menu .menuitem {
+	border-radius: 2px;
+	box-shadow: 0 0 0 1px #8888;
+	margin: 2px;
+}
+#menu .menuitem-large {
+	border-radius: 3px;
+}
+
+#menu a:hover,
+#menu a.current {
+	border-color: #888;
+	opacity: 1;
+}
+#menu a:hover {
+	box-shadow: 0 10px 5px rgba(0, 0, 0, 0.05) inset;
+	background-color: transparent;
+}
+#menu .menuitem-large a:hover {
+	box-shadow: 0 20px 5px rgba(0, 0, 0, 0.05) inset;
+}
+#menu a:hover + div {
+	display: block;
+	box-shadow: 0 1px 2px -1px rgba(0, 0, 0, 0.5);
+}
+#menu .menuitem a {
+	display: block;
+	width: 32px;
+	height: 32px;
+	border-radius: 2px;
+}
+#menu .menuitem-large a {
+	width: 48px;
+	height: 48px;
+	border-radius: 3px;
+}
+.menublock {
+	position: relative;
+	margin: 0 4px;
+	display: flex;
+	align-items: flex-end;
+}
+.menutitle {
+	position: absolute;
+    left: 54px;
+	right: 2px;
+	top: 2px;
+	overflow: hidden;
+	text-align: center;
+	color: #444;
+	font-size: 12px;
+	line-height: 13px;
+	text-shadow: 0 1px 0 white;
+	border-radius: 3px 3px 0 0;
+	box-shadow: 0 0 0 1px #8888;
+}
+
+.menuitem-index   { background-position: 0 0; }
+.menuitem-warsim2 { background-position: 0 -48px; }
+.menuitem-build   { background-position: -48px 0; }
+.menuitem-hero4   { background-position: -48px -48px; }
+.menuitem-report  { background-position: -96px 0; }
+.menuitem-servers { background-position: -96px -48px; }
+
+.menuitem-warsim  { background-position: -144px 0; }
+.menuitem-distance{ background-position: -272px 0; }
+.menuitem-conq    { background-position: -176px 0; }
+.menuitem-off_calc{ background-position: -208px 0; }
+.menuitem-war     { background-position: -240px 0; }
+
+.menuitem-villages_res { background-position: -144px -32px; }
+.menuitem-troops  { background-position: -176px -32px; }
+.menuitem-oases   { background-position: -208px -32px; }
+.menuitem-culture { background-position: -240px -32px; }
+.menuitem-search  { background-position: -272px -32px; }
+
+.menuitem-hero    { background-position: -144px -64px; }
+.menuitem-items   { background-position: -176px -64px; }
+.menuitem-about   { background-position: -208px -64px; }
+.menuitem-thanks  { background-position: -240px -64px; }
+.menuitem-def_calc{ background-position: -272px -64px; }
+
+#search {
+    position: absolute;
+    left: 32px;
+    top: 0;
+    font-size: 16px;
+    width: 209px;
+    border: none;
+	z-index: 1;
+}
+
+#search input {
+	width: 100%;
+	font-size: 16px;
+	height: 32px;
+}
+
+#search-results {
+	list-style-type: none;
+	text-align: initial;
+	padding: 2px;
+    margin: -1px;
+    background: white;
+    border: 1px solid gray;
+}
+#search-results:empty {
+    padding: 0;
+}
+
+#search-results a {
+	font-weight: normal;
+	display: block;
+	padding: 0 2px 2px;
+}
+#search-results a:hover {
+	box-shadow: none;
+	border-color: transparent;
+	background: #ddd;
+}
+
+#langbar {
+	text-align: center;
+	margin: 4px;
+	letter-spacing: 2px;
+	opacity: 0.25;
+	transition: opacity 0.35s ease-in-out;
+}
+#langbar:hover { opacity: 1; }
+
+#menu a.icon--scalable, .menu__icon {
+	background-image: url('../img/newmenu.png?a');
+}
+.menu__icon {
+	display: block;
+	width: 32px;
+	height: 32px;
+}
+.menu__item--large .menu__icon {
+	width: 48px;
+	height: 48px;
+}
+.menu__icon--index   { background-position: 0 0; }
+.menu__icon--warsim2 { background-position: 0 -48px; }
+.menu__icon--build   { background-position: -48px 0; }
+.menu__icon--hero4   { background-position: -48px -48px; }
+.menu__icon--report  { background-position: -96px 0; }
+.menu__icon--servers { background-position: -96px -48px; }
+
+.menu__icon--warsim  { background-position: -144px 0; }
+.menu__icon--distance{ background-position: -272px 0; }
+.menu__icon--conq    { background-position: -176px 0; }
+.menu__icon--off_calc{ background-position: -208px 0; }
+.menu__icon--war     { background-position: -240px 0; }
+
+.menu__icon--villages_res { background-position: -144px -32px; }
+.menu__icon--troops  { background-position: -176px -32px; }
+.menu__icon--oases   { background-position: -208px -32px; }
+.menu__icon--culture { background-position: -240px -32px; }
+.menu__icon--search  { background-position: -272px -32px; }
+
+.menu__icon--hero    { background-position: -144px -64px; }
+.menu__icon--items   { background-position: -176px -64px; }
+.menu__icon--about   { background-position: -208px -64px; }
+.menu__icon--thanks  { background-position: -240px -64px; }
+.menu__icon--def_calc{ background-position: -272px -64px; }
+
+.menu__block {
+	position: relative;
+	display: flex;
+    flex-direction: column;
+    width: 400px;
+    max-width: 100%;
+}
+.menu__item { border-radius: 2px; }
+.menu__item--large { border-radius: 3px; }
+.menu__title {
+    position: absolute;
+    left: 48px;
+    right: 0;
+	top: 0;
+	margin: 0;
+    overflow: hidden;
+    text-align: center;
+    color: #444;
+    font-size: 12px;
+    line-height: 15px;
+    text-shadow: 0 1px 0 white;
+}
+@media screen and (min-width: 800px) {
+	.menu__block {
+		align-items: flex-end;
+		flex-direction: row;
+		width: auto;
+	}
+	.menu__text {
+		position: absolute;
+		display: none;
+		left: 0;
+		top: 52px;
+		color: #444;
+		font-size: 12px;
+		font-weight: normal;
+		padding: 4px 0;
+		width: 100%;
+		background: #eee;
+		z-index: 1;
+	}
+	a:hover .menu__text {
+		display: block;
+	}
+}
+
+
+#menu a.icon--scalable, .menu__icon { background-size: 304px 96px; }
+.flag       { background-size: 18px 672px; }
+.stats      { background-size: 200px 40px; }
+img.art     { background-size: 200px 16px; }
+img.building{ background-size: 260px 80px; }
+.t5 img.building{ background-size: 390px 120px; }
+img.res 	{ background-size: 20px 140px; }
+
+@media screen and (min-resolution: 107dpi), (-webkit-min-device-pixel-ratio: 1.118) {
+	#menu a.icon--scalable, .menu__icon { background-image: url("../img/newmenu@1.25x.png?a"); }
+	.flag   { background-image: url("../img/flags@1.25x.png"); }
+	.stats  { background-image: url("../img/t4/stats@1.25x.png"); }
+	img.art { background-image: url("../img/kirilloid/artefacts@1.25x.png"); }
+	img.building { background-image: url("../img/t4/buildings@1.25x.png"); }
+	img.itemCategory { background-image: url("../img/t4/items@1.25x.png"); }
+	.t5 img.itemCategory { background-image: url("../img/t5/items@1.25x.png"); }
+	img.crystal { background-image: url("../img/t5/crystals@1.25x.png"); }	
+	img.res { background-image: url("../img/t4/res2@1.25x.png"); }
+	.t5 img.res { background-image: url("../img/t5/res2@1.25x.png"); }
+	 .u1,  .u2,  .u3,  .u4,  .u5,  .u6,  .u7,  .u8,  .u9, .u10 { background-image: url("../img/t4/romans@1.25x.png"); }
+	.u11, .u12, .u13, .u14, .u15, .u16, .u17, .u18, .u19, .u20 { background-image: url("../img/t4/teutons@1.25x.png"); }
+	.u21, .u22, .u23, .u24, .u25, .u26, .u27, .u28, .u29, .u30 { background-image: url("../img/t4/gauls@1.25x.png"); }
+	.u31, .u32, .u33, .u34, .u35, .u36, .u37, .u38, .u39, .u40 { background-image: url("../img/t4/nature@1.25x.png"); }
+	.u41, .u42, .u43, .u44, .u45, .u46, .u47, .u48, .u49, .u50 { background-image: url("../img/t4/natars@1.25x.png"); }
+	.u51, .u52, .u53, .u54, .u55, .u56, .u57, .u58, .u59, .u60 { background-image: url("../img/t4/egyptians@1.25x.png"); }
+	.u61, .u62, .u63, .u64, .u65, .u66, .u67, .u68, .u69, .u70 { background-image: url("../img/t4/huns@1.25x.png"); }
+	.uhab, .ucata, .uhero, .uexp, .uunits, .ugeb, .utraps, .ab_phi, .ab_rec, .ab_com, .ab_met { background-image: url("../img/t4/specials@1.25x.png"); }
+	.t5 .uhab, .t5 .ucata, .t5 .uhero, .t5 .uexp, .t5 .uunits, .t5 .ugeb, .t5 .utraps { background-image: url("../img/t5/specials@1.25x.png"); }
+}
+
+@media screen and (min-resolution: 131dpi), (-webkit-min-device-pixel-ratio: 1.369) {
+	#menu a.icon--scalable, .menu__icon { background-image: url("../img/newmenu@1.5x.png?a"); }
+	.flag   { background-image: url("../img/flags@1.5x.png"); }
+	.stats  { background-image: url("../img/t4/stats@1.5x.png"); }
+	img.art { background-image: url("../img/kirilloid/artefacts@1.5x.png"); }
+	img.itemCategory { background-image: url("../img/t4/items@1.5x.png"); }
+	img.building { background-image: url("../img/t4/buildings@1.5x.png"); }
+	.t5 img.itemCategory { background-image: url("../img/t5/items@1.5x.png"); }
+	img.crystal { background-image: url("../img/t5/crystals@1.5x.png"); }
+	img.res { background-image: url("../img/t4/res2@1.5x.png"); }
+	.t5 img.res { background-image: url("../img/t5/res2@1.5x.png"); }
+	 .u1,  .u2,  .u3,  .u4,  .u5,  .u6,  .u7,  .u8,  .u9, .u10 { background-image: url("../img/t4/romans@1.5x.png"); }
+	.u11, .u12, .u13, .u14, .u15, .u16, .u17, .u18, .u19, .u20 { background-image: url("../img/t4/teutons@1.5x.png"); }
+	.u21, .u22, .u23, .u24, .u25, .u26, .u27, .u28, .u29, .u30 { background-image: url("../img/t4/gauls@1.5x.png"); }
+	.u31, .u32, .u33, .u34, .u35, .u36, .u37, .u38, .u39, .u40 { background-image: url("../img/t4/nature@1.5x.png"); }
+	.u41, .u42, .u43, .u44, .u45, .u46, .u47, .u48, .u49, .u50 { background-image: url("../img/t4/natars@1.5x.png"); }
+	.u51, .u52, .u53, .u54, .u55, .u56, .u57, .u58, .u59, .u60 { background-image: url("../img/t4/egyptians@1.5x.png"); }
+	.u61, .u62, .u63, .u64, .u65, .u66, .u67, .u68, .u69, .u70 { background-image: url("../img/t4/huns@1.5x.png"); }
+	.uhab, .ucata, .uhero, .uexp, .uunits, .ugeb, .utraps, .ab_phi, .ab_rec, .ab_com, .ab_met { background-image: url("../img/t4/specials@1.5x.png"); }
+	.t5 .uhab, .t5 .ucata, .t5 .uhero, .t5 .uexp, .t5 .uunits, .t5 .ugeb, .t5 .utraps { background-image: url("../img/t5/specials@1.5x.png"); }	
+	/* a hack to have nice bottom edge for flags */ 
+	#langbar {
+		position: relative;
+		top: 0.5px;
+	}
+}
+
+@media screen and (min-resolution: 166dpi), (-webkit-min-device-pixel-ratio: 1.732) {
+	#menu a.icon--scalable, .menu__icon { background-image: url("../img/newmenu@2x.png?a"); }
+	.flag   { background-image: url("../img/flags@2x.png"); }
+	.t3 .stats { background-image: url("../img/t3/stats@2x.png"); }
+	.stats  { background-image: url("../img/t4/stats@2x.png"); }
+	img.art { background-image: url("../img/kirilloid/artefacts@2x.png"); }
+
+	.t3 img.building { background-image: url("../img/t3/buildings@2x.png"); }
+	img.building { background-image: url("../img/t4/buildings@2x.png"); }
+	.t5 img.building { background-image: url("../img/t5/buildings@2x.png"); }
+
+	img.itemCategory { background-image: url("../img/t4/items@2x.png"); }
+
+	.t5 img.itemCategory { background-image: url("../img/t5/items@2x.png"); }
+	img.crystal { background-image: url("../img/t5/crystals@2x.png"); }	
+	
+	.t3 img.res { background-image: url("../img/t3/res2@2x.png"); }
+	img.res { background-image: url("../img/t4/res2@2x.png"); }
+	.t5 img.res { background-image: url("../img/t5/res2@2x.png"); }		
+	 .u1,  .u2,  .u3,  .u4,  .u5,  .u6,  .u7,  .u8,  .u9, .u10 { background-image: url("../img/t4/romans@2x.png"); }
+	.u11, .u12, .u13, .u14, .u15, .u16, .u17, .u18, .u19, .u20 { background-image: url("../img/t4/teutons@2x.png"); }
+	.u21, .u22, .u23, .u24, .u25, .u26, .u27, .u28, .u29, .u30 { background-image: url("../img/t4/gauls@2x.png"); }
+	.u31, .u32, .u33, .u34, .u35, .u36, .u37, .u38, .u39, .u40 { background-image: url("../img/t4/nature@2x.png"); }
+	.u41, .u42, .u43, .u44, .u45, .u46, .u47, .u48, .u49, .u50 { background-image: url("../img/t4/natars@2x.png"); }
+	.u51, .u52, .u53, .u54, .u55, .u56, .u57, .u58, .u59, .u60 { background-image: url("../img/t4/egyptians@2x.png"); }
+	.u61, .u62, .u63, .u64, .u65, .u66, .u67, .u68, .u69, .u70 { background-image: url("../img/t4/huns@2x.png"); }
+	.uhab, .ucata, .uhero, .uexp, .uunits, .ugeb, .utraps, .ab_phi, .ab_rec, .ab_com, .ab_met { background-image: url("../img/t4/specials@2x.png"); }
+	.t5 .uhab, .t5 .ucata, .t5 .uhero, .t5 .uexp, .t5 .uunits, .t5 .ugeb, .t5 .utraps { background-image: url("../img/t5/specials@2x.png"); }
+	.t4 .tribe { background-image: url("../img/t4/tribes@2x.png"); }
+	.t5 .tribe { background-image: url("../img/t5/tribes@2x.png"); }
+	#langbar { top: 0; }
+}
+
+@media screen and (min-resolution: 215dpi), (-webkit-min-device-pixel-ratio: 2.236) {
+	.flag   { background-image: url("../img/flags@2.5x.png"); }
+	img.res { background-image: url("../img/t4/res2@2.5x.png"); }	
+	.t5 img.res { background-image: url("../img/t5/res2@2.5x.png"); }	
+}
+
+@media screen and (min-resolution: 263dpi), (-webkit-min-device-pixel-ratio: 2.739) {
+	#menu a.icon--scalable, .menu__icon { background-image: url("../img/newmenu@3x.png?a"); }
+	.flag   { background-image: url("../img/flags@3x.png"); }
+	img.res { background-image: url("../img/t4/res2@3x.png"); }	
+}
+
+@media screen and (min-resolution: 332dpi), (-webkit-min-device-pixel-ratio: 3.464) {
+	.flag   { background-image: url("../img/flags@4x.png"); }
+}
+
+html[lang='fa'] { 
+	font-size: 15px;
+	font-family: Tahoma, "Arial Unicode MS" Verdana, Helvetica, sans-serif;
+}
+
+html[lang='fa'] #main .build_name {
+	font-size: 15px;
+}
+
+html[lang='fa'] img.g35,
+html[lang='ar'] img.g35 {
+	background-position: -200px -60px;
+}
+
+html[lang='fa'] .t5 img.g35,
+html[lang='ar'] .t5 img.g35 {
+	background-position: -300px -80px;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background: black;
+		color: #ddd;
+	}
+	.page {
+		background: #222;
+		border-color: #444;
+	}
+	
+	#menu a.icon--scalable, .menu__icon {
+		background-color: #ddd;
+		filter: invert(1);
+	}
+	.menutitle {
+		color: #aaa;
+		text-shadow: none;
+	}
+	#menu a + div {
+		background: #222;
+		color: #ddd;
+	}
+
+	.rbg { background-color: black; }
+
+	input, button, select, textarea {
+		color: white;
+		background: #444;
+		border: 1px solid #666;
+	}
+	.but { background-color: #444; }
+	.but:hover, .but:focus { background-color: hsl(87, 80%, 15%); }
+	.but:active { background-color: hsl(30, 100%, 15%); }
+	.button-group > button.active {
+		background: hsl(30, 50%, 40%);
+	}
+	.button-group > button:hover {
+		background: hsl(87, 50%, 40%);
+	}
+	
+	.fm { border-color: #888; }
+	input[type=range] { border: none; }
+	input[type=range]::-webkit-slider-runnable-track,
+	input[type=range]:focus::-webkit-slider-runnable-track {
+		background: #444;
+	}
+	input[type=range]::-moz-range-track {
+		background: #444;
+	}
+	input[type=range]::-ms-fill-lower,
+	input[type=range]::-ms-fill-upper,
+	input[type=range]:focus::-ms-fill-lower,
+	input[type=range]:focus::-ms-fill-upper {
+		background: #444;
+	}
+
+	.ab_phi, .ab_rec, .ab_com, .ab_met {
+		mix-blend-mode: luminosity;
+		filter: brightness(0.75);
+	}
+	.t5 .res.r5,
+	.t5 .res.r7,
+	.t5 .itemCategory,
+	.t5 .stats,
+	.t5 .uexp
+	{ filter: invert(1); }
+
+	.attacker .role { color: hsl(30, 80%, 50%); }
+	.defender .role { color: hsl(90, 80%, 40%); }
+	#page-items .item .tabs div.active {
+		background-color: #2b5c0a;
+	}
+	#serverHint > div {
+		background-color: #222;
+	}
+}

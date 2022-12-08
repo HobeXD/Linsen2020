@@ -1,0 +1,687 @@
+/* reset */
+section, main { display: block; }
+/* UI */
+
+#old_style_label {
+    display: none;
+}
+.t4 #old_style_label {
+    display: block; 
+}
+
+#log_wrapper, #log_text {
+    margin-bottom: 16px;
+    width: 100%;
+    height: 200px;
+    position: relative;
+}
+
+#log_wrapper * {
+    opacity: 0;
+}
+
+#log_wrapper {
+    display: inline-block;
+    border: 1px solid gray;
+}
+#log_text {
+    position: absolute;
+    left: auto;
+    right: auto;
+    box-sizing: border-box;
+}
+#log_reset,
+#log_submit {
+    font-size: 16px;
+    padding: 2px;
+    line-height: 24px;
+    width: 121px;
+}
+
+#log_reset {
+    background: linear-gradient(to bottom, #b07c29, #7c581e);
+    color: white;
+    border-color: #283308;
+    float: left;
+}
+#log_submit {
+    margin-left: 10px;
+    background: linear-gradient(to bottom, #7cb029, #587c1e);
+    color: white;
+    float: right;
+    border-color: #283308;
+}
+.t5 #log_submit {
+    background: linear-gradient(#c7e94f, #7da100);
+    text-shadow:
+        1px 0 0 #7da100,
+        0 1px 0 #7da100,
+       -1px 0 0 #7da100,
+       0 -1px 0 #7da100;
+    letter-spacing: .3px;
+}
+
+#parse_error ol {
+    margin: 6px 0;
+    padding: 0 24px;
+}
+#log_link,
+#log_single {
+    display: block;
+    box-sizing: border-box;
+    margin: 6px 0;
+    border: 1px solid;
+}
+.t4 #log_single {
+    border-color: #ddc6a2;
+}
+#log_copy {
+    font-size: 14px;
+    padding: 0 8px;
+}
+
+.tabs {
+    border-bottom: solid 1px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.t4 .tabs {
+    border-color: #ddc6a2;
+}
+.t4 .tab {
+    border-color: #ddc6a2;
+    background: #fff9eb;
+}
+.t4 .tab:hover {
+    background: #fcf2da;
+}
+
+.tab {
+    border: solid 1px silver;
+    margin-bottom: 1px;
+    vertical-align: middle;
+    padding: 2px 5px;
+    flex: 0.1 2 20px;
+}
+
+html[dir='ltr'] .tab:not(:first-child) { margin-left: 4px; }
+html[dir='rtl'] .tab:not(:first-child) { margin-right: 4px; }
+
+.tab.active {
+    background: white;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 5px;
+    padding-top: 3px;
+    margin-bottom: -1px;
+}
+
+
+
+/* shortcuts in description */
+kbd {
+    display: inline-block;
+    line-height: 1em;
+    font-family: sans-serif;
+}
+.kbd-chord {
+    white-space: nowrap;
+}
+.win kbd {
+    border: 1px solid silver;
+    background: white;
+    border-radius: 2px;
+    box-shadow: 1px 2px 0 #aaa;
+    padding: 0 2px;
+    margin: 0 2px 0 1px;
+}
+.win kbd:active {
+    position: relative;
+    top: 1px;
+}
+.mac kbd {
+    font-weight: bold;
+}
+.win kbd.ctrl::before { content: "Ctrl"; }
+.mac kbd.ctrl::before { content: "\2318"; }
+.mac .kbd-joiner { display: none; }
+
+#stats {
+    max-width: 220px;
+    line-height: 20px;
+    font-feature-settings: 'tabn' 1;
+    font-variant-numeric: tabular-nums;
+    margin-top: -5px;
+}
+
+#stats table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+html[dir="ltr"] #stats td:first-child {
+    border-right: 1px solid gray;
+}
+html[dir="rtl"] #stats  td:first-child {
+    border-left: 1px solid gray;
+}
+
+html[dir="ltr"] #stats {
+    float: right;
+    text-align: right;
+    margin-left: -10px;
+}
+html[dir="rtl"] #stats {
+    float: left;
+    text-align: left;
+    margin-right: -10px;
+}
+#stats td { padding: 2px 10px; }
+#stats td.percent { padding: 2px 17px; }
+#stats th {
+    text-align: center;
+    padding-top: 4px;
+}
+#stats hr {
+    margin: 4px 0;
+}
+
+.t5 #stats { max-width: 200px; }
+.t5 #stats td { padding: 2px; }
+.t5 #stats td.percent { padding: 2px 14px; }
+
+.t4 #stats .res:not(.r6) { margin: 4px 0; }
+.t4 #stats .building,
+.t4 #stats .stats,
+.t4 #stats .uexp { margin: 0 2px; }
+.t5 #stats img:not(.building) { margin: 0 4px; }
+
+#report,
+.visibility_settings,
+#tabs,
+#log_form,
+#log_link,
+#log_single {
+    max-width: 540px;
+    width: 100%;
+}
+#log_form {
+    position: relative;
+}
+
+.editing .visibility_settings {
+    display: table;
+}
+.visibility_settings {
+    display: none;
+    border: solid 1px white;
+    margin-bottom: 15px;
+}
+.visibility_settings td {
+    padding: 5px 15px;
+}
+.visibility_settings label {
+    display: block;
+    text-align: initial;
+}
+.visibility_settings label.danger {
+    color: red;
+}
+.visibility_settings label.disabled {
+    color: gray;
+}
+
+.visibility_settings th { text-align: center; }
+.visibility_settings td { width: 30%; }
+td.visibility_settings--global { width: 40%; }
+
+.t4 .visibility_settings {
+    border-color: #ddc6a2;
+    background-color: #fff9eb;
+}
+.t4 .visibility_settings th {
+    background-color: #fcf2da;
+    border-bottom: 1px solid #ddc6a2;
+}
+.t5 .visibility_settings {
+    border-color: silver;
+    background: #f3f3f3;
+}
+
+/* COMMON STYLES */
+.vilName:empty::after {
+    content: "[?]";
+    color: gray;
+}
+.player-info {
+    line-height: 17px;
+}
+.player-info.names-hidden > .player-link {
+    font-size: 0;
+}
+.player-info.names-hidden > .player-link::after {
+    content: "???";
+    
+}
+.t4 #report .player-info.names-hidden > .player-link::after { font-size: 15px; }
+.t5 #report .player-info.names-hidden > .player-link::after { font-size: 14px; }
+#report .troops.troops-hidden td {
+    font-size: 0;
+}
+#report .troops.troops-hidden td::after {
+    content: "?";
+    color: gray;
+    font-size: 14px;
+}
+.t4 #report .troops.troops-hidden td {
+    padding: 6px 3px 0;
+}
+.t4 #report .troops.troops-hidden td::after {
+    line-height: 14px;
+}
+
+.c { color: gray; }
+/* LEGENDS */
+.t4 #report h2 {
+    text-transform: uppercase;
+    margin: 0;
+    padding: 4px 10px;
+    color: #f2f2f2;
+    line-height: 28px;
+}
+.t4 #report .attacker h2 { background: #A33F41; }
+.t4 #report .defender h2,
+.t4 #report .reinforcement h2 { background: #8CB1C8; }
+.t4 #report .header {
+    background-color: #fcf2da;
+    padding: 7px 10px;
+    border: solid 1px #ddc6a2;
+    margin-top: 5px;
+}
+.t4 #report .header .link a { word-wrap: break-word; }
+.t4 #report .header dl { padding: 0; margin: 0; line-height: 18px; }
+.t4 #report .header dt,
+.t4 #report .header dd { display: inline-block; }
+.t4 #report .header dt { width: 20%; min-width: 140px; padding: 5px; font-weight: bold; }
+.t4 #report .header dd { width: 65%; margin: 0; }
+.t4 #report .role {
+    border: 1px solid #ddc6a2;
+    margin-top: 15px;
+    box-sizing: border-box;
+}
+.t4 #report .roleLocation {
+    padding: 7px 9px 9px;
+    background-color: #fcf2da;
+    border-top: 1px solid #ddc6a2;
+    border-bottom: 1px solid #ddc6a2;
+    position: relative;
+    font-size: 15px;
+    line-height: 16px;
+}
+.t4 #report .roleLocation.names-hidden {
+    padding: 10px 9px 6px;
+}
+/* TOOLBAR */
+#report .toolbar {
+	display: flex;
+}
+
+.t4 #report .toolbar {
+    position: absolute;
+    top: -18px;
+    right: 8px;
+}
+.t4 #report .toolbar .menuitem {
+    margin: 0 8px;
+    box-shadow: 0 0 2px rgba(128,64,0,0.25);
+}
+.t4:not(.t4-old) #report .toolbar .menuitem a {
+    box-shadow: 0 -17px 1px inset rgba(128, 128, 128, 0.0625);
+    padding: 1px;
+}
+.t4:not(.t4-old) #report .toolbar .menuitem a:hover,
+.t4:not(.t4-old) #report .toolbar .menuitem a:focus {
+    background-color: #fff9eb;
+    border-color: #ddc6a2;
+}
+.t4:not(.t4-old) #report .toolbar .menuitem a:active {
+    background-color: #fcf2da;
+    border-color: #ccb080;
+}
+.menu__icon.but {
+	padding: 0;
+}
+
+.t4 #report .roleUnits {
+    background-color: #fff9eb;
+    padding: 3px 5px 5px;
+}
+.t4 #report table { line-height: 16px; background-color: #fff9eb; padding: 3px 5px 5px; }
+.t4 #report td { padding: 5px 3px; }
+.t4 #report th { padding: 5px 3px; vertical-align: top; font-weight: normal; width: 20%; }
+.t4 #report .troops td { width: 48px; box-sizing: border-box; }
+.t4 #report .troops th { width: 1%; }
+html[dir='ltr'] .t4 #report .troops td { text-align: right; }
+html[dir='rtl'] .t4 #report .troops td { text-align: left; }
+
+.t4-old #report .report .header {
+    border: 1px solid silver;
+    background: white;
+    padding: 0;
+}
+.t4-old #report .role { border: none; }
+.t4-old #report h2 {
+    text-transform: capitalize;
+    font-size: 12px;
+    font-weight: normal;
+    display: inline-block;
+    border-radius: 8px;
+    line-height: 1.2;
+    padding: 4px 0;
+    margin-bottom: 4px;
+    width: 20%;
+    letter-spacing: -0.5px;
+    text-align: center;
+}
+.t4-old #report .attacker h2 { background: #c00; }
+.t4-old #report .defender h2,
+.t4-old #report .reinforcement h2 { background: #080; }
+.t4-old #report .roleLocation {
+    display: inline-block;
+    border: none;
+    background: none;
+    padding: 0 4px;
+    width: calc(80% - 12px);
+}
+
+.t4-old #report .toolbar {
+    top: -13px;
+    right: -1px;
+}
+.t4-old #report .toolbar .menuitem {
+    margin: 0 1px;
+}
+
+.t4-old #report table {
+    background: white;
+    border-collapse: collapse;
+}
+.t4-old #report table + table {
+    margin-top: -1px;
+}
+.t4-old #report td,
+.t4-old #report th {
+    border: 1px solid silver;
+}
+.t4-old #report .troops th { width: 20%; }
+.t4-old #report .troops td { width: auto; }
+html[dir] .t4-old #report .troops td {
+    text-align: center;
+}
+
+
+/* KINGDOMS */
+.t5 #report > .report > * {
+    width: 100%;
+    box-sizing: border-box;
+}
+.t5 #report > .report > *, .t5 #report .border {
+    border: 0px solid #9a9389;
+}
+.t5 #report .header { overflow: hidden; border-width: 1px 1px 0; }
+.t5 #report .header .link { float: right; }
+
+#report .report .header {
+    padding: 1px 8px;
+    overflow: hidden;
+    position: relative;
+}
+#report .sep-arrow {
+    content: '';
+    position: absolute;
+    top: 7px;
+    left: 50%;
+    margin-left: -15px;
+    height: 20px;
+    width: 20px;
+    border: 1px solid #9a9389;
+    border-width: 0 0 1px 1px;
+    transform: rotate(225deg) skew(12deg,12deg);
+    background-color: #fff;
+}
+html[dir="ltr"] .player--from,
+html[dir="rtl"] .player--to { float: left; text-align: left; }
+html[dir="rtl"] .player--from,
+html[dir="ltr"] .player--to { float: right; text-align: right; }
+
+@media all and (max-width: 539px) {
+    .player-info { display: block; float: none; text-align: initial; }
+    .player-info br { display: none; }
+    #report .sep-arrow {
+        position: static;
+        transform: rotate(315deg) skew(12deg, 12deg);
+        margin: 0 auto 7px;
+        display: block;
+        background: transparent;
+        clear: both;
+    }
+}
+
+#report .report .successBar {
+    border-width: 1px;
+    height: 8px;
+    background-color: #a5c400;
+    box-shadow: inset 0 0 0 1px #fff;
+}
+.lossBar {
+    height: 100%;
+    background-color: #d40000;
+    box-shadow: inset  1px  1px #fff,
+                inset -1px -1px #fff;
+}
+#report meter.successBar {
+    box-shadow: 0 0 0 1px #9a9389;
+    background-color: transparent;
+    margin: 0 1px 0 1px;
+    display: block;
+    width: auto;
+}
+#report meter.successBar::-webkit-meter-bar {
+    background: #a5c400;
+}
+#report meter.successBar::-webkit-meter-optimum-value {
+    background: #d40000;
+    box-shadow: -1px 0 0 inset white;
+}
+
+.border {
+    border-spacing: 0;
+}
+.t5 #report .troops-hidden .losses {
+    display: none;
+}
+
+.t5 #report .border {
+    border-width: 1px;
+    margin: 5px 0;
+    position: relative;
+}
+.t5 #report .border th {
+    background: #e8e5e1;
+    padding: 4px 8px;
+    border-top-width: 1px;
+}
+.t5 #report .border td {
+    background: #f1f0ee;
+    text-align: center;
+    width: 9.09%;
+}
+.t5 #report .border td:not(:first-child) {
+    border-left: 1px solid #dad8d5;
+}
+.border .icons td {
+    padding: 6px 4px;
+}
+.border .info {
+    padding: 10px;
+}
+.border .info .bounty {
+    display: table;
+    line-height: 28px;
+    width: 100%;
+}
+.border .info .resources {
+    display: table-cell;
+    width: 100%;
+}
+.border .info .resources > ul {
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+.border .info .resources > ul > li {
+    list-style-type: none;
+    text-align: initial;
+    flex: 1;
+}
+.border .treasures {
+    display: inline-block;
+    width: 120px;
+    text-align: center;
+    margin-left: 3px;
+}
+.t5 #report .border .info .resources,
+.t5 #report .border .treasures {
+    padding: 0 10px;
+    background: white;
+    border: 1px solid #dad8d5;
+}
+.border .troops {
+    line-height: 24px;
+}
+.border .losses {
+    color: #d40000;
+    line-height: 8px;
+}
+.border .losses td {
+    padding-bottom: 6px;
+}
+.border .losses td:not(:empty)::before {
+    content: "-";
+}
+
+#stats.zero-resources .resources hr,
+#stats.zero-resources .resources hr ~ * {
+    display: none;
+}
+#stats.zero-time .time hr,
+#stats.zero-time .time hr ~ * {
+    display: none;
+}
+#stats:not(.scan) .combat img.scan,
+#stats.scan .combat img:not(.scan) {
+    display: none;
+}
+#stats.scan .combat hr,
+#stats.scan .combat hr ~ * {
+    display: none;
+}
+@media all and (max-width: 767px) {
+    html[dir] #stats { float: none; margin: 0; }
+    #stats hr, #stats hr ~ * { display: none; }
+
+    .t4 #stats, .t5 #stats { width: 100%; max-width: 540px; }
+    #stats tr { display: inline-block; }
+    #stats tr:nth-child(2n+1) { width: 74%; }
+    #stats tr:nth-child(2n) { width: 25%; }
+    #stats tr:first-child { width: 100%; text-align: right; }
+    #stats tr:first-child th { width: 35%; display: inline-block; }
+    #stats td { display: inline-block; width: calc(50% - 25px); }
+    #stats td.percent { width: calc(50% - 43px); }
+    .t5 #stats td.percent { width: calc(50% - 53px); }
+}
+
+@media all and (max-width: 540px) {
+    .t4 #report .header dl > * {
+        display: block;
+        width: 100%;
+    }
+    .t4 #report .header dt {
+        padding: 10px 0 0;
+    }
+}
+@media all and (max-width: 360px) {
+    .side-block { display: flex; width: auto; }
+    table > .troops { display: flex; width: 25%; }
+    table > tbody.troops { width: 75%; }
+    table > tbody.troops tr { width: 30%; }
+    table > thead.troops td { height: 26px; }
+    table > .troops tr { display: flex; flex-direction: column; }
+    .t4 #report .troops th { height: 16px; width: auto; }
+}
+@media (prefers-color-scheme: dark) {
+    .win kbd {
+        background: #444;
+        border-color:  #666;
+        box-shadow: 1px 2px 0 #666;
+    }
+
+    .t5 #report .border th {
+        background: #1d1a16;
+    }
+    .t5 #report .border td {
+        background: #272520;
+    }
+    #report .sep-arrow {
+        background-color: #222;
+    }
+
+    .t4 #report .header {
+        background-color: hsla(42, 85%, 12%, 1);
+    }
+    .t4 #report table {
+        background-color: hsla(42, 40%, 16%, 1);
+    }
+    .t4 .visibility_settings,
+    .t4 #report .roleLocation {
+        background-color: hsla(42, 35%, 12%, 1);
+    }
+    .t4 .visibility_settings th {
+        background-color: hsla(42, 35%, 12%, 1);
+    }
+    .t4 #report .attacker h2 {
+        background: hsla(359, 44%, 24%, 1);
+    }
+    .t4 #report .defender h2,
+    .t4 #report .reinforcement h2 {
+        background: hsla(203, 35%, 17%, 1);
+    }
+    .t4 .visibility_settings,
+    .t4 #report .role,
+    .t4 #report .header {
+        border-color:  hsla(37, 46%, 50%, 1);
+    }
+
+    .t4-old .visibility_settings {
+        border: 1px solid silver;
+        background: #444;
+    }
+    .t4-old #report .report .header {
+        background: #444;
+    }
+    .t4-old #report table {
+        background: #444;
+    }
+    .t4-old #report .defender h2,
+    .t4-old #report .reinforcement h2 {
+        background: #040;
+    }
+    .t4-old #report .roleLocation {
+        background: transparent;
+    }
+    .menu__icon.but {
+        background-color: #ccc;
+        filter: none;
+        mix-blend-mode: hard-light;
+    }
+}

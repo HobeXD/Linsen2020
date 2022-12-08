@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from travian.kirilloid.ru/troops.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:03:52 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/ico" href="img/favicon.ico" sizes="16x16">
+<link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+<link rel="stylesheet" type="text/css" href="css/stylee167.css?e">
+<link rel="stylesheet" type="text/css" media="screen and (pointer: coarse)" href="css/touch.css">
+<link rel="stylesheet" type="text/css" href="css/ltr.css">
+
+<link rel="icon" sizes="192x192" href="img/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="img/icon-152.png">
+<script type="text/javascript">
+if (!window.$) {
+	$ = function (id) { return document.getElementById(id); };
+}
+var _overlay = null;
+function scriptLoadFail() {
+	if (_overlay) {
+		return;
+	}
+	var div = document.createElement('div');
+	div.className = "overlay";
+	div.innerHTML = "<button class='close' onclick='closeOverlay()'>&times;</button>"
+				  + "<p>There was an error loading JavaScript.</p>"
+				  + "<p>The page might work incorrectly.</p>"
+				  + "<p class='buttons'>"
+				  + "<button class='but' onclick='location.reload()'>🔁 Reload</button>"
+				  + "<button class='but' onclick='closeOverlay()'>❎ Ignore</button></p>";
+	$$(".page")[0].appendChild(div);
+	_overlay = div;
+	document.addEventListener('keyup', closeOverlayOnEsc);
+}
+function closeOverlay() {
+	_overlay.parentNode.removeChild(_overlay);
+	document.removeEventListener('keyup', closeOverlayOnEsc);
+	_overlay = null;
+}
+function closeOverlayOnEsc(e) {
+	if (e.keyCode === 27) {
+		closeOverlay();
+	}
+}
+document.addEventListener('keypress', function (e) {
+  if (e.key === '\n' && (e.ctrlKey || e.metaKey)) {
+	var original = document.getSelection().toString().trim();
+	if (!original) original = prompt("Nothing was selected, enter what to replace:");
+	if (!original) return alert("Still nothing. See you later.");
+	const result = prompt("How to better translate this?", original);
+	if (!result) return;
+	var img = new Image();
+	img.onload = function () { alert("Thanks!"); };
+	img.onerror = function () { alert("Failed! Did you suggest too long string?"); };
+	img.src = 'suggest_translation.html'
+	  + '?lang=' + document.documentElement.lang
+	  + '&path=' + encodeURIComponent(location.pathname)
+	  + '&original=' + encodeURIComponent(original)
+	  + '&suggest=' + encodeURIComponent(result)
+  }
+});
+Element.prototype.matches =
+	Element.prototype.matches ||
+	Element.prototype.msMatchesSelector || 
+	function(s) {
+		var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+			i = matches.length;
+		while (--i >= 0 && matches.item(i) !== this) {}
+		return i > -1;
+	};
+function findParent(e, s) {
+	if (e.closest) return e.closest(s);
+	while (e && e !== document) {
+		if (e.matches(s)) return e;
+		e = e.parentNode;
+	}
+	return null;
+}
+(function () {
+	function css(name, value) {
+		if (arguments.length === 1) { 
+			return this[0].style[name];
+		}
+		this.forEach(function (el) { el.style[name] = value; });
+	}
+	function prop(name, value) {
+		if (arguments.length === 1) { 
+			return this[0][name];
+		}
+		this.forEach(function (el) { el[name] = value; });
+	}
+	function on(event, handler) {
+		this.forEach(function (el) {
+			el.addEventListener(event, handler, false);
+		});
+		return this;
+	}
+	function addClass(cls) {
+		this.forEach(function (el) {
+			el.classList.add(cls);
+		});
+	}
+	function removeClass(cls) {
+		this.forEach(function (el) {
+			el.classList.remove(cls);
+		});
+	}
+	function toggleClass(cls, set) {
+		this.forEach(function (el) {
+			if (set) {
+				el.classList.add(cls);
+			} else if (set == null) {
+				el.classList.toggle(cls);
+			} else {
+				el.classList.remove(cls);
+			}
+		});
+	}
+	function find(selector) {
+		return wrap(this.reduce(function (a, el) {
+			return a.concat([].slice.call(el.querySelectorAll(selector)));
+		}, []));
+	}
+	function wrap(a) {
+		a.on = on;
+		a.css = css;
+		a.prop = prop;
+		a.addClass = addClass;
+		a.removeClass = removeClass;
+		a.toggleClass = toggleClass;
+		a.find = find;
+		a.parent = parent;
+		return a;
+	}
+	function query(ctx, selector) {
+		return [].slice.call(ctx.querySelectorAll(selector));
+	}
+	$$ = function (selector, context) {
+		if (context === undefined) { context = document; }
+		var a;
+		if (selector instanceof HTMLElement) {
+			a = [selector];
+		} else if (typeof selector === 'string') {
+			a = query(context, selector);
+		} else if (selector instanceof Array) {
+			a = selector;
+		} else {
+			throw new TypeError("Selector of wrong type: " + Object.prototype.toString.call(a));
+		}
+		return wrap(a);
+	};
+	Cookie = {
+		write: function (name, value, options) {
+			if (!options) options = {};
+			document.cookie = name + "=" + value
+				+ (options.duration ? ';max-age=' + (options.duration * 86400) : '');
+		},
+		read: function (name) {
+			var m = document.cookie.match(new RegExp("(^|; )" + name + "=(.*?)(; |$)"));
+			return m && m[2];
+		},
+		dispose: function (name) {
+			document.cookie = name + "=0;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		}
+	};
+	if (!window.Event) {
+		window.Event = function (type, params) {
+			var event = document.createEvent('Event');
+			event.initEvent(type, true, true);
+			return event;
+		};
+	}
+}());
+</script>
+<title>Travian :: Troops</title>
+<style type="text/css">
+/*span.research { background:#e0ffe0; }
+#upg_table tr.research td { background:#e0ffe0; }*/
+#upg_table tr.research td { background:#e0ffe0; }*/
+span.at { background: #ffffc0; font-size: 75%; }
+#upg_table .hover td, .unitHover { background-color: #ddd }
+#upg_table .active td, .unitSelected { background-color: #ccc }
+#upg_table .unavailable { color: gray; }
+td.lvl { width:25px; }
+td.res { width:75px; }
+td.time { width:90px; }
+td.upg { width:90px; }
+#details td {
+	vertical-align: top;
+}
+.inlineHelpWrap {
+	width: 18px;
+}
+.inlineHelp {
+	position: relative;
+	width: 18px;
+	height: 20px;
+	cursor: help;
+}
+.inlineHelp::before {
+    font-size: 110%;
+    font-weight: bold;
+    text-align: center;
+    color: silver;
+    content: '?';
+    width: 100%;
+    display: inline-block;
+}
+.inlineHelp .helpContent {
+	display: none;
+	border: gray 1px solid;
+	background: white;
+	padding: 5px;
+	width: 250px;
+	position: absolute;
+	left: 20px;
+	top: 20px;
+	font-size: 12px;
+    box-shadow: 0 0 3px gray;
+}
+.inlineHelp:hover .helpContent {
+	display: block;
+}
+
+.inlineHelp .helpContent ul {
+	padding: 0;
+	margin: 0 0 0 1.5em;
+}
+@media all and (max-width: 799px) {
+	.res1, .res2, .res3, .res4 { display: none; }
+}
+@media all and (max-width: 519px) {
+	.name { display: none; }
+	#upg_table td:nth-child(2),
+	#upg_table td:nth-child(3),
+	#upg_table td:nth-child(4),
+	#upg_table td:nth-child(5) {
+		display: none;
+	}
+	#details td { float: left; }
+	#details .inlineHelpWrap { clear: left; }
+}
+@media (prefers-color-scheme: dark) {
+	#upg_table .hover td, .unitHover { background-color: #333 }
+	#upg_table .active td, .unitSelected { background-color: #555 }
+	.inlineHelp .helpContent { background-color: #222; }
+}
+</style>
+</head>
+<body>
+<div class="ad"><style id="scaling">
+	.icon--scalable {
+		zoom: var(--scale-zoom);
+		transform: scale(var(--scale-transform));
+	}
+</style>
+<script type="text/javascript" async><!--
+(function () {
+	var urls = {};
+	window.onerror = function(msg, url, line, column, error) {
+		if ($ == window.jQuery) { msg = "jQuery sneaked here!"; }
+		var origin = location.protocol + '//' + location.host;
+		var params =
+			"?msg=" + encodeURIComponent(msg) +
+			"&url=" + encodeURIComponent(url) +
+			"&page=" + encodeURIComponent(location.href.replace(origin, '')) +
+			"&line=" + line +
+            "&lang=" + document.documentElement.lang +
+            "&column=" + (column === undefined ? 'n/a' : column) +
+            "&stack=" + encodeURIComponent(error && error.stack) +
+			"";
+		var url = "error.html"+ params;
+		if (urls[url] > 3) return false;
+		var img = new Image();
+		img.width = 1;
+		img.height = 1;
+		img.src = url;
+		document.body.appendChild(img);
+		urls[url] = (urls[url] || 0) + 1;
+		return false;
+	};
+	if (!window.devicePixelRatio) return;
+	Cookie.write('dpi', Math.round(devicePixelRatio * 96), { duration: 365 });
+	var oldValue = devicePixelRatio;
+	var zoomKind = window.CSS && CSS.supports('zoom', '1') ? 'zoom' : 'transform';
+	function setZoomLevel(zoomLevel) {
+		document.body.style.setProperty("--scale-" + zoomKind, zoomLevel);
+	}
+	function resize(currentScale) {
+		function f(n) {
+			return Math.abs(Math.log(currentScale / n));
+		}
+		var zoomLevels = [0.125, 0.25, 0.5, 1, 1.25, 1.5, 2, 2.5, 3, 4];
+		zoomLevels.sort(function (a, b) { return f(a) - f(b); });
+		setZoomLevel(zoomLevels[0] / currentScale);
+	}
+	window.addEventListener('resize', function () {
+		var newValue = devicePixelRatio;
+		if (newValue === oldValue) { return; }
+		resize(oldValue = newValue);
+	});
+	resize(devicePixelRatio);
+}());
+--></script>
+<!--[if lte IE 10]>
+    <div id="warning">
+        <a href="https://www.microsoft.com/en-us/WindowsForBusiness/End-of-IE-support">
+            Support for older versions of Internet Explorer ended on January 12th, 2016
+        </a>
+    </div>
+<![endif]-->
+</div>
+<div id="menu">
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="index.html" class="icon--scalable menuitem-index"></a><div>Home Page</div></div>
+	</span>
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="warsim2.html" class="icon--scalable menuitem-warsim2"></a><div>Extended Combat Simulator</div></div>
+		<div class="menutitle">Calculators</div>
+		<div class="menuitem"><a href="distance.html" class="icon--scalable menuitem-distance"></a><div>distance calculator</div></div>
+		<div class="menuitem"><a href="conq.html" class="icon--scalable menuitem-conq"></a><div>Conquering calculator</div></div>
+		<div class="menuitem"><a href="off_calc.html" class="icon--scalable menuitem-off_calc"></a><div>offense calculator</div></div>
+		<div class="menuitem"><a href="def_calc.html" class="icon--scalable menuitem-def_calc"></a><div>defense calculator</div></div>
+		<div class="menuitem"><a href="war.html" class="icon--scalable menuitem-war"></a><div>units' attributes calculator</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="build.html" class="icon--scalable menuitem-build"></a><div>buildings</div></div>
+		<div class="menutitle">Tables</div>
+		<div class="menuitem"><a href="villages_res.html" class="icon--scalable menuitem-villages_res"></a><div>resource development calculator</div></div>
+		<div class="menuitem"><a href="troops.html" class="icon--scalable menuitem-troops"></a><div>Troops</div></div>
+		<div class="menuitem"><a href="oases.html" class="icon--scalable menuitem-oases"></a><div>Oases</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="hero4.html" class="icon--scalable menuitem-hero4"></a><div>hero (T4)</div></div>
+		<div class="menutitle">hero</div>
+		<div class="menuitem"><a href="hero.html" class="icon--scalable menuitem-hero"></a><div>hero (T3)</div></div>
+		<div class="menuitem"><a href="items.html" class="icon--scalable menuitem-items"></a><div>items</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="report.html" class="icon--scalable menuitem-report"></a><div>logger</div></div>
+		<div class="menutitle">Misc</div>
+		<div class="menuitem"><a href="about.html" class="icon--scalable menuitem-about"></a><div>about this site</div></div>
+		<div class="menuitem"><a href="thanks.html" class="icon--scalable menuitem-thanks"></a><div>Acknowledgements</div></div>
+			</span>
+	
+</div>
+<div id="langbar">
+	<img alt="ar" src="img/x.gif" class="icon--scalable click flag ae">
+	<img alt="bg" src="img/x.gif" class="icon--scalable click flag bg">
+	<img alt="cs" src="img/x.gif" class="icon--scalable click flag cz">
+	<img alt="da" src="img/x.gif" class="icon--scalable click flag dk">
+	<img alt="de" src="img/x.gif" class="icon--scalable click flag de">
+	<img alt="ee" src="img/x.gif" class="icon--scalable click flag ee">
+	<img alt="el" src="img/x.gif" class="icon--scalable click flag gr">
+	<img alt="en" src="img/x.gif" class="icon--scalable click flag us">
+	<img alt="es" src="img/x.gif" class="icon--scalable click flag es">
+	<img alt="fa" src="img/x.gif" class="icon--scalable click flag ir">
+	<img alt="fr" src="img/x.gif" class="icon--scalable click flag fr">
+	<img alt="he" src="img/x.gif" class="icon--scalable click flag il">
+	<img alt="hu" src="img/x.gif" class="icon--scalable click flag hu">
+	<img alt="it" src="img/x.gif" class="icon--scalable click flag it">
+	<img alt="ja" src="img/x.gif" class="icon--scalable click flag jp">
+	<img alt="lt" src="img/x.gif" class="icon--scalable click flag lt">
+	<img alt="lv" src="img/x.gif" class="icon--scalable click flag lv">
+	<img alt="nl" src="img/x.gif" class="icon--scalable click flag nl">
+	<img alt="pl" src="img/x.gif" class="icon--scalable click flag pl">
+	<img alt="pt" src="img/x.gif" class="icon--scalable click flag pt">
+	<img alt="rs" src="img/x.gif" class="icon--scalable click flag rs">
+	<img alt="ru" src="img/x.gif" class="icon--scalable click flag ru">
+	<img alt="sl" src="img/x.gif" class="icon--scalable click flag si">
+	<img alt="sv" src="img/x.gif" class="icon--scalable click flag se">
+	<img alt="tr" src="img/x.gif" class="icon--scalable click flag tr">
+	<img alt="uk" src="img/x.gif" class="icon--scalable click flag ua">
+	</div>
+
+<script type="text/javascript">
+(function(){
+	var page = location.pathname.match(/(\w+)\.php$/) || [,'index'];
+	$$(".menuitem-" + page[1]).addClass('current');
+})();
+function switch_lang(lang_name) {
+	const d = new Date();
+	d.setYear(d.getYear() + 1);
+	document.cookie = "lang=" + lang_name + ';expires=' + d.toISOString();
+	window.location.reload();
+}
+$$(".flag").on('click', function(){ switch_lang(this.alt) });
+(function(){
+	var search = $$("#search input")[0];
+	if (!search || !window.fetch) return;
+	var index = [];
+	fetch('asearch.html')
+		.then(function (s) {
+			return s.json();
+		})
+		.then(function (obj) {
+			for (var k in obj) {
+				var item = obj[k];
+				if (typeof item.str === 'string') {
+					item.str = item.str.toLowerCase();
+					index.push(item);
+				} else {
+					item.str.forEach(function (s) {
+						var obj = {
+							ico: item.ico,
+							str: s.toLowerCase(),
+							url: item.url
+						};
+						if (item.ver) {
+							obj.ver = item.ver;
+						}
+						index.push(obj);
+					});
+				}
+			}
+		});
+	var lastResults = [];
+	var lastIndex = -1;
+	function matcher(term) {
+		return function(item) {
+			if (item.str.indexOf(term) !== -1) return true;
+			const letters = term.split('');
+			const words = item.str.split(' ');
+			if (words.length >= letters.length
+			&& letters.every(function (c, i) { return words[i][0] === c; })) {
+				return true;
+			}
+			return false;
+		}
+	}
+	search.oninput = function () {
+		var term = this.value.toLowerCase();
+		if (term.length < 2) {
+			window['search-results'].innerHTML = '';
+			return;
+		}
+		let termMatcher = matcher(term);
+		lastResults = index.filter(termMatcher).slice(0, 10);
+		if (lastResults.length > 0 && lastIndex === -1) {
+			lastIndex = 0;
+		}
+		window['search-results'].innerHTML = lastResults.map(function (item) {
+			return '<a href="' + item.url + '">'
+				+ '<img src="img/x.gif" class="' + item.ico + '"> '
+				+ item.str.replace(term, '<mark>$&</mark>')
+				+ '</a>';
+		}).join('');
+	};
+	search.onkeyup = function (e) {
+		if (e.keyCode === 38) {
+			// up
+			e.preventDefault();
+		}
+		if (e.keyCode === 40) {
+			// down
+			e.preventDefault();
+		}
+	}
+}());
+</script>
+
+<script type="text/javascript" src="js/units8277.js?d"></script>
+<script type="text/javascript" src="js/tables.js"></script>
+<script type="text/javascript" src="js/utils4a8a.js?c"></script>
+<script type="text/javascript"><!--
+var i18n = {
+	day_name: "day",
+	names: [
+["Legionnaire","Praetorian","Imperian","Equites Legati","Equites Imperatoris","Equites Caesaris","Battering ram","Fire Catapult","Senator","Settler"],
+["Maceman","Spearman","Axeman","Scout","Paladin","Teutonic Knight","Ram","Catapult","Chief","Settler"],
+["Phalanx","Swordsman","Pathfinder","Theutates Thunder","Druidrider","Haeduan","Ram","Trebuchet","Chieftain","Settler"],
+["Rat","Spider","Serpent","Bat","Wild boar","Wolf","Bear","Crocodile","Tiger","Elephant"],
+["Pikeman","Thorned Warrior","Guardsman","Birds Of Prey","Axerider","Natarian Knight","Warelephant","Ballista","Natarian Emperor","Settler"],
+["Slave Militia","Ash Warden","Khopesh Warrior","Sopdu Explorer","Anhur Guard","Resheph Chariot","Ram","Stone Catapult","Nomarch","Settler"],
+["Mercenary","Bowman","Spotter","Steppe Rider","Marksman","Marauder","Ram","Catapult","Logades","Settler"],
+["Hoplite","Sentinel","Shieldsman","Twinsteel Therion","Elpida Rider","Corinthian Crusher","Ram","Ballista","Ephor","Settler"],
+[]]
+};
+['t2.5', 't3', 't4', 't4.5', 't5'].forEach(function (key) {
+	units[key].forEach(function(tribeUnits, r) {
+		tribeUnits.forEach(function(unit, u) {
+			unit.name = i18n.names[r][u];
+		});
+	});
+});
+--></script>
+<div class="page">
+<div class="content">
+<label for="server">server</label>: <style>
+    #serverHint {
+        position: relative;
+        display: inline-block;
+        z-index: 100;
+    }
+    #serverHint > div {
+        position: absolute;
+        border: 1px solid gray;
+        background: white;
+        padding: 4px;
+        width: 200px;
+        z-index: 1;
+        top: -12px;
+        box-shadow: 0 0 2px gray;
+        white-space: normal;
+    }
+    #serverHint .but {
+        font-size: 14px;
+    }
+    #serverVersionNew {
+        font-weight: bold;
+    }
+    #serverHintButtons {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 8px;
+    }
+</style>
+<select id="server">
+    <optgroup label="Kingdoms">
+        <option value="1.50">T5</option>
+        <option value="3.50">T5 3x</option>
+        <option value="5.50">T5 5x</option>
+    </optgroup>
+    <optgroup label="Legends">
+        <option value="1.45">T4.5 1x</option>
+        <option value="1.46">T4.6 1x</option>
+        <option value="2.46">T4.6 2x</option>
+        <option value="3.46">T4.6 3x</option>
+        <option value="5.46">T4.6 5x</option>
+        <option value="10.46">T4.6 10x</option>
+    </optgroup>
+    <optgroup label="Specials">
+        <option value="1.431" disabled>New Year Special</option>
+        <option value="1.432">Annual Special</option>
+        <option value="2.432">Annual Special 2x</option>
+        <option value="3.432">Annual Special 3x</option>
+    </optgroup>
+    <optgroup label="Classis">
+        <option value="1.36">T3.6</option>
+        <option value="3.36">T3.6 3x</option>
+        <option value="1.25">T2.5</option>
+    </optgroup>
+</select>
+<div id="serverHint" style="display: none;">
+    <div>
+        <div>You have changed version to <span id="serverVersionNew"></span> on another tab</div>
+        <div id="serverHintButtons">
+            <input type="button" class="but" value="use it" id="serverHintButtonUse">
+            <input type="button" class="but" value="discard" id="serverHintButtonDiscard">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+(function (server) {
+    if (!server) { return; }
+    var lastValue = null;
+    var lastNewValue = null;
+    function f() {
+        lastNewValue = lastValue = this.value;
+        var s = parseVersion(this.value);
+        document.body.className = 't' + s.major + ' t' + s.major + s.minor;
+    };
+    server.addEventListener('change', f);
+    window.addEventListener('load', function () {
+        setTimeout(f.bind(server), 0);
+    });
+    window.addEventListener('storage', function (event) {
+        if (event.key === 'v') {
+            lastNewValue = event.newValue;
+        }
+    });
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState !== 'visible') { return; }
+        if (lastNewValue === lastValue) { return; }
+        var option = [].filter.call(server.options, function (o) {
+            return o.value === lastNewValue;
+        })[0];
+        if (!option) return;
+        var fullVersion = option.parentNode.label + ' / ' + option.innerHTML;
+        $('serverVersionNew').innerHTML = fullVersion;
+        $('serverHint').style.display = '';
+    });
+    $('serverHintButtonUse').onclick = function () {
+        server.value = lastNewValue;
+        f.call(server);
+        $('serverHint').style.display = 'none';
+    };
+    $('serverHintButtonDiscard').onclick = function () {
+        $('serverHint').style.display = 'none';
+    };
+}(document.getElementById('server')));
+</script>
+<table class="wire" width="100%" id="main" cellspacing="0">
+<tr><td colspan="14" class="rbg"><select id="tribe" state_name="tribe"><option value='1' id='tribe1'>The Roman Troops</option><option value='2' id='tribe2'>The Teutonic Troops</option><option value='3' id='tribe3'>The Gallic Troops</option><option value='4' id='tribe4'>Nature's Troops</option><option value='5' id='tribe5'>The Natarian Troops</option><option value='6' id='tribe6'>The Egyptian Troops</option><option value='7' id='tribe7'>The Huns Troops</option><option value='8' id='tribe8'>The Spartans</option></select></td></tr>
+<tr>
+<td class="ico"><span style="{size:10px; color:gray;}">ico</span></td>
+<td class="name"><span style="{color:gray;}">name</span></td>
+<td class="off"><img class="icon--scalable stats att_all" src="img/x.gif" alt="offense"></td>
+<td class="def_i"><img class="icon--scalable stats def_i" src="img/x.gif" alt="Defense value against infantry"></td>
+<td class="def_c"><img class="icon--scalable stats def_c" src="img/x.gif" alt="Defense value against cavalry"></td>
+<td class="speed"><img class="icon--scalable stats speed" src="img/x.gif" alt="Speed"></td>
+<td class="cap"><img class="icon--scalable stats cap" src="img/x.gif" alt="Capacity"></td>
+<td class="res1"><img class="icon--scalable res r1" src="img/x.gif" alt="Lumber"></td>
+<td class="res2"><img class="icon--scalable res r2" src="img/x.gif" alt="Clay"></td>
+<td class="res3"><img class="icon--scalable res r3" src="img/x.gif" alt="Iron"></td>
+<td class="res4"><img class="icon--scalable res r4" src="img/x.gif" alt="Crop"></td>
+<td class="res_sum"><img class="icon--scalable res r6" src="img/x.gif" alt="Total cost"></td>
+<td class="cu"><img class="icon--scalable res r5" src="img/x.gif" alt="upkeep"></td>
+<td class="time"><img class="icon--scalable res r7" src="img/x.gif" alt="Time"></td></tr>
+	<tr>
+		<td><img class="icon--scalable unit u1" src="img/x.gif" alt="" /></td>
+		<td class="name click" unit="1"></td>
+		<td class="off"></td>
+		<td class="def_i"></td>
+		<td class="def_c"></td>
+		<td class="speed"></td>
+		<td class="cap"></td>
+		<td class="res1"></td>
+		<td class="res2"></td>
+		<td class="res3"></td>
+		<td class="res4"></td>
+		<td class="res_sum"></td>
+		<td class="cu"></td>
+		<td class="time"></td>
+	</tr>
+	<tr>
+		<td><img class="icon--scalable unit u2" src="img/x.gif" alt="" /></td>
+		<td class="name click" unit="2"></td>
+		<td class="off"></td>
+		<td class="def_i"></td>
+		<td class="def_c"></td>
+		<td class="speed"></td>
+		<td class="cap"></td>
+		<td class="res1"></td>
+		<td class="res2"></td>
+		<td class="res3"></td>
+		<td class="res4"></td>
+		<td class="res_sum"></td>
+		<td class="cu"></td>
+		<td class="time"></td>
+	</tr>
+	<tr>
+		<td><img class="icon--scalable unit u3" src="img/x.gif" alt="" /></td>
+		<td class="name click" unit="3"></td>
+		<td class="off"></td>
+		<td class="def_i"></td>
+		<td class="def_c"></td>
+		<td class="speed"></td>
+		<td class="cap"></td>
+		<td class="res1"></td>
+		<td class="res2"></td>
+		<td class="res3"></td>
+		<td class="res4"></td>
+		<td class="res_sum"></td>
+		<td class="cu"></td>
+		<td class="time"></td>
+	</tr>
+	<tr>
+		<td><img class="icon--scalable unit u4" src="img/x.gif" alt="" /></td>
+		<td class="name click" unit="4"></td>
+		<td class="off"></td>
+		<td class="def_i"></td>
+		<td class="def_c"></td>
+		<td class="speed"></td>
+		<td class="cap"></td>
+		<td class="res1"></td>
+		<td class="res2"></td>
+		<td class="res3"></td>
+		<td class="res4"></td>
+		<td class="res_sum"></td>
+		<td class="cu"></td>
+		<td class="time"></td>
+	</tr>
+	<tr>
+		<td><img class="icon--scalable unit u5" src="img/x.gif" alt="" /></td>
+		<td class="name click" unit="5"></td>
+		<td class="off"></td>
+		<td class="def_i"></td>
+		<td class="def_c"></td>
+		<td class="speed"></td>
+		<td class="cap"></td>
+		<td class="res1"></td>
+		<td class="res2"></td>
+		<td class="res3"></td>
+		<td class="res4"></td>
+		<td class="res_sum"></td>
+		<td class="cu"></td>
+		<td class="time"></td>
+	</tr>
+	<tr>
+		<td><img class="icon--scalable unit u6" src="img/x.gif" alt="" /></td>
+		<td class="name click" unit="6"></td>
+		<td class="off"></td>
+		<td class="def_i"></td>
+		<td class="def_c"></td>
+		<td class="speed"></td>
+		<td class="cap"></td>
+		<td class="res1"></td>
+		<td class="res2"></td>
+		<td class="res3"></td>
+		<td class="res4"></td>
+		<td class="res_sum"></td>
+		<td class="cu"></td>
+		<td class="time"></td>
+	</tr>
+	<tr>
+		<td><img class="icon--scalable unit u7" src="img/x.gif" alt="" /></td>
+		<td class="name click" unit="7"></td>
+		<td class="off"></td>
+		<td class="def_i"></td>
+		<td class="def_c"></td>
+		<td class="speed"></td>
+		<td class="cap"></td>
+		<td class="res1"></td>
+		<td class="res2"></td>
+		<td class="res3"></td>
+		<td class="res4"></td>
+		<td class="res_sum"></td>
+		<td class="cu"></td>
+		<td class="time"></td>
+	</tr>
+	<tr>
+		<td><img class="icon--scalable unit u8" src="img/x.gif" alt="" /></td>
+		<td class="name click" unit="8"></td>
+		<td class="off"></td>
+		<td class="def_i"></td>
+		<td class="def_c"></td>
+		<td class="speed"></td>
+		<td class="cap"></td>
+		<td class="res1"></td>
+		<td class="res2"></td>
+		<td class="res3"></td>
+		<td class="res4"></td>
+		<td class="res_sum"></td>
+		<td class="cu"></td>
+		<td class="time"></td>
+	</tr>
+	<tr>
+		<td><img class="icon--scalable unit u9" src="img/x.gif" alt="" /></td>
+		<td class="name click" unit="9"></td>
+		<td class="off"></td>
+		<td class="def_i"></td>
+		<td class="def_c"></td>
+		<td class="speed"></td>
+		<td class="cap"></td>
+		<td class="res1"></td>
+		<td class="res2"></td>
+		<td class="res3"></td>
+		<td class="res4"></td>
+		<td class="res_sum"></td>
+		<td class="cu"></td>
+		<td class="time"></td>
+	</tr>
+	<tr>
+		<td><img class="icon--scalable unit u10" src="img/x.gif" alt="" /></td>
+		<td class="name click" unit="10"></td>
+		<td class="off"></td>
+		<td class="def_i"></td>
+		<td class="def_c"></td>
+		<td class="speed"></td>
+		<td class="cap"></td>
+		<td class="res1"></td>
+		<td class="res2"></td>
+		<td class="res3"></td>
+		<td class="res4"></td>
+		<td class="res_sum"></td>
+		<td class="cu"></td>
+		<td class="time"></td>
+	</tr>
+</table>
+
+<table width="100%" id="details">
+<tr>
+    <td width="50%">
+		<img src="img/x.gif" class="icon--scalable building g13">
+		<select id="smith" state_name="s_lvl">
+			<option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option><option value='11'>11</option><option value='12'>12</option><option value='13'>13</option><option value='14'>14</option><option value='15'>15</option><option value='16'>16</option><option value='17'>17</option><option value='18'>18</option><option value='19'>19</option><option value='20'>20</option>		</select>
+		<label for="smith">Smithy</label>
+	</td>
+	<td class="inlineHelpWrap">
+		<div class="inlineHelp">
+			<div class="helpContent">Upgrades made in blacksmith or/and armoury.</div>
+		</div>
+	</td>
+	<td>
+		<div>
+			<select id="upg" state_name="u_lvl">
+		<option value='0'>0</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option><option value='11'>11</option><option value='12'>12</option><option value='13'>13</option><option value='14'>14</option><option value='15'>15</option><option value='16'>16</option><option value='17'>17</option><option value='18'>18</option><option value='19'>19</option><option value='20'>20</option>			</select>
+		upgrade lvl		</div>
+	</td>
+</tr>
+<tr>
+	<td>
+	<div id="hdp_wrap">
+		<img src="img/x.gif" class="icon--scalable building g41">
+		<select id="hdp" state_name="hdp">
+		<option value='0'>0</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option><option value='11'>11</option><option value='12'>12</option><option value='13'>13</option><option value='14'>14</option><option value='15'>15</option><option value='16'>16</option><option value='17'>17</option><option value='18'>18</option><option value='19'>19</option><option value='20'>20</option>		</select>
+		<label for="hdp">Horse Drinking Trough</label>
+	</div>
+	</td>
+	<td class="inlineHelpWrap">
+		<div class="inlineHelp">
+			<div class="helpContent">
+				<ul>
+					<li><img src="img/x.gif" class="icon--scalable building g19"> Barracks					  / <img src="img/x.gif" class="icon--scalable building g29"> Great Barracks</li>
+					<li><img src="img/x.gif" class="icon--scalable building g20"> Stable					  / <img src="img/x.gif" class="icon--scalable building g30"> Great Stable</li>
+					<li><img src="img/x.gif" class="icon--scalable building g21"> Workshop</li>
+					<li><img src="img/x.gif" class="icon--scalable building g25"> Residence					  / <img src="img/x.gif" class="icon--scalable building g26"> Palace</li>
+				</ul>
+			</div>
+		</div>
+	</td>
+	<td>
+		<div>
+			<select id="prod" state_name="t_lvl">
+			<option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option><option value='11'>11</option><option value='12'>12</option><option value='13'>13</option><option value='14'>14</option><option value='15'>15</option><option value='16'>16</option><option value='17'>17</option><option value='18'>18</option><option value='19'>19</option><option value='20'>20</option>			</select>
+			train.build. Lvl		</div>
+	</td>
+</tr>
+<tr id="t4" style="display:none;">
+	<td>
+		<img src="img/x.gif" class="icon--scalable itemCategory itemCategory_helmet">
+		<select id="hi">
+			<option value="0">&mdash;</option>
+		<option value="10">Helmet of the Mercenary</option><option value="15">Helmet of the Warrior</option><option value="20">Helmet of the Archon</option>		</select>
+	</td>
+	<td></td>
+	<td>
+		<img src="img/x.gif" class="icon--scalable itemCategory itemCategory_helmet">
+		<select id="hc">
+			<option value="0">&mdash;</option>
+		<option value="10">Helmet of the Horseman</option><option value="15">Helmet of the Cavalry</option><option value="20">Helmet of the Heavy cavalry</option>		</select>
+	</td>
+</tr>
+<tr>
+	<td id="art_wrap">
+		<img src="img/x.gif" class="icon--scalable art art6">
+		<select id="art_train">
+			<option value="0">—</option>
+			<option value="1">75%</option>
+			<option value="2">50%</option>
+		</select>
+		<label for="art_train">Troops' training artifact</label>
+	</td>
+	<td></td>
+	<td id="recruit_wrap">
+		<img src="img/x.gif" class="icon--scalable ab_rec">
+		<select id="recruit">
+			<option value="0">—</option>
+			<option value="2">2%</option>
+			<option value="4">4%</option>
+			<option value="6">6%</option>
+			<option value="8">8%</option>
+			<option value="10">10%</option>
+		</select>
+		<label for="recruit">Recruitment</label>
+	</td>
+</tr>
+</table>
+
+<table cellspacing="0" class="wire" id="upg_table">
+	<tr><td colspan="12" class="rbg">Upgrade + <span class="research">Research</span> (lvl 0)</td></tr>
+	<tr>
+		<td class="lvl">lvl</td>
+		<td class="res"><img class="icon--scalable res r1" src="img/x.gif" alt="Lumber"/></td>
+		<td class="res"><img class="icon--scalable res r2" src="img/x.gif" alt="Clay"/></td>
+		<td class="res"><img class="icon--scalable res r3" src="img/x.gif" alt="Iron"/></td>
+		<td class="res"><img class="icon--scalable res r4" src="img/x.gif" alt="Crop"/></td>
+		<td class="res"><img class="icon--scalable res r6" src="img/x.gif" alt="Total cost"/></td>
+		<td class="time"><img class="icon--scalable res r7"	src="img/x.gif" alt="Time"/></td>
+		<td class="upg"><img class="icon--scalable stats att_all" src="img/x.gif" alt="offense"/></td>
+		<td class="upg"><img class="icon--scalable stats def_i" src="img/x.gif" alt="Defense value against infantry"></td>
+		<td class="upg"><img class="icon--scalable stats def_c" src="img/x.gif" alt="Defense value against cavalry"></td>
+		<td class="upg"><img class="icon--scalable stats eye"   src="img/x.gif" alt="Reconnaissance"></td>
+		<td class="upg"><img class="icon--scalable stats def_s" src="img/x.gif" alt="Counter-scouting"></td>
+		<td class="upg"><img class="icon--scalable stats point" src="img/x.gif" alt="destructive capability"></td>
+	</tr>
+	<tr class="sum" id="upg_sum">
+		<td class="lvl">&sum;</td>
+		<td class="res"></td>
+		<td class="res"></td>
+		<td class="res"></td>
+		<td class="res"></td>
+		<td class="res"></td>
+		<td class="time"></td>
+		<td class="upg"></td>
+		<td class="upg"></td>
+		<td class="upg"></td>
+		<td class="upg"></td>
+		<td class="upg"></td>
+		<td class="upg"></td>
+	</tr>
+</table>
+</div>
+</div>
+<script type="text/javascript" src="js/server.js"></script>
+<script type="text/javascript" src="js/troops0cc1.js?a"></script>
+</body>
+
+<!-- Mirrored from travian.kirilloid.ru/troops.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:03:54 GMT -->
+</html>

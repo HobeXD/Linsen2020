@@ -1,0 +1,198 @@
+<tr><td>UTC+3</td>
+	<td>Last changes (<a href="news.html">all</a>)</td></tr>
+<table class="wire" cellspacing="0" width="100%" align='center' id="news">
+<tr><td>16.09.20</td>
+	<td align='left'>Fixed error with report parsing. Also fixed ugly colors for report sharing options in dark mode.</td></tr>
+<tr><td>04.06.20</td>
+	<td align='left'>Dark mode on the site if it's enabled in your OS. Also fixed minor error of rectruitment bonus in defense calculator.</td></tr>
+<tr><td>10.05.20</td>
+	<td align='left'>Guess what? Defense calculator!</td></tr>
+<tr><td>08.05.20</td>
+	<td align='left'>Broken some things, fixed some things. In general I'm trying to improve UI on mobiles. BUT there's a new feature now mostly for desktops. If you think there might be a better translation of some text, select it and press Ctrl+Enter. Unfortunately, it's impossible to select a text on e.g. a button in such a way, so you can just press Ctrl+Enter and enter what to replace manually. Only original and suggested texts, current page and selected language are tracked.</td></tr>
+<tr><td>12.10.19</td>
+	<td align='left'>Wounded troops no longer incorrectly detected as trapped and saved as regular casualties now. Full support for wounded will be added in a few weeks.</td></tr>
+<tr><td>25.02.19</td>
+	<td align='left'>Fixed a bug that battle in <em>conquered</em> oasis could not be saved</td></tr>
+<tr><td>11.02.19</td>
+	<td align='left'>Fixed logger bugs in Firefox</td></tr>
+<tr><td>02.02.19</td>
+	<td align='left'>Logger now supports new reports (with stats)</td></tr>
+<tr><td>06.12.18</td>
+	<td align='left'>New feature: Even if artifact/building name is not recognized, you can still pick it from dropdown and save everything correctly.</td></tr>
+<tr><td>06.12.18</td>
+	<td align='left'>Fixed a bug that some multi-reports were opened incorrectly—no need to save again, links should work.<br>Fixed problem with parsing artefacts, should work at least for English, German and some other languages.<br>Actually, I'm constantly monitoring possible errors and unrecognized information messages, names of buildings, artefacts etc from reports and updating translations. If your report wasn't recognized correctly, try again in a day or two.<br>Having artefact names will help sped up that process, though. Consider sending me names of artifacts in your language in a way more suitable for you—contacts are on updated <a href="about.html">about page</a>. Thanks for patience and using my tools. Together we can do a better tools for Travian.</td></tr>
+<tr><td>03.12.18</td>
+	<td align='left'><ul><li>Distance calculator: It's not possible to set arrival time, corrected small spurs bonus from +2 to +3 for T4 aka Legends</li><li>Reports: fixed a few things</li><li>Warsim: fixed that attack with only a hero was not calculating</li></ul></td></tr>
+<tr><td>01.12.18</td>
+	<td align='left'>Battle reports parser! Please, read details and comment on official <a href="https://wbb.forum.travian.com/index.php?thread/557555">legends</a> and <a href="https://forum.kingdoms.com/index.php?thread/21242">kingdoms</a> forums.</td></tr>
+<tr><td>28.11.18</td>
+	<td align='left'>Kingdoms: <ul><li>support crystals in distance calculator</li><li>support helms of various quality level in offense calculator</li><li>correct troops cost in combat simulator</li></ul></td></tr>
+<tr><td>09.11.18</td>
+	<td align='left'>Fixed: Teutonic scouts' training time is now affected by infantry helms. BTW I'm going to publish a new tool soon, but it's not a def.calc ... yet.</td></tr>
+<tr><td>07.11.18</td>
+	<td align='left'>Thanks to Marco Nogueira, fixed in troops table: recruiting affects also rams, catapults, settlers and senators. Offense calculator was right anyway.</td></tr>
+<tr><td>23.08.18</td>
+	<td align='left'>It turned out that actual speed of egyptian settlers on "Pandora" is 4, even though all guides and references give 5. I'm not sure yet, whether it's a bug or forgot-to-announce feature. According to my experience with TG, it's the latter.</td></tr>
+<tr><td>08.08.18</td>
+	<td align='left'>How to calculate the most efficient army for the server with merge troops function? One option is to use the power of custom formula in attributes calculator for certain hourly production w/o gold. Merged troops costs 3x just as in Great Barracks/Stables. Quick math (you can skip to the link): for every unit produced we merge x units, <nobr>hourly production = tc/t + 3x·tc/t</nobr>, and off-points generated for that hourly production is <nobr>a·(x+1)/t</nobr>. If we express x from hourly production, we will get the <a href="war.html#s=1.432&stat_sum=16&lvl=20&hd_lvl=20&item=5&func=a*(50k%2Ftc%2B2%2Ft)%2F3">following result</a>, replace 50k with your hourly production. BTW for small production, like &lt; 20k, formula <a href="war.html#s=1.432&stat_sum=16&lvl=20&item=5&func=min(a*(50k%2Ftc)%2Ca*(50k%2Ftc%2B2%2Ft)%2F3)">needs to be corrected</a>, but working with it requires changing hourly production twice.<br>This method works for single units, what if we want to see overall picture? There's a trick in offense calculator. Since merging troops is like great barracks, it's allowed to input great barracks level &gt; 20 to emulate merging troops. <a href="off_calc.html#b=20,39,20,0,0,0&p=100,0,0&r=1&t=2190&s=1.44&h=20&po&art=100&hm=20,15&rb=10">Play with it</a>, while keeping an eye on resources needed per hour—they are conveniently displayed on the right side—and find your optimal army conmposition.</td></tr>
+<tr><td>01.08.18</td>
+	<td align='left'>I apologize for combat simulator outage. I started adding changes for "Path to Pandora" server, also in distance calculator it's now possible to choose map size</td></tr>
+<tr><td>27.07.18</td>
+	<td align='left'>I removed an old JavaScript library so the site became 50KB lighter. I'm monitoring errors and trying to fix them as quickly as possible. If tomorrow something won' work, please let me know.</td></tr>
+<tr><td>20.07.18</td>
+	<td align='left'>OK-OK, combat simulator is working after recent changes and I'm not touching anything</td></tr>
+<tr><td>11.06.18</td>
+	<td align='left'>As it has been pointed out by Taro Malkovich, <img class="icon--scalable unit u51" src="img/x.gif" alt="slave militia"> is a pretty <img class="icon--scalable stats att_all" src="img/x.gif" alt="attack">/<img class="icon--scalable res r6" src="img/x.gif" alt="cost">-effective unit with items. I added <img src="img/x.gif" class="icon--scalable itemCategory itemCategory_rightHand" alt="right-hand"> items to attributes calculator and militia <a href="war.html#params=8&stat_sum=1&lvl=20&item=5&func=cu%2Ft">is the most effective</a> indeed. So I added militia to the offense calculator as well. On top of that I also added marksmans <img class="icon--scalable unit u65" src="img/x.gif" alt=""> to defense preset.</td></tr>
+<tr><td>13.03.18</td>
+	<td align='left'>Fixed more bugs: <ul><li>Building levels in offense calculator were not updated properly</li><li>Natarian troops in attacks incorrectly considered as infantry</li><li>Number of chiefs reset in shared link to conquering calculator state</li></ul></td></tr>
+<tr><td>03.11.17</td>
+	<td align='left'>Fixed several bugs on various pages, thanks everyone for reporting them.</td></tr>
+<tr><td>19.10.17</td>
+	<td align='left'>Fixed a bug in off calc when changing the number of time units (hours, days, etc) didn't recalculate things properly. Adjusted UI in off calc a bit.<br>Corrected loyalty decrease for Logades (Huns). Calculating loyalty in warsim for egyptians and huns.<br>Fixed wall base defense for egyptians & huns—were mixed up.</td></tr>
+<tr><td>11.10.17</td>
+	<td align='left'>Fixed major error: some huns units incorrectly were considered as infantry. Fixed displayed production for egyptian heroes.</td></tr>
+<tr><td>08.10.17</td>
+	<td align='left'>Finally introduced the combat simulator for T5 aka Kingdoms!</td></tr>
+<tr><td>04.10.17</td>
+	<td align='left'>Minor improvements to interface layout for combat simulator, should be better on phones now.</td></tr>
+<tr><td>21.09.17</td>
+	<td align='left'>Huns and Egyptians now are available only in Fire&amp;Sand where they belong. On top of that the chosen version is now rememberd across pages.</td></tr>
+<tr><td>13.09.17</td>
+	<td align='left'>I looked through all my crannies and gathered all old graphics. Now almost all icons on the site change their style according to selected version. On top of that, many icons for actual T4/T5 <a href="img/news/icons-full.png">have high-definition counterparts</a>.</td></tr>
+<tr><td>05.09.17</td>
+	<td align='left'>The work is going on, there are some changes every day. Yesterday I've fixed upgrades in <a href="warsim2.html">combat simulator</a> for new tribes, added new tribes to <a href="hero4.html">heroes</a> and fixed cost of the <a href="build.html#b=44&s=1.44">command center</a></td></tr>
+<tr><td>07.08.17</td>
+	<td align='left'>After some pertrubations, Egyptians were added to the site. All calculators are updated to include them as well as Huns. Please, report any error you will encounter.</td></tr>
+<tr><td>31.07.17</td>
+	<td align='left'>Updated some translations [including, but not limited to] for Hebrew and Slovak.</td></tr>
+<tr><td>17.07.17</td>
+	<td align='left'>Huns are added to several calculators</td></tr>
+<tr><td>13.07.17</td>
+	<td align='left'>Fixed some errors in unit attributes on troops page and offense calculator</td></tr>
+<tr><td>17.10.16</td>
+	<td align='left'>Full T5 support in distance calculator.</td></tr>
+<tr><td>08.02.16</td>
+	<td align='left'>Version selector was updated on most pages. On top of that, version is now auto-detected when you open my site from the game links list. This is done via a <a href="https://en.wikipedia.org/wiki/HTTP_referer">standard HTTP feature</a>.</td></tr>
+<tr><td>07.02.16</td>
+	<td align='left'>kirilloid.ru domain is 9 years old and the site is still alive.<br/>Conquering calculator now correctly stores loyalty &ge; 128 and allows to pick odd values.</td></tr>
+<tr><td>07.12.15</td>
+	<td align='left'>With some help from a user I added troops and buildings data for T5. Building times are not correct yet</td></tr>
+<tr><td>03.06.15</td>
+	<td align='left'>I received several complaints, that warsim is not working in Firefox with AdBlock Plus. Just <a href="../kirilloid.ru/pub/adblock.png">disable it for my site</a> cause I have no ads anyway.</td></tr>
+<tr><td>28.05.14</td>
+	<td align='left'>T4.4 and celebration versions added to resource development calculator.</td></tr>
+<tr><td>12.05.14</td>
+	<td align='left'>Celebration server added to options.</td></tr>
+<tr><td>16.10.13</td>
+	<td align='left'>Fixed bug with "jumping" menu on non-100% zoom.<br/>HD (retina) icons for menu, flags, buildings and unit stats</td></tr>
+<tr><td>04.03.13</td>
+	<td align='left'>Graphic for items updated according to the game changes</td></tr>
+<tr><td>24.12.12</td>
+	<td align='left'>Fixed bug, appeared just after saving of preferences in combat simulator 2.0</td></tr>
+<tr><td>13.12.12</td>
+	<td align='left'>Fixed bugs:<ul><li>Error on conquering calculator in Czech and maybe other languages</li><li>Fixed menu layout and fail of buildings page in IE7 (and IE6)</li><li>Better time parsing in distance calculator</li></ul></td></tr>
+<tr><td>11.12.12</td>
+	<td align='left'>Fixed bugs:<ul><li>Buildings page fails in Lithuanian</li><li>Combat simulator 2.0 fails in Serbian language</li><li>Left-hand item may be read wrongly on distance calculator in Chrome/Safari</li><li>Better layout for right-to-left languages</li></ul></td></tr>
+<tr><td>10.12.12</td>
+	<td align='left'>Javascript errors are tracked and reported on the site now. Except details of error the following data is gathered: language used on site, browser version and IP. Information is written into limited temporary storage and is deleted sooner or later (currently within one hour). There will be an option to opt-out error reporting.</td></tr>
+<tr><td>10.12.12</td>
+	<td align='left'>Long-lived bug fixed: 1-letter unit names in unit's attributes calculator in Chrome.</td></tr>
+<tr><td>31.05.12</td>
+	<td align='left'>Several fixes and interface adjustments.</td></tr>
+<tr><td>16.04.12</td>
+	<td align='left'>T2.5 support in warsim, fixed bug in off calc (items worked in T3)</td></tr>
+<tr><td>26.01.12</td>
+	<td align='left'>Fixed pair of bugs in warsim: hero was calculated, while should not (died in prev. attack or natar/nature troops)</td></tr>
+<tr><td>18.01.12</td>
+	<td align='left'>New menu and two pages goes public: oases and distance calculator. Total cost column on buildings page.</td></tr>
+<tr><td>13.08.11</td>
+	<td align='left'>As you may see, culture and servers pages are gone. This is intended since both pages didn't work as expected.</td></tr>
+<tr><td>20.07.11</td>
+	<td align='left'>Different preferences and a pair of features from 1.0 appeared in simulator 2.0, which becomes Release Candidate.</td></tr>
+<tr><td>03.06.11</td>
+	<td align='left'>New buildings' page. Simpler layout and no arrows.</td></tr>
+<tr><td>29.05.11</td>
+	<td align='left'>Changed erm... something in simulator. Should render it better.</td></tr>
+<tr><td>27.05.11</td>
+	<td align='left'>New icons for stats of troops in one style. Drawn by me. There will be more of them.<br/>Fixed 2 bugs with heroes in warsim (T3 mode). Mode is saved in URL.</td></tr>
+<tr><td>05.05.11</td>
+	<td align='left'>Advanced descriptions for buildings updated and numerous typos corrected there. Currently for English and Russian only. If you translated my site, please, contact me about new descriptions.</td></tr>
+<tr><td>18.04.11</td>
+	<td align='left'>I will test changes before introducing them. I will test changes before introducing them. I will test changes before introducing them. I will test changes before introducing them. I will test changes before introducing them. I will test changes before introducing them. I will test changes before introducing them. I will test changes before introducing them. I will test changes before introducing them. I will test changes before introducing them.</td></tr>
+<tr><td>01.04.11</td>
+	<td align='left'>warsim 2.0 got T3 mode. I.e. you may use all its features for old T3.6 servers too.<br/>As you may guess, warsim 1.0 will be removed soon (in a pair of months).</td></tr>
+<tr><td>09.03.11</td>
+	<td align='left'>I proudly present first simulator in the world with gull T4 features support. Except that, it is possible to simulate several attacks in a row, and several defenders of the same tribe with different upgrade levels and heroes!</td></tr>
+<tr><td>08.03.11</td>
+	<td align='left'><a href="items.html">Items reference</a> is published.</td></tr>
+<tr><td>04.03.11</td>
+	<td align='left'>It seems, that all planed changes will take rather much time, so... here are some changes for T4, but there're more to come.</td></tr>
+<tr><td>17.02.11</td>
+	<td align='left'>Site update with new T4 features will come this month. There will be one huge improvement except small additions ;-)</td></tr>
+<tr><td>14.02.11</td>
+	<td align='left'>I've created backup mirror <a href="http://travian.kirilloid.comyr.com/">travian.kirilloid.comyr.com</a>, but if you want help with hosting, there's a piece of info in "about" section.</td></tr>
+<tr><td>03.02.11</td>
+	<td align='left'>Due to <a href="http://forum.travian.com/showthread.php?p=1650200#post1650200">fan site policy</a> ads was removed. This won't affect site's stability.</td></tr>
+<tr><td>16.12.10</td>
+	<td align='left'>Several small bugs fixed in combat simulator</td></tr>
+<tr><td>31.08.10</td>
+	<td align='left'>Servers` information is taken also from index pages, which result in earlier detection of start announces. Also some minor bugs fixed.</td></tr>
+<tr><td>10.07.10</td>
+	<td align='left'>Registered short domain name: <b>krld.ru</b>. t.krld.ru will be used in travian project for shorter URLs in battle reports. For Imperion subproject i.krld.ru may be used correspondingly.</td></tr>
+<tr><td>06.07.10</td>
+	<td align='left'>Two new pages: <a href="conq.html">conquering calculator</a> and <a href="servers.html">new Travian servers's announcer</a>.</td></tr>
+<tr><td>04.07.10</td>
+	<td align='left'>Combat simulator now preserve all options, you input in it (except durability artifact). Specifications are <a href="warsim-data-transfer-BNF.html">available</a> if you're interested in.<br/>Some short description appeared on buildings page. They mostly include facts, omitted in official help and other FAQs.</td></tr>
+<tr><td>22.06.10</td>
+	<td align='left'>Troops page updated. NPC calc as a separate new tool and return of amounts for upgrades will come soon.</td></tr>
+<tr><td>21.05.10</td>
+	<td align='left'>Presets for Natar troops in warsim. Standard WW/WW-BP def and average def on artifacts.</td></tr>
+<tr><td>04.04.10</td>
+	<td align='left'>I've posted combat system guide on <a href="http://forum.travian.com/showthread.php?t=132039">international Travian forum</a>.</td></tr>
+<tr><td>26.03.10</td>
+	<td align='left'>As you know, loyalty is halved during celebration in brewery and WW durability is unaffected by artifacts. First is fixed and for second checkbox (ignore artifact durability) is added.</td></tr>
+<tr><td>10.01.10</td>
+	<td align='left'>Pre-filled fields list extended. Normal users could send examples of simulations to other players.</td></tr>
+<tr><td>05.12.09</td>
+	<td align='left'>Exact rams formula.</td></tr>
+<tr><td>02.12.09</td>
+	<td align='left'>Simulator with pre-filled fields could be opened. This may be interesting for developers of scripts and other tools, <a href="warsim.html#a:r1u,,100p200b5h#d:r3p70w5;r1u30,10;r3u50h#">example</a>, <a href="warsim-data-transfer-BNF.html">spec</a>.</td></tr>
+<tr><td>24.11.09</td>
+	<td align='left'>Project now resides on sub-domain.</td></tr>
+<tr><td>12.11.09</td>
+	<td align='left'>Warsim: Natars, scouting formula updated, a pair of cosmetics changes. Few changes in buildings and troops. New T3.5 icons.</td></tr>
+<tr><td>11.08.09</td>
+	<td align='left'>Formula for huge armies was improved with help of one com-player</td></tr>
+<tr><td>07.06.09</td>
+	<td align='left'>Several updates in offense calculator. Choose, whether plus-offense is turned on, hero bonus and more complicated time selection.</td></tr>
+<tr><td>28.05.09</td>
+	<td align='left'>Several bugs and mistypes, reported by site visitors, are fixed.</td></tr>
+<tr><td>06.05.09</td>
+	<td align='left'>New in combat simulator:<ul><li>Brewery<li>up to <a href="log5f63.html?I4b2sdEEAPzayPciGxIAEA">8400 traps</a><li>Combat engine is completely rewritten for the sake of newcoming features.</ul></td></tr>
+<tr><td>25.02.09</td>
+	<td align='left'>Updating information about T3.5 is in progress.</td></tr>
+<tr><td>15.02.09</td>
+	<td align='left'>A pair of bugs fixed in log generation.</td></tr>
+<tr><td>03.02.09</td>
+	<td align='left'>Moved to new hosting. Everything should work.</td></tr>
+<tr><td>14.01.09</td>
+	<td align='left'>Merry Christmas and happy New Year!</td></tr>
+<tr><td>27.12.08</td>
+	<td align='left'>Small bug fixed in data.</td></tr>
+<tr><td>25.12.08</td>
+	<td align='left'>Site now supports languages with right-to-left writing.</td></tr>
+<tr><td>08.12.08</td>
+	<td align='left'>Off troops were removed from troops comparison due to more powerful and more specialized off-calculator</td></tr>
+<tr><td>23.10.08</td>
+	<td align='left'>In troops' attributes calculator you can input random expression with basic arithmetic operations. Now you can also use next functions: sqrt, pow &amp; abs. Due to security reasons page won't even try to calculate/execute any other (javascript) functions. Instead, it will inform you about syntax error, by displaying next image: <img src="img/warning.gif">.</td></tr>
+<tr><td>12.10.08</td>
+	<td align='left'>Combat simulator: Fixed for Internet Explorer &amp; Opera; sorry for inconvenience. 2 features added. 1 bug fixed in log generation.</td></tr>
+<tr><td>04.10.08</td>
+	<td align='left'>Few changes in menu. Off calculator is introduced.</td></tr>
+<tr><td>28.09.08</td>
+	<td align='left'>Several minor bugs fixed in resource development calculator.</td></tr>
+<tr><td>22.09.08</td>
+	<td align='left'></td></tr>
+<tr><td>17.09.08</td>
+	<td align='left'></td></tr>
+</table>

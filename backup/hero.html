@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from travian.kirilloid.ru/hero.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:03:55 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/ico" href="img/favicon.ico" sizes="16x16">
+<link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+<link rel="stylesheet" type="text/css" href="css/stylee167.css?e">
+<link rel="stylesheet" type="text/css" media="screen and (pointer: coarse)" href="css/touch.css">
+<link rel="stylesheet" type="text/css" href="css/ltr.css">
+
+<link rel="icon" sizes="192x192" href="img/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="img/icon-152.png">
+<script type="text/javascript">
+if (!window.$) {
+	$ = function (id) { return document.getElementById(id); };
+}
+var _overlay = null;
+function scriptLoadFail() {
+	if (_overlay) {
+		return;
+	}
+	var div = document.createElement('div');
+	div.className = "overlay";
+	div.innerHTML = "<button class='close' onclick='closeOverlay()'>&times;</button>"
+				  + "<p>There was an error loading JavaScript.</p>"
+				  + "<p>The page might work incorrectly.</p>"
+				  + "<p class='buttons'>"
+				  + "<button class='but' onclick='location.reload()'>🔁 Reload</button>"
+				  + "<button class='but' onclick='closeOverlay()'>❎ Ignore</button></p>";
+	$$(".page")[0].appendChild(div);
+	_overlay = div;
+	document.addEventListener('keyup', closeOverlayOnEsc);
+}
+function closeOverlay() {
+	_overlay.parentNode.removeChild(_overlay);
+	document.removeEventListener('keyup', closeOverlayOnEsc);
+	_overlay = null;
+}
+function closeOverlayOnEsc(e) {
+	if (e.keyCode === 27) {
+		closeOverlay();
+	}
+}
+document.addEventListener('keypress', function (e) {
+  if (e.key === '\n' && (e.ctrlKey || e.metaKey)) {
+	var original = document.getSelection().toString().trim();
+	if (!original) original = prompt("Nothing was selected, enter what to replace:");
+	if (!original) return alert("Still nothing. See you later.");
+	const result = prompt("How to better translate this?", original);
+	if (!result) return;
+	var img = new Image();
+	img.onload = function () { alert("Thanks!"); };
+	img.onerror = function () { alert("Failed! Did you suggest too long string?"); };
+	img.src = 'suggest_translation.html'
+	  + '?lang=' + document.documentElement.lang
+	  + '&path=' + encodeURIComponent(location.pathname)
+	  + '&original=' + encodeURIComponent(original)
+	  + '&suggest=' + encodeURIComponent(result)
+  }
+});
+Element.prototype.matches =
+	Element.prototype.matches ||
+	Element.prototype.msMatchesSelector || 
+	function(s) {
+		var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+			i = matches.length;
+		while (--i >= 0 && matches.item(i) !== this) {}
+		return i > -1;
+	};
+function findParent(e, s) {
+	if (e.closest) return e.closest(s);
+	while (e && e !== document) {
+		if (e.matches(s)) return e;
+		e = e.parentNode;
+	}
+	return null;
+}
+(function () {
+	function css(name, value) {
+		if (arguments.length === 1) { 
+			return this[0].style[name];
+		}
+		this.forEach(function (el) { el.style[name] = value; });
+	}
+	function prop(name, value) {
+		if (arguments.length === 1) { 
+			return this[0][name];
+		}
+		this.forEach(function (el) { el[name] = value; });
+	}
+	function on(event, handler) {
+		this.forEach(function (el) {
+			el.addEventListener(event, handler, false);
+		});
+		return this;
+	}
+	function addClass(cls) {
+		this.forEach(function (el) {
+			el.classList.add(cls);
+		});
+	}
+	function removeClass(cls) {
+		this.forEach(function (el) {
+			el.classList.remove(cls);
+		});
+	}
+	function toggleClass(cls, set) {
+		this.forEach(function (el) {
+			if (set) {
+				el.classList.add(cls);
+			} else if (set == null) {
+				el.classList.toggle(cls);
+			} else {
+				el.classList.remove(cls);
+			}
+		});
+	}
+	function find(selector) {
+		return wrap(this.reduce(function (a, el) {
+			return a.concat([].slice.call(el.querySelectorAll(selector)));
+		}, []));
+	}
+	function wrap(a) {
+		a.on = on;
+		a.css = css;
+		a.prop = prop;
+		a.addClass = addClass;
+		a.removeClass = removeClass;
+		a.toggleClass = toggleClass;
+		a.find = find;
+		a.parent = parent;
+		return a;
+	}
+	function query(ctx, selector) {
+		return [].slice.call(ctx.querySelectorAll(selector));
+	}
+	$$ = function (selector, context) {
+		if (context === undefined) { context = document; }
+		var a;
+		if (selector instanceof HTMLElement) {
+			a = [selector];
+		} else if (typeof selector === 'string') {
+			a = query(context, selector);
+		} else if (selector instanceof Array) {
+			a = selector;
+		} else {
+			throw new TypeError("Selector of wrong type: " + Object.prototype.toString.call(a));
+		}
+		return wrap(a);
+	};
+	Cookie = {
+		write: function (name, value, options) {
+			if (!options) options = {};
+			document.cookie = name + "=" + value
+				+ (options.duration ? ';max-age=' + (options.duration * 86400) : '');
+		},
+		read: function (name) {
+			var m = document.cookie.match(new RegExp("(^|; )" + name + "=(.*?)(; |$)"));
+			return m && m[2];
+		},
+		dispose: function (name) {
+			document.cookie = name + "=0;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		}
+	};
+	if (!window.Event) {
+		window.Event = function (type, params) {
+			var event = document.createEvent('Event');
+			event.initEvent(type, true, true);
+			return event;
+		};
+	}
+}());
+</script>
+<title>Travian :: hero</title>
+<style type="text/css">
+span.clickable {
+	cursor: pointer;
+}
+tr.selected td {
+	background-color: #e8e8e8;
+}
+span.a {
+	color: #71d000;
+	font-weight: bold;
+	cursor: pointer;
+}
+@media (prefers-color-scheme: dark) {
+	tr.selected td { background-color: #444; }
+}
+</style>
+</head>
+<body>
+<script type="text/javascript" src="js/utils4a8a.js?c"></script>
+<div class="ad"><style id="scaling">
+	.icon--scalable {
+		zoom: var(--scale-zoom);
+		transform: scale(var(--scale-transform));
+	}
+</style>
+<script type="text/javascript" async><!--
+(function () {
+	var urls = {};
+	window.onerror = function(msg, url, line, column, error) {
+		if ($ == window.jQuery) { msg = "jQuery sneaked here!"; }
+		var origin = location.protocol + '//' + location.host;
+		var params =
+			"?msg=" + encodeURIComponent(msg) +
+			"&url=" + encodeURIComponent(url) +
+			"&page=" + encodeURIComponent(location.href.replace(origin, '')) +
+			"&line=" + line +
+            "&lang=" + document.documentElement.lang +
+            "&column=" + (column === undefined ? 'n/a' : column) +
+            "&stack=" + encodeURIComponent(error && error.stack) +
+			"";
+		var url = "error.html"+ params;
+		if (urls[url] > 3) return false;
+		var img = new Image();
+		img.width = 1;
+		img.height = 1;
+		img.src = url;
+		document.body.appendChild(img);
+		urls[url] = (urls[url] || 0) + 1;
+		return false;
+	};
+	if (!window.devicePixelRatio) return;
+	Cookie.write('dpi', Math.round(devicePixelRatio * 96), { duration: 365 });
+	var oldValue = devicePixelRatio;
+	var zoomKind = window.CSS && CSS.supports('zoom', '1') ? 'zoom' : 'transform';
+	function setZoomLevel(zoomLevel) {
+		document.body.style.setProperty("--scale-" + zoomKind, zoomLevel);
+	}
+	function resize(currentScale) {
+		function f(n) {
+			return Math.abs(Math.log(currentScale / n));
+		}
+		var zoomLevels = [0.125, 0.25, 0.5, 1, 1.25, 1.5, 2, 2.5, 3, 4];
+		zoomLevels.sort(function (a, b) { return f(a) - f(b); });
+		setZoomLevel(zoomLevels[0] / currentScale);
+	}
+	window.addEventListener('resize', function () {
+		var newValue = devicePixelRatio;
+		if (newValue === oldValue) { return; }
+		resize(oldValue = newValue);
+	});
+	resize(devicePixelRatio);
+}());
+--></script>
+<!--[if lte IE 10]>
+    <div id="warning">
+        <a href="https://www.microsoft.com/en-us/WindowsForBusiness/End-of-IE-support">
+            Support for older versions of Internet Explorer ended on January 12th, 2016
+        </a>
+    </div>
+<![endif]-->
+</div>
+<div id="menu">
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="index.html" class="icon--scalable menuitem-index"></a><div>Home Page</div></div>
+	</span>
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="warsim2.html" class="icon--scalable menuitem-warsim2"></a><div>Extended Combat Simulator</div></div>
+		<div class="menutitle">Calculators</div>
+		<div class="menuitem"><a href="distance.html" class="icon--scalable menuitem-distance"></a><div>distance calculator</div></div>
+		<div class="menuitem"><a href="conq.html" class="icon--scalable menuitem-conq"></a><div>Conquering calculator</div></div>
+		<div class="menuitem"><a href="off_calc.html" class="icon--scalable menuitem-off_calc"></a><div>offense calculator</div></div>
+		<div class="menuitem"><a href="def_calc.html" class="icon--scalable menuitem-def_calc"></a><div>defense calculator</div></div>
+		<div class="menuitem"><a href="war.html" class="icon--scalable menuitem-war"></a><div>units' attributes calculator</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="build.html" class="icon--scalable menuitem-build"></a><div>buildings</div></div>
+		<div class="menutitle">Tables</div>
+		<div class="menuitem"><a href="villages_res.html" class="icon--scalable menuitem-villages_res"></a><div>resource development calculator</div></div>
+		<div class="menuitem"><a href="troops.html" class="icon--scalable menuitem-troops"></a><div>Troops</div></div>
+		<div class="menuitem"><a href="oases.html" class="icon--scalable menuitem-oases"></a><div>Oases</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="hero4.html" class="icon--scalable menuitem-hero4"></a><div>hero (T4)</div></div>
+		<div class="menutitle">hero</div>
+		<div class="menuitem"><a href="hero.html" class="icon--scalable menuitem-hero"></a><div>hero (T3)</div></div>
+		<div class="menuitem"><a href="items.html" class="icon--scalable menuitem-items"></a><div>items</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="report.html" class="icon--scalable menuitem-report"></a><div>logger</div></div>
+		<div class="menutitle">Misc</div>
+		<div class="menuitem"><a href="about.html" class="icon--scalable menuitem-about"></a><div>about this site</div></div>
+		<div class="menuitem"><a href="thanks.html" class="icon--scalable menuitem-thanks"></a><div>Acknowledgements</div></div>
+			</span>
+	
+</div>
+<div id="langbar">
+	<img alt="ar" src="img/x.gif" class="icon--scalable click flag ae">
+	<img alt="bg" src="img/x.gif" class="icon--scalable click flag bg">
+	<img alt="cs" src="img/x.gif" class="icon--scalable click flag cz">
+	<img alt="da" src="img/x.gif" class="icon--scalable click flag dk">
+	<img alt="de" src="img/x.gif" class="icon--scalable click flag de">
+	<img alt="ee" src="img/x.gif" class="icon--scalable click flag ee">
+	<img alt="el" src="img/x.gif" class="icon--scalable click flag gr">
+	<img alt="en" src="img/x.gif" class="icon--scalable click flag us">
+	<img alt="es" src="img/x.gif" class="icon--scalable click flag es">
+	<img alt="fa" src="img/x.gif" class="icon--scalable click flag ir">
+	<img alt="fr" src="img/x.gif" class="icon--scalable click flag fr">
+	<img alt="he" src="img/x.gif" class="icon--scalable click flag il">
+	<img alt="hu" src="img/x.gif" class="icon--scalable click flag hu">
+	<img alt="it" src="img/x.gif" class="icon--scalable click flag it">
+	<img alt="ja" src="img/x.gif" class="icon--scalable click flag jp">
+	<img alt="lt" src="img/x.gif" class="icon--scalable click flag lt">
+	<img alt="lv" src="img/x.gif" class="icon--scalable click flag lv">
+	<img alt="nl" src="img/x.gif" class="icon--scalable click flag nl">
+	<img alt="pl" src="img/x.gif" class="icon--scalable click flag pl">
+	<img alt="pt" src="img/x.gif" class="icon--scalable click flag pt">
+	<img alt="rs" src="img/x.gif" class="icon--scalable click flag rs">
+	<img alt="ru" src="img/x.gif" class="icon--scalable click flag ru">
+	<img alt="sl" src="img/x.gif" class="icon--scalable click flag si">
+	<img alt="sv" src="img/x.gif" class="icon--scalable click flag se">
+	<img alt="tr" src="img/x.gif" class="icon--scalable click flag tr">
+	<img alt="uk" src="img/x.gif" class="icon--scalable click flag ua">
+	</div>
+
+<script type="text/javascript">
+(function(){
+	var page = location.pathname.match(/(\w+)\.php$/) || [,'index'];
+	$$(".menuitem-" + page[1]).addClass('current');
+})();
+function switch_lang(lang_name) {
+	const d = new Date();
+	d.setYear(d.getYear() + 1);
+	document.cookie = "lang=" + lang_name + ';expires=' + d.toISOString();
+	window.location.reload();
+}
+$$(".flag").on('click', function(){ switch_lang(this.alt) });
+(function(){
+	var search = $$("#search input")[0];
+	if (!search || !window.fetch) return;
+	var index = [];
+	fetch('asearch.html')
+		.then(function (s) {
+			return s.json();
+		})
+		.then(function (obj) {
+			for (var k in obj) {
+				var item = obj[k];
+				if (typeof item.str === 'string') {
+					item.str = item.str.toLowerCase();
+					index.push(item);
+				} else {
+					item.str.forEach(function (s) {
+						var obj = {
+							ico: item.ico,
+							str: s.toLowerCase(),
+							url: item.url
+						};
+						if (item.ver) {
+							obj.ver = item.ver;
+						}
+						index.push(obj);
+					});
+				}
+			}
+		});
+	var lastResults = [];
+	var lastIndex = -1;
+	function matcher(term) {
+		return function(item) {
+			if (item.str.indexOf(term) !== -1) return true;
+			const letters = term.split('');
+			const words = item.str.split(' ');
+			if (words.length >= letters.length
+			&& letters.every(function (c, i) { return words[i][0] === c; })) {
+				return true;
+			}
+			return false;
+		}
+	}
+	search.oninput = function () {
+		var term = this.value.toLowerCase();
+		if (term.length < 2) {
+			window['search-results'].innerHTML = '';
+			return;
+		}
+		let termMatcher = matcher(term);
+		lastResults = index.filter(termMatcher).slice(0, 10);
+		if (lastResults.length > 0 && lastIndex === -1) {
+			lastIndex = 0;
+		}
+		window['search-results'].innerHTML = lastResults.map(function (item) {
+			return '<a href="' + item.url + '">'
+				+ '<img src="img/x.gif" class="' + item.ico + '"> '
+				+ item.str.replace(term, '<mark>$&</mark>')
+				+ '</a>';
+		}).join('');
+	};
+	search.onkeyup = function (e) {
+		if (e.keyCode === 38) {
+			// up
+			e.preventDefault();
+		}
+		if (e.keyCode === 40) {
+			// down
+			e.preventDefault();
+		}
+	}
+}());
+</script>
+
+<div class="page">
+<div class="content">
+<a name='top'></a>
+<table>
+<tr><td style="vertical-align:top;" rowspan="2">
+	<table class="wire" cellspacing="0" id="units">
+ 	<tr><td colspan="2">Choose hero</td></tr>
+	<tr><td><img class="unit u1" src="img/x.gif" alt=''/></td>		<td class='cl' onclick='unit_change(1)'onmouseover='cell_enter(this)' onmouseout ='cell_leave(this)'>Legionnaire</td></tr>
+	<tr><td><img class="unit u2" src="img/x.gif" alt=''/></td>		<td class='cl' onclick='unit_change(2)'onmouseover='cell_enter(this)' onmouseout ='cell_leave(this)'>Praetorian</td></tr>
+	<tr><td><img class="unit u3" src="img/x.gif" alt=''/></td>		<td class='cl' onclick='unit_change(3)'onmouseover='cell_enter(this)' onmouseout ='cell_leave(this)'>Imperian</td></tr>
+	<tr><td><img class="unit u5" src="img/x.gif" alt=''/></td>		<td class='cl' onclick='unit_change(4)'onmouseover='cell_enter(this)' onmouseout ='cell_leave(this)'>Equites Imperatoris</td></tr>
+	<tr><td><img class="unit u6" src="img/x.gif" alt=''/></td>		<td class='cl' onclick='unit_change(5)'onmouseover='cell_enter(this)' onmouseout ='cell_leave(this)'>Equites Caesaris</td></tr>
+	<tr><td><img class="unit u11" src="img/x.gif" alt=''/></td>		<td class='cl' onclick='unit_change(6)'onmouseover='cell_enter(this)' onmouseout ='cell_leave(this)'>Maceman</td></tr>
+	<tr><td><img class="unit u12" src="img/x.gif" alt=''/></td>		<td class='cl' onclick='unit_change(7)'onmouseover='cell_enter(this)' onmouseout ='cell_leave(this)'>Spearman</td></tr>
+	<tr><td><img class="unit u13" src="img/x.gif" alt=''/></td>		<td class='cl' onclick='unit_change(8)'onmouseover='cell_enter(this)' onmouseout ='cell_leave(this)'>Axeman</td></tr>
+	<tr><td><img class="unit u15" src="img/x.gif" alt=''/></td>		<td class='cl' onclick='unit_change(9)'onmouseover='cell_enter(this)' onmouseout ='cell_leave(this)'>Paladin</td></tr>
+	<tr><td><img class="unit u16" src="img/x.gif" alt=''/></td>		<td class='cl' onclick='unit_change(10)'onmouseover='cell_enter(this)' onmouseout ='cell_leave(this)'>Teutonic Knight</td></tr>
+	<tr><td><img class="unit u21" src="img/x.gif" alt=''/></td>		<td class='cl' onclick='unit_change(11)'onmouseover='cell_enter(this)' onmouseout ='cell_leave(this)'>Phalanx</td></tr>
+	<tr><td><img class="unit u22" src="img/x.gif" alt=''/></td>		<td class='cl' onclick='unit_change(12)'onmouseover='cell_enter(this)' onmouseout ='cell_leave(this)'>Swordsman</td></tr>
+	<tr><td><img class="unit u24" src="img/x.gif" alt=''/></td>		<td class='cl' onclick='unit_change(13)'onmouseover='cell_enter(this)' onmouseout ='cell_leave(this)'>Theutates Thunder</td></tr>
+	<tr><td><img class="unit u25" src="img/x.gif" alt=''/></td>		<td class='cl' onclick='unit_change(14)'onmouseover='cell_enter(this)' onmouseout ='cell_leave(this)'>Druidrider</td></tr>
+	<tr><td><img class="unit u26" src="img/x.gif" alt=''/></td>		<td class='cl' onclick='unit_change(15)'onmouseover='cell_enter(this)' onmouseout ='cell_leave(this)'>Haeduan</td></tr>
+	</table>
+</td><td>
+	<table class="wire" cellspacing="0" id="stats" width="550">
+	<tr>
+		<td style="width:32%">Abilities</td>
+		<td style="width:38%">Points</td>
+		<td style="width:30%">Values</td>
+	</tr>
+	<tr>
+		<td>offense</td>
+		<td>
+			<span class="but" onclick="updateStats('sa', -100)">&nbsp; 0 &nbsp;</span>
+			<span class="a" onclick="updateStats('sa', -5)">&minus;5</span>
+			<input size="2" maxlength="3" value="0" id="sa" onkeyup="updateStats('sa')"/>
+			<span class="a" onclick="updateStats('sa', 5)">+5</span>
+			<span class="but" onclick="updateStats('sa', 100)">100</span>
+		</td>
+		<td><img class="stats att_all" src="img/x.gif" alt="offense"/> 0</td>
+	</tr>
+	<tr>
+		<td>defense</td>
+		<td>
+			<span class="but" onclick="updateStats('sd', -100)">&nbsp; 0 &nbsp;</span>
+			<span class="a" onclick="updateStats('sd', -5)">&minus;5</span>
+			<input size="2" maxlength="3" value="0" id="sd" onkeyup="updateStats('sd')"/>
+			<span class="a" onclick="updateStats('sd', 5)">+5</span>
+			<span class="but" onclick="updateStats('sd', 100)">100</span>
+		</td>
+		<td><img class="stats def_i icon--scalable" src="img/x.gif" alt="Defense value against infantry"/> 0
+			<img class="stats def_c icon--scalable" src="img/x.gif" alt="Defense value against infantry"/> 0</td>
+	</tr>
+	<tr>
+		<td>Off-Bonus</td>
+		<td>
+			<span class="but" onclick="updateStats('ba', -100)">&nbsp; 0 &nbsp;</span>
+			<span class="a" onclick="updateStats('ba', -5)">&minus;5</span>
+			<input size="2" maxlength="3" value="0" id="ba" onkeyup="updateStats('ba')"/>
+			<span class="a" onclick="updateStats('ba', 5)">+5</span>
+			<span class="but" onclick="updateStats('ba', 100)">100</span>
+		</td>
+		<td>0%</td>
+	</tr>
+	<tr>
+		<td>Def-Bonus</td>
+		<td>
+			<span class="but" onclick="updateStats('bd', -100)">&nbsp; 0 &nbsp;</span>
+			<span class="a" onclick="updateStats('bd', -5)">&minus;5</span>
+			<input size="2" maxlength="3" value="0" id="bd" onkeyup="updateStats('bd')"/>
+			<span class="a" onclick="updateStats('bd', 5)">+5</span>
+			<span class="but" onclick="updateStats('bd', 100)">100</span>
+		</td>
+		<td>0%</td>
+	</tr>
+	<tr>
+		<td>regeneration</td>
+		<td>
+			<span class="but" onclick="updateStats('rg', -100)">&nbsp; 0 &nbsp;</span>
+			<span class="a" onclick="updateStats('rg', -5)">&minus;5</span>
+			<input size="2" maxlength="3" value="0" id="rg" onkeyup="updateStats('rg')"/>
+			<span class="a" onclick="updateStats('rg', 5)">+5</span>
+			<span class="but" onclick="updateStats('rg', 100)">100</span>
+		</td>
+		<td>0%&#47;day</td>
+	</tr>
+	<tr>
+		<td>
+			<select onchange='speed_change(this.value)' id='speed'>
+				<option value="0">1x</option>
+				<option value="1">2x</option>
+				<option value="2">3x</option>
+				<option value="4">5x</option>
+				<option value="9">10x</option>
+			</select> server		</td>
+		<td></td>
+		<td dir="ltr"></td>
+	</tr>
+	</table>
+</td></tr>
+<tr><td>
+	<table class="wire ht" cellspacing="0" style="td height: 10px;">
+	<tr><td colspan="7">ressurect costs &amp; times:</td></tr>
+	<tr>		
+		<td style="width:33px">lvl</td>
+		<td style="width:73px"><img class="res r1 icon--scalable" src="img/x.gif" alt='Lumber'/></td>
+		<td style="width:73px"><img class="res r2 icon--scalable" src="img/x.gif" alt='Clay'/></td>
+		<td style="width:73px"><img class="res r3 icon--scalable" src="img/x.gif" alt='Iron'/></td>
+		<td style="width:68px"><img class="res r4 icon--scalable" src="img/x.gif" alt='Crop'/></td>
+		<td style="width:100px"><img class="res r7 icon--scalable" src="img/x.gif" alt='Time'/></td>
+		<td style="width:66px"><img class="unit uhero icon--scalable" src="img/x.gif" alt='Experience'/></td>
+	</tr>
+	</table>
+	<div style="border:0px; width:568px; height:300px; overflow:auto;" id="div_container">
+	</div>
+</td></tr></table>
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript"><!--
+const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+/* model */
+var stats = [
+	{off:40, def_i:35, def_c:50, cost:[120, 100, 150, 30], cap:50, cu:1, time:"0:33:20", speed:6},
+	{off:30, def_i:65, def_c:35, cost:[100, 130, 160, 70], cap:20, cu:1, time:"0:36:40", speed:5},
+	{off:70, def_i:40, def_c:25, cost:[150, 160, 210, 80], cap:50, cu:1, time:"0:40:00", speed:7},
+	{off:120, def_i:65, def_c:50, cost:[550, 440, 320, 100], cap:100, cu:3, time:"0:55:00", speed:14},
+	{off:180, def_i:80, def_c:105, cost:[550, 640, 800, 180], cap:70, cu:4, time:"1:13:20", speed:10},
+	{off:40, def_i:20, def_c:5, cost:[95, 75, 40, 40], cap:60, cu:1, time:"0:15:00", speed:7},
+	{off:10, def_i:35, def_c:60, cost:[145, 70, 85, 40], cap:40, cu:1, time:"0:23:20", speed:7},
+	{off:60, def_i:30, def_c:30, cost:[130, 120, 170, 70], cap:50, cu:1, time:"0:25:00", speed:6},
+	{off:55, def_i:100, def_c:40, cost:[370, 270, 290, 75], cap:110, cu:2, time:"0:50:00", speed:10},
+	{off:150, def_i:50, def_c:75, cost:[450, 515, 480, 80], cap:80, cu:3, time:"1:01:40", speed:9},
+	{off:15, def_i:40, def_c:50, cost:[100, 130, 55, 30], cap:35, cu:1, time:"0:21:40", speed:7},
+	{off:65, def_i:35, def_c:20, cost:[140, 150, 185, 60], cap:45, cu:1, time:"0:30:00", speed:6},
+	{off:90, def_i:25, def_c:40, cost:[350, 450, 230, 60], cap:75, cu:2, time:"0:51:40", speed:19},
+	{off:45, def_i:115, def_c:55, cost:[360, 330, 280, 120], cap:35, cu:2, time:"0:53:20", speed:16},
+	{off:140, def_i:60, def_c:165, cost:[500, 620, 675, 170], cap:65, cu:3, time:"1:05:00", speed:13}];
+stats.forEach(function(stat) {
+	stat.time = timeI2S(timeS2I(stat.time) * .8);
+});
+var stat_names = ['sa', 'sd', 'ba', 'bd', 'rg'];
+var TABLE_LENGTH=100;
+var data = Array(TABLE_LENGTH);
+for (i=0;i<TABLE_LENGTH;i++) data[i]={cost:Array(4),time:0,exp:0};
+var old_idx = 0;
+var xcells = new Array();
+var server_speed = 1;
+var stats_table = $('stats');
+var hero = {
+	min_lvl:0,
+	sa:0, sd:0, ba:0, bd:0, rg:0,
+	unit:1,
+	spd:0
+};
+StateSaver.bind(hero, {sa:'i', sd:'i', ba:'i', bd:'i', rg:'i', unit:'i', spd:'i'});
+hero.calc_stats = function() {
+	off   = this.stats.off;
+	def_i = this.stats.def_i;
+	def_c = this.stats.def_c;
+	corr = Math.pow(def_i/def_c, 0.2);
+	return {
+		off:   Round5((2*off/3+27.5)*this.sa + 5*off/4),
+		def_i: Round5((2*def_i/3 + 27.5*corr)*this.sd + 5*def_i/3),
+		def_c: Round5((2*def_c/3 + 27.5/corr)*this.sd + 5*def_c/3),
+		off_b: this.ba/5,
+		def_b: this.bd/5,
+		regen: this.rg*5
+	};
+}
+hero.calc_ressurection = function() {
+	var lvl_60 = 0;
+	for(lvl=0; lvl<TABLE_LENGTH; lvl++) {
+		coeff = Math.pow(lvl_60+1, 1.25);
+		for(res=0; res<4; res++) {
+			value = 2 * this.stats.cost[res];
+			if (lvl > 0) value += 30;
+			data[lvl].cost[res] = trickyRounding(value * coeff);
+		}
+		data[lvl].time = 2*timeS2I(this.stats.time)*(lvl_60+1)/server_speed;
+		if (lvl_60 < 60) ++lvl_60;
+	}
+}
+hero.update_min_lvl = function() {
+	points = 0;
+	hero.points = hero.sa + hero.sd + hero.ba + hero.bd + hero.rg;
+	hero.min_lvl = Math.max(Math.ceil((points-6)/5), 0);
+}
+function Round5(x) { return 5*Math.round(x/5) }
+function exp_lvl(lvl) { return (lvl*(lvl+1)*50) }
+function trickyRounding(value) {
+	if (value < 10000) round_size = 100;
+	if (value < 1000) round_size = 10;
+	if (value >= 10000) round_size = 500;
+	if (value > 240000) value = 240000;
+	return Math.round(value / round_size) * round_size;
+}
+
+function updateSpeed() {
+	server_speed = parseInt(hero.spd) + 1;
+	writeRessurection();
+}
+/* view */
+function cell_enter(xcell) {
+	if (hero.unit != xcell.parentNode.rowIndex)
+		xcell.bgColor = isDarkMode ? '#333' : '#ddd';
+}
+function cell_leave(xcell) {
+	if (hero.unit != xcell.parentNode.rowIndex)
+		xcell.bgColor=""
+}
+function turnOffCells() { while (xcells.length) xcells.shift().bgColor=""; }
+function blinkCell(a_cell, a_color) {
+	xcells.push(a_cell);
+	a_cell.bgColor=a_color;
+	setTimeout(turnOffCells, 150);
+}
+function writeStats() {
+	hero_stats = hero.calc_stats();
+	stats_table.rows[1].cells[2].innerHTML = '<img class="stats att_all icon--scalable" src="img/x.gif" alt="offense"/> ' + hero_stats.off;
+	stats_table.rows[2].cells[2].innerHTML = '<img class="stats def_i icon--scalable" src="img/x.gif" alt="Defense value against infantry"/> ' + hero_stats.def_i + ' ' +
+											 '<img class="stats def_c icon--scalable" src="img/x.gif" alt="Defense value against cavalry"/> ' + hero_stats.def_c;
+	stats_table.rows[3].cells[2].innerHTML = hero_stats.off_b + '%';
+	stats_table.rows[4].cells[2].innerHTML = hero_stats.def_b + '%';
+	stats_table.rows[5].cells[2].innerHTML = hero_stats.regen * server_speed + '%/day';
+	
+	stats_table.rows[6].cells[1].innerHTML = "lvl &ge; " + hero.min_lvl;
+	stats_table.rows[6].cells[2].innerHTML =
+		"<img class='unit uhero icon--scalable' src='img/x.gif' alt=\"Experience\"> &ge; " +
+		small_last_3_digits(String(exp_lvl(hero.min_lvl)));
+}
+function select_lvls(lvl) {
+	lvl -= 5;
+	lvl = Math.max(0, lvl);
+	lvl = Math.min(lvl, 89);
+	xdiv.scrollTop = Math.round((xdiv.scrollHeight - xdiv.clientHeight) * lvl / 89);
+}
+
+/* controller */
+var xdiv = $('div_container');
+var xtable = document.createElement('table');
+const obj = {id: "costs", 'class':"wire", 'cellspacing':0};
+for (var k in obj) {
+	xtable.setAttribute(k, obj[k]);
+}
+xdiv.appendChild(xtable);
+
+function unit_change(new_unit) {
+	var xunits = $("units").rows;
+	xunits[hero.unit].cells[1].bgColor = "";
+	xunits[new_unit].cells[1].bgColor = isDarkMode ? '#555' : '#ccc';
+	hero.stats = stats[new_unit-1];
+	hero.unit = new_unit;
+	updateSpeed();
+	writeStats();
+}
+
+function speed_change(value) {
+	hero.spd = value;
+	updateSpeed();
+	writeStats();
+}
+
+function lvl_change() {
+	xtable.rows[hero.min_lvl].className = '';
+	hero.update_min_lvl();
+	select_lvls(hero.min_lvl);
+	xtable.rows[hero.min_lvl].className = 'selected';
+	writeStats();
+}
+
+function writeRessurection() {
+	if (hero.stats) {		
+		hero.calc_ressurection();
+		xtable = $("costs");
+		FRW = 0; // first row index
+		for(row_i=0; row_i<TABLE_LENGTH; row_i++) {
+			html_row = xtable.rows[row_i+FRW].cells;
+			data_row = data[row_i];
+			for(res=0; res<4; res++)
+				html_row[res+1].innerHTML = data_row.cost[res];
+			html_row[5].innerHTML = timeI2S(data_row.time);
+		}
+		StateSaver.save();
+	} else {
+		blinkCell($('units').rows[0].cells[0], isDarkMode ? '#400' : "#ffe0e0");
+	}
+}
+
+function updateStats(skill, delta) {	
+	if (hero.stats) {
+		hero[skill] = parseInt($(skill).value, 10);
+		if (delta) {
+			hero[skill] += delta;
+		} else {
+			hero[skill] = parseInt($(skill).value, 10);
+		}
+		var row_idx = 0;
+		while (stat_names[row_idx++] != skill);
+		if (isNaN(hero[skill]))	{ hero[skill] = 0;		blinkCell(stats_table.rows[row_idx].cells[1], isDarkMode ? '#400' : "#ffe0e0"); }
+		if (hero[skill] < 0)	{ hero[skill] = 0;		blinkCell(stats_table.rows[row_idx].cells[1], isDarkMode ? '#442' : "#fffff0"); }
+		if (hero[skill] > 100)	{ hero[skill] = 100;	blinkCell(stats_table.rows[row_idx].cells[1], isDarkMode ? '#343' : "#f4fff4"); }
+		$(skill).value = hero[skill]; // view
+		lvl_change();
+		StateSaver.save();
+	} else {
+		blinkCell($('units').rows[0].cells[0], isDarkMode ? '#400' : "#ffe0e0");	
+	}
+	return false;
+}
+
+// init
+for (i=0; i<TABLE_LENGTH; i++) {
+	xrow = xtable.insertRow(i);
+	xcell = xrow.insertCell(0);
+	xcell.width = '33'; // lvl
+	xcell.innerHTML = i;
+	for(j=0; j<6; j++) xrow.insertCell(1).width = '73';
+	xrow.cells[4].width = '68'; // crop
+	xrow.cells[5].width = '100'; // time
+	xrow.cells[6].width = '66'; // exp
+	xrow.cells[6].innerHTML = small_last_3_digits(String(exp_lvl(i)));
+}
+
+StateSaver.load();
+for (i=0; i<stat_names.length; i++) {
+	var sn = stat_names[i];
+	$(sn).value = hero[sn];
+}
+$('speed').value = hero.spd;
+unit_change(hero.unit);
+lvl_change();
+--></script>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from travian.kirilloid.ru/hero.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:03:55 GMT -->
+</html>

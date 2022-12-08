@@ -1,0 +1,224 @@
+<html>
+
+<!-- Mirrored from travian.kirilloid.ru/warsim-data-transfer-BNF.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:04:01 GMT -->
+<head>
+<style>
+.literal { color: blue; }
+.atom {
+	color: maroon;
+	font-weight: bold;
+	cursor: pointer;
+}
+.define {
+	cursor: text;
+}
+.comment { color: gray; }
+.modificator { color: green; font-style: italic; }
+
+#spec { line-height: 130%; }
+.v { border: dashed 1px; margin:-1px; }
+.v1 { border-color: transparent; }
+.v2 { border-color: #ccc; background-color: #f0f0f0; }
+.v3 { border-color: #ada; background-color: #e4ffe4; }
+.v3a { border-color: #dd8; background-color: #ffb; }
+.v4 { border-color: hotpink; background-color: pink; }
+#spec.v1p .v2, #spec.v1p .v3, #spec.v1p .v3a, #spec.v1p .v4,
+#spec.v2p .v3, #spec.v2p .v3a, #spec.v2p .v4,
+#spec.v3p .v3a, #spec.v3p .v4,
+#spec.v3ap .v4 {
+	display: none;
+}
+
+.comment.v, { line-height: 150%; }
+div.v {
+	margin: 1px -3px;
+	padding: 0 2px;
+}
+
+/*.v2 { border-bottom: silver; }
+.v3 { border-bottom: #ada; }*/
+
+div { float: left; clear: left; }
+br { clear: both; }
+
+</style>
+</head>
+<body>
+<h3>Format spec</h3>
+<p>This is a spec for passing data to <a href="warsim2.html">combat simulator</a> with pre-filled values in <a href="https://en.wikipedia.org/wiki/Backus–Naur_form">BNF</a> format.
+<br>Just add the resulting string prepended with <code>#</code> to the page url.</p>
+<pre id="spec">
+<div><span class="atom define">&lt;data&gt;</span>         ::= <span class="literal">"#"</span>, [<span class="atom">&lt;attacker&gt;</span>], [<span class="atom">&lt;defender&gt;</span>]</div>
+<br/>
+<div style="margin-bottom:2px;"><span class="atom define">&lt;attacker&gt;</span>     ::= <span class="literal">"a:"</span>, <span class="atom">&lt;race&gt;</span> <span class="v v3 version">[, <span class="atom">&lt;attack-type&gt;</span>]</span>, <span class="atom">&lt;units&gt;</span> <span class="v v2 version">[, <span class="atom">&lt;upgrades&gt;</span>]</span> [, <span class="atom">&lt;population&gt;</span>] [, <span class="atom">&lt;cata-targets&gt;</span>] [, <span class="atom">&lt;hero&gt;</span>] <span class="v v3 version">[, <span class="atom">&lt;plus-stat&gt;</span>]</span> <span class="v v3a version">[, <span class="atom">&lt;scout-art&gt;</span>]</span> <span class="v v3 version">[, <span class="atom">&lt;big-party&gt;</span>]</span> <span class="v v3 version">[, <span class="atom">&lt;brewery&gt;</span>]</span>, <span class="literal">"#"</span></div>
+<div><span class="atom define">&lt;defender&gt;</span>     ::= <span class="literal">"d:"</span>, <span class="atom">&lt;race&gt;</span> [, <span class="atom">&lt;population&gt;</span>] [, <span class="atom">&lt;wall&gt;</span>] <span class="v v3 version">[, <span class="atom">&lt;residence&gt;</span>]</span> <span class="v v2 version">[, <span class="atom">&lt;stonemason&gt;</span>]</span> <span class="v v3 version">[, <span class="atom">&lt;traps&gt;</span>]</span> <span class="v v3 version">[, <span class="atom">&lt;plus-stat&gt;</span>]</span> <span class="v v3a version">[, <span class="atom">&lt;scout-art&gt;</span>]</span> <span class="v v3a version">[, <span class="atom">&lt;dur-art&gt;</span>]</span> <span class="v v3 version">[, <span class="atom">&lt;big-party&gt;</span>]</span>, (<span class="atom">&lt;def-side&gt;</span>)<span class="modificator">{1,}</span>, <span class="literal">"#"</span></div>
+<div>      <span class="comment">(* here race is attribute of place of battle, affects type of wall *)</span></div>
+<br/>
+<div><span class="atom define">&lt;def-side&gt;</span>     ::= <span class="literal">";"</span>, <span class="atom">&lt;race&gt;</span>, <span class="atom">&lt;units&gt;</span> <span class="v v2 version">[, <span class="atom">&lt;upgrades&gt;</span>]</span> [, <span class="atom">&lt;hero&gt;</span>]</div>
+<div>      <span class="comment">(* here race is attribute of units *)</span></div>
+
+<div><span class="atom define">&lt;race&gt;</span>         ::= <span class="literal">"r"</span>, <span class="atom">&lt;digit&gt;</span></div>
+<div>      <span class="comment">(* 1 - romans, 2 - teutons, 3 - gauls; off:/4 - natar/; def:/4 - nature, 5 - natar/ *)</span></div>
+
+<div><span class="atom define">&lt;units&gt;</span>        ::= <span class="literal">"u"</span>, <span class="atom">&lt;number-array&gt;</span></div>
+<div>      <span class="comment">(* examples: "u10,,,10", "u,,100" *)</span></div>
+<div class="v v2"><span class="atom define">&lt;upgrades&gt;</span>     ::= <span class="literal">"U"</span>, ( <span class="atom">&lt;number-array&gt;</span> <span class="v v3">| <span class="literal">"!"</span>, <span class="atom">&lt;number&gt;</span></span> )</div>
+<div>      <span class="comment v v2">(* notice compact indexing (50 imps @10 up level are "u,,50U10", not "u,,50U,,10") and CAPITAL "U" *)</span></div>
+<div>      <span class="comment v v3">(* "!U&lt;number&gt;" means, that all units have the same upgrade level *)</span></div>
+<div class="v v3"><span class="atom define">&lt;attack-type&gt;</span>  ::= <span class="literal">"R"</span><span class="v v4">[,<span class="atom">&lt;number&gt;</span>]</span><span class="comment">(* R for raid, empty for normal *)</span></div>
+<div>      <span class="v v4 comment">(* R0 = R: raid, R1 = '' (default): normal, R2: siege *)</span></div>
+<div><span class="atom define">&lt;population&gt;</span>   ::= <span class="literal">"p"</span>, <span class="atom">&lt;number&gt;</span> <span class="comment">(* population of whole account *)</span></div>
+<div><span class="atom define">&lt;wall&gt;</span>         ::= <span class="literal">"w"</span>, <span class="atom">&lt;number&gt;</span> <span class="comment">(* wall level *)</span></div>
+<div class="v v3"><span class="atom define">&lt;residence&gt;</span>    ::= <span class="literal">"R"</span>, <span class="atom">&lt;number&gt;</span> <span class="comment">(* residence/palace level *)</span></div>
+<div class="v v2"><span class="atom define">&lt;stonemason&gt;</span>   ::= <span class="literal">"s"</span>, <span class="atom">&lt;number&gt;</span> <span class="comment">(* stonemason level *)</span></div>
+<div class="v v3"><span class="atom define">&lt;traps&gt;</span>        ::= <span class="literal">"t"</span>, <span class="atom">&lt;number&gt;</span> <span class="comment">(* traps amount *)</span></div>
+<div class="v v3"><span class="atom define">&lt;plus-stat&gt;</span>    ::= <span class="literal">"P"</span>           <span class="comment">(* plus-offense or plus-defense *)</span></div>
+<div class="v v3a"><span class="atom define">&lt;scout-art&gt;</span>    ::= <span class="literal">"S"</span>, <span class="atom">&lt;number&gt;</span> <span class="comment">(* scouting artifact effect: 0 - 10x, 1 - 5x, 2 - 3x, 3 - 1x, 4 - 0.33x, 5 - 0.2x, 6 - 0.1x *)</span></div>
+<div class="v v3a"><span class="atom define">&lt;dur-art&gt;</span>      ::= <span class="literal">"D"</span>, <span class="atom">&lt;number&gt;</span> <span class="comment">(* durability artifact effect: 0 - 5x, 1 - 4x, 2 - 3x, 3 - 2x, 4 - 1x, 5 - 0.5x, 6 - 0.33x, 7 - 0.25x, 8 - 0.2x *)</span></div>
+<div class="v v3"><span class="atom define">&lt;brewery&gt;</span>      ::= <span class="literal">"B"</span>, <span class="atom">&lt;number&gt;</span> <span class="comment">(* brewery level celebration *)</span></div>
+<div class="v v3"><span class="atom define">&lt;big-party&gt;</span>    ::= <span class="literal">"C"</span>           <span class="comment">(* big celebration from any side *)</span></div>
+<div><span class="atom define">&lt;cata-targets&gt;</span> ::= <span class="literal">"b"</span>, <span class="atom">&lt;number&gt;</span> [, <span class="atom">&lt;number&gt;</span>]</div>
+<div>      <span class="comment">(* levels of targeted buildings *)</span></div>
+<br/>
+<div><span class="atom define">&lt;hero&gt;</span>         ::= <span class="literal">"h"</span> <span class="v v2">[, <span class="atom">&lt;digit&gt;</span>, <span class="literal">","</span>, <span class="atom">&lt;number&gt;</span>, <span class="literal">","</span>, <span class="atom">&lt;number&gt;</span>, <span class="literal">","</span>, <span class="atom">&lt;number&gt;</span>]</span> <span class="v v4">[, <span class="atom">&lt;hero-items&gt;</span>]</span></div>
+<div>      <span class="comment v v2">(* unit-type(0-4), self skill(0-100), bonus skill(0-100), health(0-100) *)</span></div>
+<div class="v v4"><span class="atom define">&lt;hero-items&gt;</span>   ::= <span class="literal">"i"</span>, <span class="atom">&lt;number-array&gt;</span> <span class="comment">(* comma-separated indices for items: right-hand, left-hand, body, cages, bandages, bandage type (0 - small, 1 - big) *)</span>
+	<span class="comment">(* item quality is not supported yet *)</span></div>
+<br/>
+<div><span class="atom define">&lt;number-array&gt;</span> ::= <span class="atom">&lt;number-null&gt;</span> [, <span class="literal">","</span>, <span class="atom">&lt;number-null&gt;</span>]<span class="modificator">{0,9}</span></div>
+<div><span class="atom define">&lt;number&gt;</span>       ::= <span class="atom">&lt;digit&gt;</span><span class="modificator">{1,}</span> <span class="v v3">[, <span class="atom">&lt;multiplier&gt;</span>]</span></div>
+<div><span class="atom define">&lt;number-null&gt;</span>  ::= <span class="atom">&lt;digit&gt;</span><span class="modificator">{0,}</span> <span class="comment">(* empty string considered as zero *)</span></div>
+<br/>
+<div><span class="atom define">&lt;digit&gt;</span>        ::= ( <span class="literal">"0"</span> | <span class="literal">"1"</span> | <span class="literal">"2"</span> | <span class="literal">"3"</span> | <span class="literal">"4"</span> | <span class="literal">"5"</span> | <span class="literal">"6"</span> | <span class="literal">"7"</span> | <span class="literal">"8"</span> | <span class="literal">"9"</span> )</div>
+<div class="v v3"><span class="atom define">&lt;multiplier&gt;</span>   ::= ( <span class="literal">"K"</span> | <span class="literal">"M"</span> )</div>
+<div>      <span class="comment v v3">(* K is for 1'000 and M is for 1'000'000 *)</span></div>
+<br/>
+</pre>
+<div class="v v1"><input type="radio" name="version" id="v1"/> <label for="v1">version 1+</label> </div>
+<div class="v v2"><input type="radio" name="version" id="v2"/> <label for="v2">version 2+</label> </div>
+<div class="v v3"><input type="radio" name="version" id="v3"/> <label for="v3">version 3+</label> </div>
+<div class="v v3a"><input type="radio" name="version" id="v3a"/> <label for="v3a">version 3a+</label> </div>
+<div class="v v4"><input type="radio" name="version" checked="checked" id="v4"/> <label for="v4">version 4+</label> </div>
+<script type="text/javascript">
+/*var dataFormat = {
+	data: [
+		{ type: "literal",	value: "#" },
+		{ type: "atom",	value: "attacker" },
+		{ type: "atom",	value: "defender", comment: "here race is attribute of place of battle, affects type of wall" }
+	],
+	attacker: [
+		{ type: "literal",	value: "a:" },
+		{ type: "atom",	value: "race" },
+		{ type: "atom",	value: "units" },
+		{ type: "atom",	value: "upgrades",	optional: true,		version: 2 },
+		{ type: "atom",	value: "raid-mark",	optional: true,		version: 3 },
+		{ type: "atom",	value: "population",	optional: true},
+		{ type: "atom",	value: "cata-targets",optional: true},
+		{ type: "atom",	value: "hero",			optional: true},
+		{ type: "atom",	value: "plus-stat",	optional: true,		version: 3 },
+		{ type: "atom",	value: "big-party",	optional: true,		version: 3 }
+	],
+	defender: [
+		{ type: "literal",	value: "d:" },
+		{ type: "atom",	value: "race" },
+		{ type: "atom",	value: "population",	optional: true},
+		{ type: "atom",	value: "wall",			optional: true},
+		{ type: "atom",	value: "residence",	optional: true,		version: 3 },
+		{ type: "atom",	value: "stonemason",optional: true,		version: 2 },
+		{ type: "atom",	value: "plus-stat",	optional: true,		version: 3 },
+		{ type: "atom",	value: "big-party",	optional: true,		version: 3 }
+		{ type: "atom",	value: "def-side",		amount: [1,],		version: 3 }
+	],
+	'def-side': [
+		{ type: "literal",	value: ";" },
+		{ type: "atom",	value: "units" },
+		{ type: "atom",	value: "upgrades",	optional: true,		version: 2 },
+		{ type: "atom",	value: "hero",			optional: true}
+	],
+	race: [
+		{ type: "literal",	value: "r" },
+		{ type: "atom",	value: "digit" }
+	],
+	units: [
+		{ type: "literal",	value: "u" },
+		{ type: "atom",	value: "number-null" },
+		{ type: "composite", optional: false, amount: [0,9],
+			nodes: [
+				{ type: "literal",	value: "," },
+				{ type: "atom",	value: "number-null" }
+			]
+		}
+	],
+	upgrades: {
+		version: 2,
+		comment: 'notice compact indexing (50 imps @10 up level are "u,,50U10") and CAPITAL "U"',
+		nodes: [
+			{ type: "literal",	value: "U" },
+			{ type: "atom",	value: "number-null" },
+			{ type: "composite", optional: false, amount: [0,9],
+				nodes: [
+					{ type: "literal",	value: "," },
+					{ type: "atom",	value: "number-null" }
+				]
+			}
+		]
+	},
+	'raid-mark': [{
+		type: "literal",	value: "R",	comment: "is set, when attck type is raid"
+	}],
+	population: [
+		{ type: "literal",	value: "p" },
+		{ type: "atom",	value: "number" }
+	],
+	wall: [
+		{ type: "literal",	value: "w" },
+		{ type: "atom",	value: "number" }
+	],
+	residence: {
+		version: 2,
+		nodes: [
+			{ type: "literal",	value: "s" },
+			{ type: "atom",	value: "number" }
+		]
+	},
+	stonemason: [
+		{ type: "literal",	value: "s" },
+		{ type: "atom",	value: "number" }
+	]
+};*/
+
+var defines = {};
+[].forEach.call(document.querySelectorAll(".define"), function (elt) {
+    defines[elt.textContent] = elt;
+});
+document.addEventListener('mouseover', function(event) {
+	if (event.target.classList.contains('atom')
+	&&  !event.target.classList.contains('define')) {
+		var define = defines[event.target.textContent];
+		if (define) define.parentNode.style.backgroundColor = "#ff6";
+	};
+});
+document.addEventListener('mouseout', function() {
+	if (event.target.classList.contains('atom')
+	&&  !event.target.classList.contains('define')) {
+		var define = defines[event.target.textContent];
+		if (define) define.parentNode.style.backgroundColor = "";
+	}
+});
+document.addEventListener('click', function() {
+	if (event.target.classList.contains('atom')
+	&&  !event.target.classList.contains('define')) {
+		var define = defines[event.target.textContent];
+		if (define) define.scrollIntoView();
+	}
+});
+document.addEventListener('change', function (event) {
+	if (event.target.tagName.toLowerCase() !== 'input'
+	||  event.target.type !== 'radio') { return; }
+	document.getElementById('spec').className = event.target.id + 'p';
+});
+</script>
+</body>
+
+<!-- Mirrored from travian.kirilloid.ru/warsim-data-transfer-BNF.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:04:01 GMT -->
+</html>

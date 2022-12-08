@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from travian.kirilloid.ru/thanks.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:03:57 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/ico" href="img/favicon.ico" sizes="16x16">
+<link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+<link rel="stylesheet" type="text/css" href="css/stylee167.css?e">
+<link rel="stylesheet" type="text/css" media="screen and (pointer: coarse)" href="css/touch.css">
+<link rel="stylesheet" type="text/css" href="css/ltr.css">
+
+<link rel="icon" sizes="192x192" href="img/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="img/icon-152.png">
+<script type="text/javascript">
+if (!window.$) {
+	$ = function (id) { return document.getElementById(id); };
+}
+var _overlay = null;
+function scriptLoadFail() {
+	if (_overlay) {
+		return;
+	}
+	var div = document.createElement('div');
+	div.className = "overlay";
+	div.innerHTML = "<button class='close' onclick='closeOverlay()'>&times;</button>"
+				  + "<p>There was an error loading JavaScript.</p>"
+				  + "<p>The page might work incorrectly.</p>"
+				  + "<p class='buttons'>"
+				  + "<button class='but' onclick='location.reload()'>🔁 Reload</button>"
+				  + "<button class='but' onclick='closeOverlay()'>❎ Ignore</button></p>";
+	$$(".page")[0].appendChild(div);
+	_overlay = div;
+	document.addEventListener('keyup', closeOverlayOnEsc);
+}
+function closeOverlay() {
+	_overlay.parentNode.removeChild(_overlay);
+	document.removeEventListener('keyup', closeOverlayOnEsc);
+	_overlay = null;
+}
+function closeOverlayOnEsc(e) {
+	if (e.keyCode === 27) {
+		closeOverlay();
+	}
+}
+document.addEventListener('keypress', function (e) {
+  if (e.key === '\n' && (e.ctrlKey || e.metaKey)) {
+	var original = document.getSelection().toString().trim();
+	if (!original) original = prompt("Nothing was selected, enter what to replace:");
+	if (!original) return alert("Still nothing. See you later.");
+	const result = prompt("How to better translate this?", original);
+	if (!result) return;
+	var img = new Image();
+	img.onload = function () { alert("Thanks!"); };
+	img.onerror = function () { alert("Failed! Did you suggest too long string?"); };
+	img.src = 'suggest_translation.html'
+	  + '?lang=' + document.documentElement.lang
+	  + '&path=' + encodeURIComponent(location.pathname)
+	  + '&original=' + encodeURIComponent(original)
+	  + '&suggest=' + encodeURIComponent(result)
+  }
+});
+Element.prototype.matches =
+	Element.prototype.matches ||
+	Element.prototype.msMatchesSelector || 
+	function(s) {
+		var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+			i = matches.length;
+		while (--i >= 0 && matches.item(i) !== this) {}
+		return i > -1;
+	};
+function findParent(e, s) {
+	if (e.closest) return e.closest(s);
+	while (e && e !== document) {
+		if (e.matches(s)) return e;
+		e = e.parentNode;
+	}
+	return null;
+}
+(function () {
+	function css(name, value) {
+		if (arguments.length === 1) { 
+			return this[0].style[name];
+		}
+		this.forEach(function (el) { el.style[name] = value; });
+	}
+	function prop(name, value) {
+		if (arguments.length === 1) { 
+			return this[0][name];
+		}
+		this.forEach(function (el) { el[name] = value; });
+	}
+	function on(event, handler) {
+		this.forEach(function (el) {
+			el.addEventListener(event, handler, false);
+		});
+		return this;
+	}
+	function addClass(cls) {
+		this.forEach(function (el) {
+			el.classList.add(cls);
+		});
+	}
+	function removeClass(cls) {
+		this.forEach(function (el) {
+			el.classList.remove(cls);
+		});
+	}
+	function toggleClass(cls, set) {
+		this.forEach(function (el) {
+			if (set) {
+				el.classList.add(cls);
+			} else if (set == null) {
+				el.classList.toggle(cls);
+			} else {
+				el.classList.remove(cls);
+			}
+		});
+	}
+	function find(selector) {
+		return wrap(this.reduce(function (a, el) {
+			return a.concat([].slice.call(el.querySelectorAll(selector)));
+		}, []));
+	}
+	function wrap(a) {
+		a.on = on;
+		a.css = css;
+		a.prop = prop;
+		a.addClass = addClass;
+		a.removeClass = removeClass;
+		a.toggleClass = toggleClass;
+		a.find = find;
+		a.parent = parent;
+		return a;
+	}
+	function query(ctx, selector) {
+		return [].slice.call(ctx.querySelectorAll(selector));
+	}
+	$$ = function (selector, context) {
+		if (context === undefined) { context = document; }
+		var a;
+		if (selector instanceof HTMLElement) {
+			a = [selector];
+		} else if (typeof selector === 'string') {
+			a = query(context, selector);
+		} else if (selector instanceof Array) {
+			a = selector;
+		} else {
+			throw new TypeError("Selector of wrong type: " + Object.prototype.toString.call(a));
+		}
+		return wrap(a);
+	};
+	Cookie = {
+		write: function (name, value, options) {
+			if (!options) options = {};
+			document.cookie = name + "=" + value
+				+ (options.duration ? ';max-age=' + (options.duration * 86400) : '');
+		},
+		read: function (name) {
+			var m = document.cookie.match(new RegExp("(^|; )" + name + "=(.*?)(; |$)"));
+			return m && m[2];
+		},
+		dispose: function (name) {
+			document.cookie = name + "=0;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		}
+	};
+	if (!window.Event) {
+		window.Event = function (type, params) {
+			var event = document.createEvent('Event');
+			event.initEvent(type, true, true);
+			return event;
+		};
+	}
+}());
+</script>
+<title> Thanks to contributors to this site </title>
+<style type="text/css">
+body {
+	background-color: black;
+	color: white;
+	font-size: 20px;
+	text-align: center;
+	direction:ltr;
+}
+table {
+	margin-top: 30px;
+	border-collapse: collapse;
+}
+table tr td {
+	padding: 5px;
+}
+
+td.title {
+	text-align: center;
+	font-size: 36px;
+	padding: 20px;
+}
+td.func {
+	text-align: right;
+	width: 50%;
+}
+td.name {
+	text-align: left;
+	width: 50%;
+}
+
+td.title2 {
+	text-align: center;
+	font-size: 28px;
+	margin-top: 10px;
+}
+td.left {
+	text-align: center;
+	width: 40%;
+}
+td.right {
+	text-align: center;
+	width: 40%;
+}
+	a { font-weight:normal; }
+	a:link { color:#f0f0f0; }
+	a:visited { color:#e0e0e0; }
+	a:active { color:white; }
+	a:hover { color:white; text-decoration:underline; }
+</style>
+<script type="text/javascript"><!--
+var performScroll = true;
+function scroll() {
+	if (performScroll)
+		window.scrollBy(0,1);
+}
+setInterval(scroll, 49);
+document.onclick = function() {
+	performScroll = !performScroll;
+}
+</script>
+</head>
+<body>
+<!-- &mdash; -->
+<table width="100%" style="margin-top:200px;">
+<tr><td class="title" colspan="3">Acknowledgements</td></tr>
+<tr><td class="func">translation (English)</td>
+	<td> </td><td class="name">Kirilloid</td></tr>
+﻿<tr><td class="func">Advices on HTML-design &amp; CSS</td>		<td> </td><td class="name"><a href="http://forum.travian.ru/member.php?u=3229">Радогор</a>, <a href="http://forum.travian.ru/member.php?u=23020">Тензор</a></td></tr>
+<tr><td class="func">Combat system basics</td>					<td> </td><td class="name">Andreas age</td></tr>
+<tr><td class="func">Large armies formula</td>					<td> </td><td class="name"><a href="http://forum.travian.com/member.php?u=372556">[CWL] JacekW</a></td></tr>
+<tr><td class="func">Rams formula</td>								<td> </td><td class="name"><a href="http://forum.travian.ru/member.php?u=40227">Antoshka</a></td></tr>
+<tr><td class="func">Advices on PHP languauge</td>				<td> </td><td class="name">Alexus, Antis</td></tr>
+<tr><td class="func">Hosting</td>				<td> </td><td class="name">Alexus, Mr.Algalish,<br/><a href="http://aknet.ru/">aknet.ru</a>, <a href="http://a-koss.ru/trav/">datacompboy</a></td></tr>
+</table>
+
+<table align="center">
+<tr><td colspan="3" class="title">Advices on interfaces design</td></tr>
+<tr><td class="left">Antis</td><td><a href="http://forum.travian.ru/member.php?u=13775">arzt</a></td><td class="right"><a href="http://forum.travian.ru/member.php?u=72">c69</a></td></tr><tr><td class="left"><a href="http://web-gamer.ru/">Dichlofos</a></td><td>Dubrovsky</td><td class="right"><a href="http://forum.travian.ru/member.php?u=101710">Maksat</a></td></tr><tr><td class="left"><a href="http://forum.travian.ru/member.php?u=79885">ol6ka</a></td><td><a href="http://forum.travian.ru/member.php?u=3229">Радогор</a></td><td class="right"><a href="http://forum.travian.ru/member.php?u=23020">Тензор</a></td></tr><tr><td class="left"><a href="http://forum.travian.ru/member.php?u=834">Wind</a></td><td></td><td class="right"></td></tr></table>
+
+<table align="center">
+<tr><td colspan="3" class="title">Ideas</td></tr>
+<tr><td class="left">Alireza Rayan</td><td> </td><td class="right"><a href="http://travian-utils.com/?w=a">anlide</a></td></tr><tr><td class="left"><a href="http://forum.travian.ru/member.php?u=34770">different.local</a></td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=17709">Ierarh</a></td></tr><tr><td class="left"><a href="http://forum.travian.ru/member.php?u=43774">megapolis</a></td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=11949">Raven_AE</a></td></tr><tr><td class="left"><a href="http://forum.travian.ru/member.php?u=26318">rtchakka</a></td><td> </td><td class="right">spion47</td></tr><tr><td class="left"></td><td> </td><td class="right"></td></tr></table>
+
+<table align="center">
+<tr><td colspan="3" class="title">Useful remarks</td></tr>
+<tr><td class="left">afrastgeek</td><td> </td><td class="right">Andy Duggan</td></tr><tr><td class="left"><a href="http://travian-utils.com/?w=a">anlide</a></td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=40227">Antoshka</a></td></tr><tr><td class="left">Aria Aghakhani</td><td> </td><td class="right">Bisu</td></tr><tr><td class="left"><a href="http://forum.travian.ru/member.php?u=73714">Denied</a></td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=33029">Der Shoospan</a></td></tr><tr><td class="left"><a href="http://forum.travian.ru/member.php?u=34770">different.local</a></td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=15379">dpav</a></td></tr><tr><td class="left">Erik Isaksson</td><td> </td><td class="right">Faisal E. Failmban</td></tr><tr><td class="left"><a href="http://forum.travian.ru/member.php?u=26519">fci</a></td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=79563">Flyd</a></td></tr><tr><td class="left">Gabi Lautenbach</td><td> </td><td class="right">Gábor Barna</td></tr><tr><td class="left"><a href="http://forum.travian.ru/member.php?u=6261">Geplew</a></td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=20882">gevor</a></td></tr><tr><td class="left">Γιώργος Κοσμίδης</td><td> </td><td class="right">Gold Dragon</td></tr><tr><td class="left">Horst Müller</td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=28381">injektor</a></td></tr><tr><td class="left">Istvan Popovics</td><td> </td><td class="right"><a href="http://forum.travian.com/member.php?u=372556">[CWL] JacekW</a></td></tr><tr><td class="left">Jakob Hoe</td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=12869">kot7325</a></td></tr><tr><td class="left"><a href="http://forum.travian.ru/member.php?u=6272">Leesa</a></td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=10761">Leonora</a></td></tr><tr><td class="left">Matthew Hellewell</td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=10983">Methos</a></td></tr><tr><td class="left">Michael Day</td><td> </td><td class="right">Mista Speedy</td></tr><tr><td class="left">Robertas Stankevic</td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=18354">sem_ektb</a></td></tr><tr><td class="left"><a href="http://forum.travian.ru/member.php?u=23316">shd</a></td><td> </td><td class="right">Simon</td></tr><tr><td class="left">Simon Bachstein</td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=2632">Skaz</a></td></tr><tr><td class="left">Small Bee</td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=98028">Sonik_AU</a></td></tr><tr><td class="left"><a href="http://forum.travian.ru/member.php?u=26650">StSandro</a></td><td> </td><td class="right">SweetNess</td></tr><tr><td class="left"><a href="http://forum.travian.us/member.php?u=27234">Wren</a></td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=3836">XGen</a></td></tr><tr><td class="left">Yan Shmulans</td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=23786">ziabr</a></td></tr><tr><td class="left"><a href="http://forum.travian.ru/member.php?u=22950">zalexan</a></td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=33885">анонимус</a></td></tr><tr><td class="left"><a href="http://forum.travian.ru/member.php?u=30170">Ахиллес</a></td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=117924">Взрыватель</a></td></tr><tr><td class="left">Кош</td><td> </td><td class="right"><a href="http://forum.travian.ru/member.php?u=4607">Хрен</a></td></tr><tr><td class="left"><a href="http://forum.travian.ru/member.php?u=30558">Сколь ла Средин</a></td><td> </td><td class="right"></td></tr></table>
+
+<table align="center">
+<tr><td colspan="3" class="title">Data</td></tr>
+<tr><td class="func">conquer simulation</td><td> </td>
+	<td class="name"><a href="http://travian-utils.com/?w=a">anlide</a>, <a href="http://a-koss.ru/trav/">datacompboy</a></td>
+</tr>
+<tr><td class="func">hero ressurection - T3</td><td> </td>
+	<td class="name">
+		<a href="http://forum.travian.ru/member.php?u=3229">Радогор</a>,
+		<a href="http://forum.travian.ru/member.php?u=4201">Stasulja</a>,
+		<a href="http://forum.travian.ru/member.php?u=55">Zmeevic</a>
+	</td>
+</tr>
+<tr><td class="func">hero ressurection - T4</td><td> </td>
+	<td class="name"><a href="http://forum.travian.com/member.php?363059-Phanttis">Phanttis</a></td>
+</tr>
+</table>
+<div style="height: 500px;"></div>
+</body>
+
+<!-- Mirrored from travian.kirilloid.ru/thanks.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:03:57 GMT -->
+</html>

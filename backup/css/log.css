@@ -1,0 +1,65 @@
+#report { margin: -15px 0 15px; }
+#report table {
+	width: 500px;
+	margin-top: 15px;
+}
+#report table thead td { background-color:#F3F3F3; }
+#report table thead td.role { font-weight:bold; width:23%; }
+#report.hideAlive .alive { display: none; }
+#display_alive_block { width: 250px; }
+#report #summary {
+	width: auto;
+/*	margin-top: -10px; */
+}
+#report #summary table {
+	width: auto;
+	float: none;
+	margin-top: 0;
+}
+/*#report table.wire td {
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+}*/
+#report > table {
+	box-shadow: 0 0 4px #eee;
+}
+#report #summary td.inner { padding: 0; }
+#report #summary td.inner table { margin: -1px; }
+#report #summary td.inner table td { padding: 5px; }
+#report #tabs {
+	width: 500px;
+	margin: 15px 0 -10px;
+	border-bottom: 1px solid silver;
+}
+#report #tabs .tab {
+	margin: 1px 1px 1px 0;
+	width: 40px;
+	height: 16px;
+	line-height: 16px;
+    border: 1px solid silver;
+	border-bottom-width: 0;
+	font-weight: bold;
+	color: #777;
+	background: #eee;
+	cursor: pointer;
+}
+#report #tabs .tab.active {
+	background: white;
+	height: 18px;
+	margin-bottom: -1px;
+	box-shadow: 0 -1px 1px #eee;
+}
+
+#log {
+	width: 100%;
+	height: 400px;
+	resize: none;
+}
+
+@media (prefers-color-scheme: dark) {
+	#report table thead td { background: #444; }
+	#display_alive_block { background: #222; }
+	#report #tabs .tab { background: #444; color: #ddd; }
+	#report #tabs .tab.active { background: #222; color: white; }
+	#report #summary [style^="color:rgb"] { filter: brightness(2); font-weight: bold; }
+}

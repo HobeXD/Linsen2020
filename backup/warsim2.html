@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from travian.kirilloid.ru/warsim2.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:01:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/ico" href="img/favicon.ico" sizes="16x16">
+<link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+<link rel="stylesheet" type="text/css" href="css/stylee167.css?e">
+<link rel="stylesheet" type="text/css" media="screen and (pointer: coarse)" href="css/touch.css">
+<link rel="stylesheet" type="text/css" href="css/ltr.css">
+
+<link rel="icon" sizes="192x192" href="img/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="img/icon-152.png">
+<script type="text/javascript">
+if (!window.$) {
+	$ = function (id) { return document.getElementById(id); };
+}
+var _overlay = null;
+function scriptLoadFail() {
+	if (_overlay) {
+		return;
+	}
+	var div = document.createElement('div');
+	div.className = "overlay";
+	div.innerHTML = "<button class='close' onclick='closeOverlay()'>&times;</button>"
+				  + "<p>There was an error loading JavaScript.</p>"
+				  + "<p>The page might work incorrectly.</p>"
+				  + "<p class='buttons'>"
+				  + "<button class='but' onclick='location.reload()'>🔁 Reload</button>"
+				  + "<button class='but' onclick='closeOverlay()'>❎ Ignore</button></p>";
+	$$(".page")[0].appendChild(div);
+	_overlay = div;
+	document.addEventListener('keyup', closeOverlayOnEsc);
+}
+function closeOverlay() {
+	_overlay.parentNode.removeChild(_overlay);
+	document.removeEventListener('keyup', closeOverlayOnEsc);
+	_overlay = null;
+}
+function closeOverlayOnEsc(e) {
+	if (e.keyCode === 27) {
+		closeOverlay();
+	}
+}
+document.addEventListener('keypress', function (e) {
+  if (e.key === '\n' && (e.ctrlKey || e.metaKey)) {
+	var original = document.getSelection().toString().trim();
+	if (!original) original = prompt("Nothing was selected, enter what to replace:");
+	if (!original) return alert("Still nothing. See you later.");
+	const result = prompt("How to better translate this?", original);
+	if (!result) return;
+	var img = new Image();
+	img.onload = function () { alert("Thanks!"); };
+	img.onerror = function () { alert("Failed! Did you suggest too long string?"); };
+	img.src = 'suggest_translation.html'
+	  + '?lang=' + document.documentElement.lang
+	  + '&path=' + encodeURIComponent(location.pathname)
+	  + '&original=' + encodeURIComponent(original)
+	  + '&suggest=' + encodeURIComponent(result)
+  }
+});
+Element.prototype.matches =
+	Element.prototype.matches ||
+	Element.prototype.msMatchesSelector || 
+	function(s) {
+		var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+			i = matches.length;
+		while (--i >= 0 && matches.item(i) !== this) {}
+		return i > -1;
+	};
+function findParent(e, s) {
+	if (e.closest) return e.closest(s);
+	while (e && e !== document) {
+		if (e.matches(s)) return e;
+		e = e.parentNode;
+	}
+	return null;
+}
+(function () {
+	function css(name, value) {
+		if (arguments.length === 1) { 
+			return this[0].style[name];
+		}
+		this.forEach(function (el) { el.style[name] = value; });
+	}
+	function prop(name, value) {
+		if (arguments.length === 1) { 
+			return this[0][name];
+		}
+		this.forEach(function (el) { el[name] = value; });
+	}
+	function on(event, handler) {
+		this.forEach(function (el) {
+			el.addEventListener(event, handler, false);
+		});
+		return this;
+	}
+	function addClass(cls) {
+		this.forEach(function (el) {
+			el.classList.add(cls);
+		});
+	}
+	function removeClass(cls) {
+		this.forEach(function (el) {
+			el.classList.remove(cls);
+		});
+	}
+	function toggleClass(cls, set) {
+		this.forEach(function (el) {
+			if (set) {
+				el.classList.add(cls);
+			} else if (set == null) {
+				el.classList.toggle(cls);
+			} else {
+				el.classList.remove(cls);
+			}
+		});
+	}
+	function find(selector) {
+		return wrap(this.reduce(function (a, el) {
+			return a.concat([].slice.call(el.querySelectorAll(selector)));
+		}, []));
+	}
+	function wrap(a) {
+		a.on = on;
+		a.css = css;
+		a.prop = prop;
+		a.addClass = addClass;
+		a.removeClass = removeClass;
+		a.toggleClass = toggleClass;
+		a.find = find;
+		a.parent = parent;
+		return a;
+	}
+	function query(ctx, selector) {
+		return [].slice.call(ctx.querySelectorAll(selector));
+	}
+	$$ = function (selector, context) {
+		if (context === undefined) { context = document; }
+		var a;
+		if (selector instanceof HTMLElement) {
+			a = [selector];
+		} else if (typeof selector === 'string') {
+			a = query(context, selector);
+		} else if (selector instanceof Array) {
+			a = selector;
+		} else {
+			throw new TypeError("Selector of wrong type: " + Object.prototype.toString.call(a));
+		}
+		return wrap(a);
+	};
+	Cookie = {
+		write: function (name, value, options) {
+			if (!options) options = {};
+			document.cookie = name + "=" + value
+				+ (options.duration ? ';max-age=' + (options.duration * 86400) : '');
+		},
+		read: function (name) {
+			var m = document.cookie.match(new RegExp("(^|; )" + name + "=(.*?)(; |$)"));
+			return m && m[2];
+		},
+		dispose: function (name) {
+			document.cookie = name + "=0;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		}
+	};
+	if (!window.Event) {
+		window.Event = function (type, params) {
+			var event = document.createEvent('Event');
+			event.initEvent(type, true, true);
+			return event;
+		};
+	}
+}());
+</script>
+<title>Travian :: Extended Combat Simulator 2.0</title>
+<link type="text/css" href="css/warsim92eb.css?b" rel="stylesheet">
+<link type="text/css" href="css/log0cc1.css?a" rel="stylesheet">
+<!--[if IE]><style type="text/css">
+.unitHolder .details div { padding: 3px 6px 2px; }
+.party { margin: 0 2px !important; }
+#prefs_frame { border: 10px solid #444; }
+.caption .buffer { margin-top: 0; }
+.mode_switcher { padding: 1px 0; }
+.unitHolder .details .ida { left: 1px; top: 2px; }
+.outline .details .ida { margin: 0 3px; left: -23px; top: -20px; }</style><![endif]-->
+</head>
+<body>
+<div class="ad"><style id="scaling">
+	.icon--scalable {
+		zoom: var(--scale-zoom);
+		transform: scale(var(--scale-transform));
+	}
+</style>
+<script type="text/javascript" async><!--
+(function () {
+	var urls = {};
+	window.onerror = function(msg, url, line, column, error) {
+		if ($ == window.jQuery) { msg = "jQuery sneaked here!"; }
+		var origin = location.protocol + '//' + location.host;
+		var params =
+			"?msg=" + encodeURIComponent(msg) +
+			"&url=" + encodeURIComponent(url) +
+			"&page=" + encodeURIComponent(location.href.replace(origin, '')) +
+			"&line=" + line +
+            "&lang=" + document.documentElement.lang +
+            "&column=" + (column === undefined ? 'n/a' : column) +
+            "&stack=" + encodeURIComponent(error && error.stack) +
+			"";
+		var url = "error.html"+ params;
+		if (urls[url] > 3) return false;
+		var img = new Image();
+		img.width = 1;
+		img.height = 1;
+		img.src = url;
+		document.body.appendChild(img);
+		urls[url] = (urls[url] || 0) + 1;
+		return false;
+	};
+	if (!window.devicePixelRatio) return;
+	Cookie.write('dpi', Math.round(devicePixelRatio * 96), { duration: 365 });
+	var oldValue = devicePixelRatio;
+	var zoomKind = window.CSS && CSS.supports('zoom', '1') ? 'zoom' : 'transform';
+	function setZoomLevel(zoomLevel) {
+		document.body.style.setProperty("--scale-" + zoomKind, zoomLevel);
+	}
+	function resize(currentScale) {
+		function f(n) {
+			return Math.abs(Math.log(currentScale / n));
+		}
+		var zoomLevels = [0.125, 0.25, 0.5, 1, 1.25, 1.5, 2, 2.5, 3, 4];
+		zoomLevels.sort(function (a, b) { return f(a) - f(b); });
+		setZoomLevel(zoomLevels[0] / currentScale);
+	}
+	window.addEventListener('resize', function () {
+		var newValue = devicePixelRatio;
+		if (newValue === oldValue) { return; }
+		resize(oldValue = newValue);
+	});
+	resize(devicePixelRatio);
+}());
+--></script>
+<!--[if lte IE 10]>
+    <div id="warning">
+        <a href="https://www.microsoft.com/en-us/WindowsForBusiness/End-of-IE-support">
+            Support for older versions of Internet Explorer ended on January 12th, 2016
+        </a>
+    </div>
+<![endif]-->
+</div>
+<div id="menu">
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="index.html" class="icon--scalable menuitem-index"></a><div>Home Page</div></div>
+	</span>
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="warsim2.html" class="icon--scalable menuitem-warsim2"></a><div>Extended Combat Simulator</div></div>
+		<div class="menutitle">Calculators</div>
+		<div class="menuitem"><a href="distance.html" class="icon--scalable menuitem-distance"></a><div>distance calculator</div></div>
+		<div class="menuitem"><a href="conq.html" class="icon--scalable menuitem-conq"></a><div>Conquering calculator</div></div>
+		<div class="menuitem"><a href="off_calc.html" class="icon--scalable menuitem-off_calc"></a><div>offense calculator</div></div>
+		<div class="menuitem"><a href="def_calc.html" class="icon--scalable menuitem-def_calc"></a><div>defense calculator</div></div>
+		<div class="menuitem"><a href="war.html" class="icon--scalable menuitem-war"></a><div>units' attributes calculator</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="build.html" class="icon--scalable menuitem-build"></a><div>buildings</div></div>
+		<div class="menutitle">Tables</div>
+		<div class="menuitem"><a href="villages_res.html" class="icon--scalable menuitem-villages_res"></a><div>resource development calculator</div></div>
+		<div class="menuitem"><a href="troops.html" class="icon--scalable menuitem-troops"></a><div>Troops</div></div>
+		<div class="menuitem"><a href="oases.html" class="icon--scalable menuitem-oases"></a><div>Oases</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="hero4.html" class="icon--scalable menuitem-hero4"></a><div>hero (T4)</div></div>
+		<div class="menutitle">hero</div>
+		<div class="menuitem"><a href="hero.html" class="icon--scalable menuitem-hero"></a><div>hero (T3)</div></div>
+		<div class="menuitem"><a href="items.html" class="icon--scalable menuitem-items"></a><div>items</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="report.html" class="icon--scalable menuitem-report"></a><div>logger</div></div>
+		<div class="menutitle">Misc</div>
+		<div class="menuitem"><a href="about.html" class="icon--scalable menuitem-about"></a><div>about this site</div></div>
+		<div class="menuitem"><a href="thanks.html" class="icon--scalable menuitem-thanks"></a><div>Acknowledgements</div></div>
+			</span>
+	
+</div>
+<div id="langbar">
+	<img alt="ar" src="img/x.gif" class="icon--scalable click flag ae">
+	<img alt="bg" src="img/x.gif" class="icon--scalable click flag bg">
+	<img alt="cs" src="img/x.gif" class="icon--scalable click flag cz">
+	<img alt="da" src="img/x.gif" class="icon--scalable click flag dk">
+	<img alt="de" src="img/x.gif" class="icon--scalable click flag de">
+	<img alt="ee" src="img/x.gif" class="icon--scalable click flag ee">
+	<img alt="el" src="img/x.gif" class="icon--scalable click flag gr">
+	<img alt="en" src="img/x.gif" class="icon--scalable click flag us">
+	<img alt="es" src="img/x.gif" class="icon--scalable click flag es">
+	<img alt="fa" src="img/x.gif" class="icon--scalable click flag ir">
+	<img alt="fr" src="img/x.gif" class="icon--scalable click flag fr">
+	<img alt="he" src="img/x.gif" class="icon--scalable click flag il">
+	<img alt="hu" src="img/x.gif" class="icon--scalable click flag hu">
+	<img alt="it" src="img/x.gif" class="icon--scalable click flag it">
+	<img alt="ja" src="img/x.gif" class="icon--scalable click flag jp">
+	<img alt="lt" src="img/x.gif" class="icon--scalable click flag lt">
+	<img alt="lv" src="img/x.gif" class="icon--scalable click flag lv">
+	<img alt="nl" src="img/x.gif" class="icon--scalable click flag nl">
+	<img alt="pl" src="img/x.gif" class="icon--scalable click flag pl">
+	<img alt="pt" src="img/x.gif" class="icon--scalable click flag pt">
+	<img alt="rs" src="img/x.gif" class="icon--scalable click flag rs">
+	<img alt="ru" src="img/x.gif" class="icon--scalable click flag ru">
+	<img alt="sl" src="img/x.gif" class="icon--scalable click flag si">
+	<img alt="sv" src="img/x.gif" class="icon--scalable click flag se">
+	<img alt="tr" src="img/x.gif" class="icon--scalable click flag tr">
+	<img alt="uk" src="img/x.gif" class="icon--scalable click flag ua">
+	</div>
+
+<script type="text/javascript">
+(function(){
+	var page = location.pathname.match(/(\w+)\.php$/) || [,'index'];
+	$$(".menuitem-" + page[1]).addClass('current');
+})();
+function switch_lang(lang_name) {
+	const d = new Date();
+	d.setYear(d.getYear() + 1);
+	document.cookie = "lang=" + lang_name + ';expires=' + d.toISOString();
+	window.location.reload();
+}
+$$(".flag").on('click', function(){ switch_lang(this.alt) });
+(function(){
+	var search = $$("#search input")[0];
+	if (!search || !window.fetch) return;
+	var index = [];
+	fetch('asearch.html')
+		.then(function (s) {
+			return s.json();
+		})
+		.then(function (obj) {
+			for (var k in obj) {
+				var item = obj[k];
+				if (typeof item.str === 'string') {
+					item.str = item.str.toLowerCase();
+					index.push(item);
+				} else {
+					item.str.forEach(function (s) {
+						var obj = {
+							ico: item.ico,
+							str: s.toLowerCase(),
+							url: item.url
+						};
+						if (item.ver) {
+							obj.ver = item.ver;
+						}
+						index.push(obj);
+					});
+				}
+			}
+		});
+	var lastResults = [];
+	var lastIndex = -1;
+	function matcher(term) {
+		return function(item) {
+			if (item.str.indexOf(term) !== -1) return true;
+			const letters = term.split('');
+			const words = item.str.split(' ');
+			if (words.length >= letters.length
+			&& letters.every(function (c, i) { return words[i][0] === c; })) {
+				return true;
+			}
+			return false;
+		}
+	}
+	search.oninput = function () {
+		var term = this.value.toLowerCase();
+		if (term.length < 2) {
+			window['search-results'].innerHTML = '';
+			return;
+		}
+		let termMatcher = matcher(term);
+		lastResults = index.filter(termMatcher).slice(0, 10);
+		if (lastResults.length > 0 && lastIndex === -1) {
+			lastIndex = 0;
+		}
+		window['search-results'].innerHTML = lastResults.map(function (item) {
+			return '<a href="' + item.url + '">'
+				+ '<img src="img/x.gif" class="' + item.ico + '"> '
+				+ item.str.replace(term, '<mark>$&</mark>')
+				+ '</a>';
+		}).join('');
+	};
+	search.onkeyup = function (e) {
+		if (e.keyCode === 38) {
+			// up
+			e.preventDefault();
+		}
+		if (e.keyCode === 40) {
+			// down
+			e.preventDefault();
+		}
+	}
+}());
+</script>
+
+<div class="page">
+<div class="content">
+<label for="server">server</label>
+<style>
+    #serverHint {
+        position: relative;
+        display: inline-block;
+        z-index: 100;
+    }
+    #serverHint > div {
+        position: absolute;
+        border: 1px solid gray;
+        background: white;
+        padding: 4px;
+        width: 200px;
+        z-index: 1;
+        top: -12px;
+        box-shadow: 0 0 2px gray;
+        white-space: normal;
+    }
+    #serverHint .but {
+        font-size: 14px;
+    }
+    #serverVersionNew {
+        font-weight: bold;
+    }
+    #serverHintButtons {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 8px;
+    }
+</style>
+<select id="server">
+    <optgroup label="Kingdoms">
+        <option value="1.50">T5</option>
+        <option value="3.50">T5 3x</option>
+        <option value="5.50">T5 5x</option>
+    </optgroup>
+    <optgroup label="Legends">
+        <option value="1.45">T4.5 1x</option>
+        <option value="1.46">T4.6 1x</option>
+        <option value="2.46">T4.6 2x</option>
+        <option value="3.46">T4.6 3x</option>
+        <option value="5.46">T4.6 5x</option>
+        <option value="10.46">T4.6 10x</option>
+    </optgroup>
+    <optgroup label="Specials">
+        <option value="1.431" disabled>New Year Special</option>
+        <option value="1.432">Annual Special</option>
+        <option value="2.432">Annual Special 2x</option>
+        <option value="3.432">Annual Special 3x</option>
+    </optgroup>
+    <optgroup label="Classis">
+        <option value="1.36">T3.6</option>
+        <option value="3.36">T3.6 3x</option>
+        <option value="1.25">T2.5</option>
+    </optgroup>
+</select>
+<div id="serverHint" style="display: none;">
+    <div>
+        <div>You have changed version to <span id="serverVersionNew"></span> on another tab</div>
+        <div id="serverHintButtons">
+            <input type="button" class="but" value="use it" id="serverHintButtonUse">
+            <input type="button" class="but" value="discard" id="serverHintButtonDiscard">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+(function (server) {
+    if (!server) { return; }
+    var lastValue = null;
+    var lastNewValue = null;
+    function f() {
+        lastNewValue = lastValue = this.value;
+        var s = parseVersion(this.value);
+        document.body.className = 't' + s.major + ' t' + s.major + s.minor;
+    };
+    server.addEventListener('change', f);
+    window.addEventListener('load', function () {
+        setTimeout(f.bind(server), 0);
+    });
+    window.addEventListener('storage', function (event) {
+        if (event.key === 'v') {
+            lastNewValue = event.newValue;
+        }
+    });
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState !== 'visible') { return; }
+        if (lastNewValue === lastValue) { return; }
+        var option = [].filter.call(server.options, function (o) {
+            return o.value === lastNewValue;
+        })[0];
+        if (!option) return;
+        var fullVersion = option.parentNode.label + ' / ' + option.innerHTML;
+        $('serverVersionNew').innerHTML = fullVersion;
+        $('serverHint').style.display = '';
+    });
+    $('serverHintButtonUse').onclick = function () {
+        server.value = lastNewValue;
+        f.call(server);
+        $('serverHint').style.display = 'none';
+    };
+    $('serverHintButtonDiscard').onclick = function () {
+        $('serverHint').style.display = 'none';
+    };
+}(document.getElementById('server')));
+</script>
+<a href="#" id="warsim_settings" onclick="return false;" title="Preferences"></a>
+<h2>Extended Combat Simulator 2.0<sup><i>RC</i></sup></h2>
+<p class="error"></p>
+<div id="report" style="display:none;">
+<div id="tabs"></div>
+<div id="display_alive_block">
+	<label for="display_alive">display survivors</label>
+	<input type="checkbox" id="display_alive" checked="checked">
+</div>
+<table cellspacing="0" class="wire" id="summary">
+<thead><tr>
+	<td colspan="2">offense</td>
+	<td colspan="2">defense</td>
+</tr></thead>
+<tbody>
+<tr class="extra">
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable stats att_i"></td>
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable stats def_i"></td>
+</tr><tr class="extra">
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable stats att_c"></td>
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable stats def_c"></td>
+</tr><tr>
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable stats att_all"></td>
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable stats def_all"></td>
+</tr>
+<tr>
+	<td colspan="4">casualties</td>
+</tr><tr>
+	<td colspan="2">?</td>
+	<td colspan="2">?</td>
+</tr><tr class="extra">
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable res r1" alt="Lumber"></td>
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable res r1" alt="Lumber"></td>
+</tr><tr class="extra">
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable res r2" alt="Clay"></td>
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable res r2" alt="Clay"></td>
+</tr><tr class="extra">
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable res r3" alt="Iron"></td>
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable res r3" alt="Iron"></td>
+</tr><tr class="extra">
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable res r4" alt="Crop"></td>
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable res r4" alt="Crop"></td>
+</tr><tr>
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable res r6" alt="Total cost"></td>
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable res r6" alt="Total cost"></td>
+</tr><tr>
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable unit uexp" alt="Experience"></td>
+	<td class="value">?</td>
+	<td><img src="img/x.gif" class="icon--scalable unit uexp" alt="Experience"></td>
+</tr>
+</tbody></table>
+
+<table cellspacing="0" class="wire attacker">
+<thead>
+	<tr><td class="role">offense</td>
+<td><img src="img/x.gif" class="icon--scalable unit u1" alt="Legionnaire"></td><td><img src="img/x.gif" class="icon--scalable unit u2" alt="Praetorian"></td><td><img src="img/x.gif" class="icon--scalable unit u3" alt="Imperian"></td><td><img src="img/x.gif" class="icon--scalable unit u4" alt="Equites Legati"></td><td><img src="img/x.gif" class="icon--scalable unit u5" alt="Equites Imperatoris"></td><td><img src="img/x.gif" class="icon--scalable unit u6" alt="Equites Caesaris"></td><td><img src="img/x.gif" class="icon--scalable unit u7" alt="Battering ram"></td><td><img src="img/x.gif" class="icon--scalable unit u8" alt="Fire Catapult"></td><td><img src="img/x.gif" class="icon--scalable unit u9" alt="Senator"></td><td><img src="img/x.gif" class="icon--scalable unit u10" alt="Settler"></td>	
+		<td><img src="img/x.gif" class="icon--scalable unit uhero" alt="hero"></td>
+	</tr>
+</thead>
+<tbody>
+	<tr><td>Troops</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr class="trapped" style="display:none;"><td>captured</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr><td>casualties</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr class="revived" style="display:none;"><td>revived</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr class="alive"><td>survivors</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr><td><img src="img/x.gif" class="icon--scalable stats cap" alt="Capacity"></td>
+		<td colspan="11" class="info"></td>
+	</tr>
+</tbody>
+</table>
+<table cellspacing="0" class="wire defender">
+<thead>
+	<tr><td class="role">defense</td>
+<td><img src="img/x.gif" class="icon--scalable unit u1" alt="Legionnaire"></td><td><img src="img/x.gif" class="icon--scalable unit u2" alt="Praetorian"></td><td><img src="img/x.gif" class="icon--scalable unit u3" alt="Imperian"></td><td><img src="img/x.gif" class="icon--scalable unit u4" alt="Equites Legati"></td><td><img src="img/x.gif" class="icon--scalable unit u5" alt="Equites Imperatoris"></td><td><img src="img/x.gif" class="icon--scalable unit u6" alt="Equites Caesaris"></td><td><img src="img/x.gif" class="icon--scalable unit u7" alt="Battering ram"></td><td><img src="img/x.gif" class="icon--scalable unit u8" alt="Fire Catapult"></td><td><img src="img/x.gif" class="icon--scalable unit u9" alt="Senator"></td><td><img src="img/x.gif" class="icon--scalable unit u10" alt="Settler"></td>	
+		<td><img src="img/x.gif" class="icon--scalable unit uhero" alt="hero"></td>
+	</tr>
+</thead>
+<tbody>
+	<tr><td>Troops</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr><td>casualties</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr class="revived" style="display:none;"><td>revived</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr class="alive"><td>survivors</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+</tbody>
+</table>
+<table cellspacing="0" class="wire defender">
+<thead>
+	<tr><td class="role">defense</td>
+<td><img src="img/x.gif" class="icon--scalable unit u11" alt="Maceman"></td><td><img src="img/x.gif" class="icon--scalable unit u12" alt="Spearman"></td><td><img src="img/x.gif" class="icon--scalable unit u13" alt="Axeman"></td><td><img src="img/x.gif" class="icon--scalable unit u14" alt="Scout"></td><td><img src="img/x.gif" class="icon--scalable unit u15" alt="Paladin"></td><td><img src="img/x.gif" class="icon--scalable unit u16" alt="Teutonic Knight"></td><td><img src="img/x.gif" class="icon--scalable unit u17" alt="Ram"></td><td><img src="img/x.gif" class="icon--scalable unit u18" alt="Catapult"></td><td><img src="img/x.gif" class="icon--scalable unit u19" alt="Chief"></td><td><img src="img/x.gif" class="icon--scalable unit u20" alt="Settler"></td>	
+		<td><img src="img/x.gif" class="icon--scalable unit uhero" alt="hero"></td>
+	</tr>
+</thead>
+<tbody>
+	<tr><td>Troops</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr><td>casualties</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr class="revived" style="display:none;"><td>revived</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr class="alive"><td>survivors</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+</tbody>
+</table>
+<table cellspacing="0" class="wire defender">
+<thead>
+	<tr><td class="role">defense</td>
+<td><img src="img/x.gif" class="icon--scalable unit u21" alt="Phalanx"></td><td><img src="img/x.gif" class="icon--scalable unit u22" alt="Swordsman"></td><td><img src="img/x.gif" class="icon--scalable unit u23" alt="Pathfinder"></td><td><img src="img/x.gif" class="icon--scalable unit u24" alt="Theutates Thunder"></td><td><img src="img/x.gif" class="icon--scalable unit u25" alt="Druidrider"></td><td><img src="img/x.gif" class="icon--scalable unit u26" alt="Haeduan"></td><td><img src="img/x.gif" class="icon--scalable unit u27" alt="Ram"></td><td><img src="img/x.gif" class="icon--scalable unit u28" alt="Trebuchet"></td><td><img src="img/x.gif" class="icon--scalable unit u29" alt="Chieftain"></td><td><img src="img/x.gif" class="icon--scalable unit u30" alt="Settler"></td>	
+		<td><img src="img/x.gif" class="icon--scalable unit uhero" alt="hero"></td>
+	</tr>
+</thead>
+<tbody>
+	<tr><td>Troops</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr><td>casualties</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr class="revived" style="display:none;"><td>revived</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr class="alive"><td>survivors</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+</tbody>
+</table>
+<table cellspacing="0" class="wire defender">
+<thead>
+	<tr><td class="role">defense</td>
+<td><img src="img/x.gif" class="icon--scalable unit u31" alt="Rat"></td><td><img src="img/x.gif" class="icon--scalable unit u32" alt="Spider"></td><td><img src="img/x.gif" class="icon--scalable unit u33" alt="Serpent"></td><td><img src="img/x.gif" class="icon--scalable unit u34" alt="Bat"></td><td><img src="img/x.gif" class="icon--scalable unit u35" alt="Wild boar"></td><td><img src="img/x.gif" class="icon--scalable unit u36" alt="Wolf"></td><td><img src="img/x.gif" class="icon--scalable unit u37" alt="Bear"></td><td><img src="img/x.gif" class="icon--scalable unit u38" alt="Crocodile"></td><td><img src="img/x.gif" class="icon--scalable unit u39" alt="Tiger"></td><td><img src="img/x.gif" class="icon--scalable unit u40" alt="Elephant"></td>	
+		<td><img src="img/x.gif" class="icon--scalable unit uhero" alt="hero"></td>
+	</tr>
+</thead>
+<tbody>
+	<tr><td>Troops</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr><td>casualties</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr class="alive"><td>survivors</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr class="caged" style="display:none;"><td>captured</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+</tbody>
+</table>
+<table cellspacing="0" class="wire defender">
+<thead>
+	<tr><td class="role">defense</td>
+<td><img src="img/x.gif" class="icon--scalable unit u41" alt="Pikeman"></td><td><img src="img/x.gif" class="icon--scalable unit u42" alt="Thorned Warrior"></td><td><img src="img/x.gif" class="icon--scalable unit u43" alt="Guardsman"></td><td><img src="img/x.gif" class="icon--scalable unit u44" alt="Birds Of Prey"></td><td><img src="img/x.gif" class="icon--scalable unit u45" alt="Axerider"></td><td><img src="img/x.gif" class="icon--scalable unit u46" alt="Natarian Knight"></td><td><img src="img/x.gif" class="icon--scalable unit u47" alt="Warelephant"></td><td><img src="img/x.gif" class="icon--scalable unit u48" alt="Ballista"></td><td><img src="img/x.gif" class="icon--scalable unit u49" alt="Natarian Emperor"></td><td><img src="img/x.gif" class="icon--scalable unit u50" alt="Settler"></td>	
+		<td><img src="img/x.gif" class="icon--scalable unit uhero" alt="hero"></td>
+	</tr>
+</thead>
+<tbody>
+	<tr><td>Troops</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr><td>casualties</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr class="alive"><td>survivors</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+</tbody>
+</table>
+<table cellspacing="0" class="wire defender">
+<thead>
+	<tr><td class="role">defense</td>
+<td><img src="img/x.gif" class="icon--scalable unit u51" alt="Slave Militia"></td><td><img src="img/x.gif" class="icon--scalable unit u52" alt="Ash Warden"></td><td><img src="img/x.gif" class="icon--scalable unit u53" alt="Khopesh Warrior"></td><td><img src="img/x.gif" class="icon--scalable unit u54" alt="Sopdu Explorer"></td><td><img src="img/x.gif" class="icon--scalable unit u55" alt="Anhur Guard"></td><td><img src="img/x.gif" class="icon--scalable unit u56" alt="Resheph Chariot"></td><td><img src="img/x.gif" class="icon--scalable unit u57" alt="Ram"></td><td><img src="img/x.gif" class="icon--scalable unit u58" alt="Stone Catapult"></td><td><img src="img/x.gif" class="icon--scalable unit u59" alt="Nomarch"></td><td><img src="img/x.gif" class="icon--scalable unit u60" alt="Settler"></td>	
+		<td><img src="img/x.gif" class="icon--scalable unit uhero" alt="hero"></td>
+	</tr>
+</thead>
+<tbody>
+	<tr><td>Troops</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr><td>casualties</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr class="alive"><td>survivors</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+</tbody>
+</table>
+<table cellspacing="0" class="wire defender">
+<thead>
+	<tr><td class="role">defense</td>
+<td><img src="img/x.gif" class="icon--scalable unit u61" alt="Mercenary"></td><td><img src="img/x.gif" class="icon--scalable unit u62" alt="Bowman"></td><td><img src="img/x.gif" class="icon--scalable unit u63" alt="Spotter"></td><td><img src="img/x.gif" class="icon--scalable unit u64" alt="Steppe Rider"></td><td><img src="img/x.gif" class="icon--scalable unit u65" alt="Marksman"></td><td><img src="img/x.gif" class="icon--scalable unit u66" alt="Marauder"></td><td><img src="img/x.gif" class="icon--scalable unit u67" alt="Ram"></td><td><img src="img/x.gif" class="icon--scalable unit u68" alt="Catapult"></td><td><img src="img/x.gif" class="icon--scalable unit u69" alt="Logades"></td><td><img src="img/x.gif" class="icon--scalable unit u70" alt="Settler"></td>	
+		<td><img src="img/x.gif" class="icon--scalable unit uhero" alt="hero"></td>
+	</tr>
+</thead>
+<tbody>
+	<tr><td>Troops</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr><td>casualties</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+	<tr class="alive"><td>survivors</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td><td></td><td></td>
+	</tr>
+</tbody>
+</table>
+<ul id="warsim_warns" style="display:none;">
+	<li>You have not input population of attacker's account</li>
+	<li>You have not input population of defender's account</li>
+	<li>You have not input attacker's upgrades, his/her troops seemes to have, though</li>
+	<li>You have not input attacker's upgrades, his/her troops seemes to have, though</li>
+	<li>Cages works only in attack of unoccupied oasis with animals</li>
+	<li>Cages works only when hero attacks alone</li>
+	<li>Special abilities of rams, catapults and chiefs do not "work" in raid</li>
+</ul>
+<br style="clear:both;">
+<a href="#" id="log_link">Permanent link to log</a>
+<a href="#" id="to_warsim">Extended Combat Simulator</a>
+
+<script type="text/javascript"> 
+var i18n = {
+	walls: [
+		"City Wall",
+		"Earth Wall",
+		"Palisade",
+		"",
+		"City Wall",
+		"Stone Wall",
+		"Makeshift Wall",
+	],
+	units: [	["Legionnaire","Praetorian","Imperian","Equites Legati","Equites Imperatoris","Equites Caesaris","Battering ram","Fire Catapult","Senator","Settler"],
+	["Maceman","Spearman","Axeman","Scout","Paladin","Teutonic Knight","Ram","Catapult","Chief","Settler"],
+	["Phalanx","Swordsman","Pathfinder","Theutates Thunder","Druidrider","Haeduan","Ram","Trebuchet","Chieftain","Settler"],
+	["Rat","Spider","Serpent","Bat","Wild boar","Wolf","Bear","Crocodile","Tiger","Elephant"],
+	["Pikeman","Thorned Warrior","Guardsman","Birds Of Prey","Axerider","Natarian Knight","Warelephant","Ballista","Natarian Emperor","Settler"],
+	["Slave Militia","Ash Warden","Khopesh Warrior","Sopdu Explorer","Anhur Guard","Resheph Chariot","Ram","Stone Catapult","Nomarch","Settler"],
+	["Mercenary","Bowman","Spotter","Steppe Rider","Marksman","Marauder","Ram","Catapult","Logades","Settler"]	],
+	info: {
+		info: "Information",
+		wall: "{wall} demolished from {lvl1} to {lvl2} level",
+		build: "Building demolished from {lvl1} to {lvl2} level",
+		free: "You freed {n} own troops",
+		free_alive: "You freed {n} own troops, but could save only {m}",
+		none_return: "none of your soldiers have returned"
+	}
+}
+</script><br />
+</div>
+
+<div class="side off" id="side_off">
+<div class="caption" tabindex="-1">
+	<div>
+		<img src="img/x.gif" class="icon--scalable stats att_all" alt="offense">
+		<select class="race_selector">
+			<option value="0">Romans</option>
+			<option value="1">Teutons</option>
+			<option value="2">Gauls</option>
+			<option value="3" disabled="disabled">Nature</option>
+			<option value="4">Natar</option>
+			<option value="5" class="sf-et">Egyptians</option>
+			<option value="6" class="sf-et">Huns</option>
+			<option value="7">Spartans</option>
+		</select>
+		<label class="raidHolder">
+			<select class="attackType" name="R">
+				<option value="0">normal</option>
+				<option value="1">raid</option>
+				<option value="2" class="mode mode5">siege</option>
+			</select>
+		</label>
+		
+		<label class="population">
+			<img src="img/x.gif" class="icon--scalable unit uhab">
+			Population			<input class="pop fm d5" maxlength="6" max="999999" fc="p" title="Total population">
+		</label>
+		
+		<label class="brew" style="margin-left: 8px; display:none;">
+			<img src="img/x.gif" class="icon--scalable building g35" style="margin-top:-4px;">
+			Brewery			<input class="brew_party fm d2" maxlength="2" max="20">
+		</label>
+
+		<span class="sf-ab">
+			<label>
+				<img src="img/x.gif" class="icon--scalable ab_met" alt=""/>
+				Metallurgy:
+				<select class="metallurgy" valign="bottom">
+					<option value="0" selected>0%</option>
+					<option value="2">2%</option>
+					<option value="4">4%</option>
+					<option value="6">6%</option>
+					<option value="8">8%</option>
+					<option value="10">10%</option>
+				</select>
+			</label>
+		</span>
+	</div>
+	<div style="float:right;">
+		<input class="buffer" tabindex="-1" title="paste line with numbers of units here" />
+		<a href="#" class="up navi navi_up" tabindex="-1" title="move up"></a>
+		<a href="#" class="down navi navi_down" tabindex="-1" title="move down"></a>
+		<a href="#" class="copy navi navi_plus" tabindex="-1" title="clone"></a>
+		<a href="#" class="block navi navi_under" tabindex="-1" title="disable"></a>
+		<a href="#" class="close navi navi_close" tabindex="-1" title="remove"></a>
+	</div>
+</div>
+	
+<div class="units">
+	<div class="unitHolder">
+		<img src="img/x.gif" class="icon--scalable unit u1" fc="u">
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl">
+		<input class="fm d7" maxlength="7" fc="u" title="amount">
+	</div>
+	<div class="unitHolder">
+		<img src="img/x.gif" class="icon--scalable unit u2" fc="u">
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl">
+		<input class="fm d7" maxlength="7" fc="u" title="amount">
+	</div>
+	<div class="unitHolder">
+		<img src="img/x.gif" class="icon--scalable unit u3" fc="u">
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl">
+		<input class="fm d7" maxlength="7" fc="u" title="amount">
+	</div>
+	<div class="unitHolder">
+		<img src="img/x.gif" class="icon--scalable unit u4" fc="u"/>
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl" />
+		<input class="fm d7" maxlength="7" fc="u" title="amount" />
+		<div class="details mode mode3 mode4 mode9">
+			<select class="art">
+				<option value="10">10x</option>
+				<option value="5">5x</option>
+				<option value="3">3x</option>
+				<option value="0" selected="selected">&mdash;</option>
+				<option value="-3">0.33</option>
+				<option value="-5">0.2x</option>
+				<option value="-10">0.1x</option>
+			</select>
+			<div>
+				<img src="img/x.gif" class="icon--scalable art art4">
+				Scouting artifact			</div>
+		</div>
+	</div>
+	<div class="unitHolder">
+		<img src="img/x.gif" class="icon--scalable unit u5" fc="u" />
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl" />
+		<input class="fm d7" maxlength="7" fc="u" title="amount" />
+	</div>
+	<div class="unitHolder">
+		<img src="img/x.gif" class="icon--scalable unit u6" fc="u" />
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl" />
+		<input class="fm d7" maxlength="7" fc="u" title="amount" />
+	</div>
+	<div class="unitHolder notInRaid">
+		<img src="img/x.gif" class="icon--scalable unit u7" fc="u" />
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl" />
+		<input class="fm d7" maxlength="7" fc="u" title="amount" />
+	</div>
+	<div class="unitHolder notInRaid">
+		<img src="img/x.gif" class="icon--scalable unit u8" fc="u" />
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl" />
+		<input class="fm d7" maxlength="7" fc="u" title="amount" />
+		<div class="details cata_details">
+			<input class="cata_tgt fm d2" maxlength="2" max="99" fc="c" />
+			<input class="cata_tgt fm d2" maxlength="2" max="99" fc="c" />
+			<br/>
+			<div>
+				<img src="img/x.gif" class="icon--scalable unit ucata">
+				levels of targets				<br/>
+				<span style="display: block; margin: 3px -73px 0;">
+					&nbsp;&uarr; Wonder of the World				</span>
+			</div>
+			<input type="checkbox" class="ida" name="ida" tabindex="-1">
+		</div>
+	</div>
+	<div class="unitHolder notInRaid narrow">
+		<img src="img/x.gif" class="icon--scalable unit u9" fc="s" />
+		<br/>
+		<input class="fm d2" maxlength="1" max="3" fc="u" title="amount" />
+		<div class="details">
+			<input class="party" type="checkbox" name="party" />
+			<div class="outline">
+				Big party &#9834;
+			</div>
+		</div>
+	</div>
+	<div class="unitHolder narrow"><img src="img/x.gif" class="icon--scalable unit u10" max="9" /><br/><input class="fm d2" maxlength="1" fc="u" title="amount" /></div>
+	<div class="unitHolder heroHolder narrow">
+		<label>
+			<img src="img/x.gif" class="icon--scalable unit uhero" alt="hero" />
+			<br/>
+			<input type='checkbox' class="hero_switcher" name="hero_switcher" />
+		</label>
+	</div>
+</div>
+
+<div class="mode mode2 plus-wrapper">
+	<label>
+		<img src="img/x.gif" class="icon--scalable stats att_plus" alt="">
+		<input type="checkbox" class="plus"/> plus-offense	</label>
+</div>
+<div class="hero disabled">
+	<table cellspacing="0" width="100%">
+	<tr>
+		<td><img src="img/x.gif" class="icon--scalable stats health" alt="health" fc="h" /></td>
+		<td class="last"><input class="fm d3 hero_health" maxlength="3" value="100" max="100" fc="h" /></td>
+		<td><img src="img/x.gif" class="icon--scalable stats att_bonus" alt="Off-Bonus" fc="h" /></td>
+		<td><input class="fm d3 hero_bonus" maxlength="3" max="100" fc="h" title="Points" /></td>
+		<td class="skill_bonus last">0%</td>
+		<td><img src="img/x.gif" class="icon--scalable stats att_all" alt="offense" fc="h" /></td>
+		<td><input class="fm d3 hero_self" maxlength="3" max="100" fc="h" title="Points" /></td>
+		<td class="skill_str" title="fighting strength">100</td>
+	</tr>
+	<tr class="mode mode3">
+		<td><img src="img/x.gif" class="icon--scalable unit u1" /></td>
+		<td colspan="6"><select class="hero_unit">
+			<option value="0">unit1</option>
+			<option value="1">unit2</option>
+			<option value="2">unit3</option>
+			<option value="3">unit4</option>
+			<option value="4">unit5</option>
+		</select></td>
+		<td class="skill_str2"></td>
+	</tr>
+	</table>
+	<div class="mode mode4 mode5 mode9 total_str"></div>
+	<span class="mode mode4 mode5 mode9">
+		<label>
+			<img src="img/x.gif" class="icon--scalable itemCategory itemCategory_horse" alt="" />
+			<input type="checkbox" name="hero_mounted" class="hero_mounted" checked="checked" />
+			Hero is mounted		</label>
+	</span><br>
+
+	<div class="mode mode4 mode5 mode9 hero_items">
+		<input readonly="readonly" value="items" class="side_hero_item_input" />
+		<div class="hero_item">
+			<label>
+				<img src="img/x.gif" class="icon--scalable itemCategory itemCategory_rightHand" alt="Weapon (right hand)" />
+				<select class="weapon hero_input">
+					<option value="0">--</option>
+					<optgroup label="unit1"><option>1</option><option>2</option><option>3</option></optgroup>
+					<optgroup label="unit2"><option>1</option><option>2</option><option>3</option></optgroup>
+					<optgroup label="unit3"><option>1</option><option>2</option><option>3</option></optgroup>
+					<optgroup label="unit4"><option>1</option><option>2</option><option>3</option></optgroup>
+					<optgroup label="unit5"><option>1</option><option>2</option><option>3</option></optgroup>
+				</select>
+            </label>
+			<div class="mode mode5 item_extra">
+				|
+				<span class="button-group quality">
+					<button type="button" value="-2">-2</button>
+					<button type="button" value="-1">-1</button>
+					<button type="button" value="0" class="active">0</button>
+					<button type="button" value="1">+1</button>
+					<button type="button" value="2">+2</button>
+					<input type="hidden" class="right_quality" />
+				</span>
+				|
+				<span class="button-group crystals" crystal="rightHand">
+					<button type="button" value="0"><b class="cross cross--disabled">&times;</b></button>
+					<button type="button" value="1"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="2"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="3"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="4"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="5"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<input type="hidden" class="right_crystals" />
+				</span>
+			</div>
+		</div>
+		<div class="hero_item">
+			<label><img src="img/x.gif" class="icon--scalable itemCategory itemCategory_leftHand" alt="Left-hand items" />
+			<select class="leftHand hero_input">
+				<optgroup><option value="0">--</option></optgroup>
+			<optgroup label='-----'><option value="76">Small shield</option><option value="77">Shield</option><option value="78">Large shield</option><optgroup label='-----'><option value="79">Small horn of the Natarian</option><option value="80">Horn of the Natarian</option><option value="81">Large horn of the Natarian</option>			</select>
+			</label>
+			<div class="mode mode5 item_extra">
+				|
+				<span class="button-group quality">
+					<button type="button" value="-2">-2</button>
+					<button type="button" value="-1">-1</button>
+					<button type="button" value="0" class="active">0</button>
+					<button type="button" value="1">+1</button>
+					<button type="button" value="2">+2</button>
+					<input type="hidden" class="left_quality" />
+				</span>
+				|
+				<span class="button-group crystals" crystal="leftHand">
+					<button type="button" value="0"><b class="cross cross--disabled">&times;</b></button>
+					<button type="button" value="1"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="2"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="3"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="4"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="5"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<input type="hidden" class="left_crystals" />
+				</span>
+			</div>
+		</div>
+		<div class="hero_item">
+			<label><img src="img/x.gif" class="icon--scalable itemCategory itemCategory_body" alt="Armors (body)" />
+			<select class="armor hero_input">
+				<optgroup><option value="0">--</option></optgroup>
+			<optgroup label='-----'><option value="85">Light scale armour</option><option value="86">Scale armour</option><option value="87">Heavy scale armour</option><optgroup label='-----'><option value="88">Light breastplate</option><option value="89">Breastplate</option><option value="90">Heavy breastplate</option><optgroup label='-----'><option value="91">Light segmented armour</option><option value="92">Segmented armour</option><option value="93">Heavy segmented armour</option>			</select>
+			</label>
+			<div class="mode mode5 item_extra">
+				|
+				<span class="button-group quality">
+					<button type="button" value="-2">-2</button>
+					<button type="button" value="-1">-1</button>
+					<button type="button" value="0" class="active">0</button>
+					<button type="button" value="1">+1</button>
+					<button type="button" value="2">+2</button>
+					<input type="hidden" class="body_quality" />
+				</span>
+				|
+				<span class="button-group crystals" crystal="body">
+					<button type="button" value="0"><b class="cross cross--disabled">&times;</b></button>
+					<button type="button" value="1"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="2"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="3"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="4"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="5"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<input type="hidden" class="body_crystals" />
+				</span>
+			</div>
+		</div>
+		<div class="hero_item">
+			<label><img src="img/x.gif" class="icon--scalable itemCategory itemCategory_cage" alt="Cage" />
+			<input type="number" pattern="\d*" min="0" class="cages hero_input" name="cage" /></label>
+		</div>
+		<div class="hero_item">
+			<img src="img/x.gif" class="icon--scalable itemCategory itemCategory_bandage25" alt="" />
+			<input type="number" pattern="\d*" min="0" class="bandage hero_input"/>
+			<select class="bandage hero_input">
+				<option value="25">Small bandage</option>
+				<option value="33">Bandage</option>
+			</select>
+		</div>
+	</div>
+
+</div>
+<br />
+</div>
+<div class="side def" id="side_def">
+<div class="caption" tabindex="-1">
+	<div>
+		<img src="img/x.gif" class="icon--scalable stats def_all" title="defense">
+		<select class="race_selector" valign="bottom">
+			<option value="0">Romans</option>
+			<option value="1">Teutons</option>
+			<option value="2">Gauls</option>
+			<option value="3" class="mode mode3 mode4 mode9">Nature</option>
+			<option value="4">Natar</option>
+			<option value="5" class="mode mode9">Egyptians</option>
+			<option value="6" class="mode mode9">Huns</option>
+			<option value="7" class="mode mode9">Spartans</option>
+		</select>
+		<span class="sf-ab">
+			<label>
+				<img src="img/x.gif" class="icon--scalable ab_met" alt=""/>
+				Metallurgy:
+				<select class="metallurgy" valign="bottom">
+					<option value="0" selected>0%</option>
+					<option value="2">2%</option>
+					<option value="4">4%</option>
+					<option value="6">6%</option>
+					<option value="8">8%</option>
+					<option value="10">10%</option>
+				</select>
+			</label>
+		</span>
+	</div>
+	<div style="float:right;">
+		<input class="buffer" tabindex="-1" title="paste line with numbers of units here" />
+		<a href="#" class="up navi navi_up" tabindex="-1" title="move up"></a>
+		<a href="#" class="down navi navi_down" tabindex="-1" title="move down"></a>
+		<a href="#" class="copy navi navi_plus" tabindex="-1" title="clone"></a>
+		<a href="#" class="block navi navi_under" tabindex="-1" title="disable"></a>
+		<a href="#" class="close navi navi_close" tabindex="-1" title="remove"></a>
+	</div>
+</div>
+
+<div class="units">
+	<div class="natar_selection" style="display: none;">
+		<div class="slider">
+			<div class="knob">
+			</div>
+		</div>
+	</div>
+	<div class="unitHolder">
+		<img src="img/x.gif" class="icon--scalable unit u21" fc="u" />
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl" />
+		<input class="fm d7" maxlength="8" fc="u" title="amount" />
+	</div>
+	<div class="unitHolder">
+		<img src="img/x.gif" class="icon--scalable unit u22" fc="u" />
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl" />
+		<input class="fm d7" maxlength="8" fc="u" title="amount" />
+	</div>
+	<div class="unitHolder">
+		<img src="img/x.gif" class="icon--scalable unit u23" fc="u" />
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl" />
+		<input class="fm d7" maxlength="7" fc="u" title="amount" />
+	</div>
+	<div class="unitHolder">
+		<img src="img/x.gif" class="icon--scalable unit u24" fc="u" />
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl" />
+		<input class="fm d7" maxlength="7" fc="u" title="amount" />
+	</div>
+	<div class="unitHolder">
+		<img src="img/x.gif" class="icon--scalable unit u25" fc="u" />
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl" />
+		<input class="fm d7" maxlength="7" fc="u" title="amount" />
+	</div>
+	<div class="unitHolder">
+		<img src="img/x.gif" class="icon--scalable unit u26" fc="u" />
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl" />
+		<input class="fm d7" maxlength="7" fc="u" title="amount" />
+	</div>
+	<div class="unitHolder">
+		<img src="img/x.gif" class="icon--scalable unit u27" fc="u" />
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl" />
+		<input class="fm d7" maxlength="7" fc="u" title="amount" />
+	</div>
+	<div class="unitHolder">
+		<img src="img/x.gif" class="icon--scalable unit u28" fc="u" />
+		<input class="fm d2 up" maxlength="2" max="20" fc="i" title="upgrade lvl" />
+		<input class="fm d7" maxlength="7" fc="u" title="amount" />
+	</div>
+	<div class="unitHolder narrow"><img src="img/x.gif" class="icon--scalable unit u29" fc="s" /><br/><input class="fm d2" maxlength="4" fc="u" title="amount" /></div>
+	<div class="unitHolder narrow"><img src="img/x.gif" class="icon--scalable unit u30" /><br/><input class="fm d2" maxlength="4" fc="u" title="amount" /></div>
+	<div class="unitHolder heroHolder narrow">
+		<label>
+			<img src="img/x.gif" class="icon--scalable unit uhero" alt="hero" />
+			<br/>
+			<input type='checkbox' class="hero_switcher" name="hero_switcher" />
+		</label>
+	</div>
+</div>
+
+<div class="mode mode2 plus-wrapper">
+	<label>
+		<img src="img/x.gif" class="icon--scalable stats def_plus" alt="">
+		<input type="checkbox" class="plus"/> plus-defense	</label>
+</div>
+<div class="hero disabled">
+	<table cellspacing="0">
+	<tr>
+		<td><img src="img/x.gif" class="icon--scalable stats health" alt="health" fc="h" /></td>
+		<td class="last"><input class="fm d3 hero_health" maxlength="3" value="100" max="100" fc="h" /></td>
+		<td><img src="img/x.gif" class="icon--scalable stats def_bonus" alt="Def-Bonus" fc="h" /></td>
+		<td><input class="fm d3 hero_bonus" maxlength="3" max="100" fc="h" title="Points" /></td>
+		<td class="skill_bonus last">0%</td>
+		<td><img src="img/x.gif" class="icon--scalable stats def_all" alt="defense" fc="h" /></td>
+		<td><input class="fm d3 hero_self" maxlength="3" max="100" fc="h" title="Points" /></td>
+		<td class="skill_str" title="fighting strength">100</td>
+	</tr>
+	<tr class="mode mode3">
+		<td><img src="img/x.gif" class="icon--scalable unit u1" /></td>
+		<td colspan="6"><select class="hero_unit">
+			<option value="0">unit1</option>
+			<option value="1">unit2</option>
+			<option value="2">unit3</option>
+			<option value="3">unit4</option>
+			<option value="4">unit5</option>
+		</select></td>
+		<td class="skill_str2">100</td>
+	</tr>
+	</table>
+	<div class="mode mode4 mode5 mode9 total_str"></div>
+	<div class="mode mode4 mode5 mode9 hero_items">
+		<input readonly="readonly" value="items" class="side_hero_item_input" />
+		<div class="hero_item">
+			<label><img src="img/x.gif" class="icon--scalable itemCategory itemCategory_rightHand" alt="Weapon (right hand)" />
+			<select class="weapon hero_input">
+				<option value="0">--</option>
+				<optgroup label="unit1"><option>1</option><option>2</option><option>3</option></optgroup>
+				<optgroup label="unit2"><option>1</option><option>2</option><option>3</option></optgroup>
+				<optgroup label="unit3"><option>1</option><option>2</option><option>3</option></optgroup>
+				<optgroup label="unit4"><option>1</option><option>2</option><option>3</option></optgroup>
+				<optgroup label="unit5"><option>1</option><option>2</option><option>3</option></optgroup>
+			</select>
+			</label>
+			<div class="mode mode5 item_extra">
+				|
+				<span class="button-group quality">
+					<button type="button" value="-2">-2</button>
+					<button type="button" value="-1">-1</button>
+					<button type="button" value="0" class="active">0</button>
+					<button type="button" value="1">+1</button>
+					<button type="button" value="2">+2</button>
+					<input type="hidden" class="right_quality" />
+				</span>
+				|
+				<span class="button-group crystals" crystal="rightHand">
+					<button type="button" value="0"><b class="cross cross--disabled">&times;</b></button>
+					<button type="button" value="1"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="2"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="3"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="4"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="5"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<input type="hidden" class="right_crystals" />
+				</span>
+			</div>		
+		</div>
+		<div class="hero_item">
+		<label>
+			<img src="img/x.gif" class="icon--scalable itemCategory itemCategory_leftHand" alt="Left-hand items" />
+			<select class="leftHand hero_input">
+				<!-- natarian horns in defense are useless -->
+				<option value="0">--</option>
+		<option value="76">Small shield</option><option value="77">Shield</option><option value="78">Large shield</option>			</select>
+			</label>
+			<div class="mode mode5 item_extra">
+				|
+				<span class="button-group quality">
+					<button type="button" value="-2">-2</button>
+					<button type="button" value="-1">-1</button>
+					<button type="button" value="0" class="active">0</button>
+					<button type="button" value="1">+1</button>
+					<button type="button" value="2">+2</button>
+					<input type="hidden" class="left_quality" />
+				</span>
+				|
+				<span class="button-group crystals" crystal="leftHand">
+					<button type="button" value="0"><b class="cross cross--disabled">&times;</b></button>
+					<button type="button" value="1"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="2"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="3"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="4"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="5"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<input type="hidden" class="left_crystals" />
+				</span>
+			</div>
+		</div>
+		<div class="hero_item">
+			<label>
+			<img src="img/x.gif" class="icon--scalable itemCategory itemCategory_body" alt="Armors (body)" />
+			<select class="armor hero_input">
+				<optgroup><option value="0">--</option></optgroup><optgroup label='-----'><option value="85">Light scale armour</option><option value="86">Scale armour</option><option value="87">Heavy scale armour</option><optgroup label='-----'><option value="88">Light breastplate</option><option value="89">Breastplate</option><option value="90">Heavy breastplate</option><optgroup label='-----'><option value="91">Light segmented armour</option><option value="92">Segmented armour</option><option value="93">Heavy segmented armour</option>			</select>
+			</label>
+			<div class="mode mode5 item_extra">
+				|
+				<span class="button-group quality">
+					<button type="button" value="-2">-2</button>
+					<button type="button" value="-1">-1</button>
+					<button type="button" value="0" class="active">0</button>
+					<button type="button" value="1">+1</button>
+					<button type="button" value="2">+2</button>
+					<input type="hidden" class="body_quality" />
+				</span>
+				|
+				<span class="button-group crystals" crystal="body">
+					<button type="button" value="0"><b class="cross cross--disabled">&times;</b></button>
+					<button type="button" value="1"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="2"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="3"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="4"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<button type="button" value="5"><img src="img/x.gif" class="icon--scalable crystal"></button>
+					<input type="hidden" class="body_crystals" />
+				</span>
+			</div>
+		</div>
+	</div>
+
+</div>
+<br>
+
+</div>
+
+<script type="text/javascript">
+var new_side_pre_calls = [];
+var Warsim = {
+    newSide: function(side, r) { new_side_pre_calls.push([side, r]); }
+};
+</script>
+<form name="main">
+	<input type="submit" value="Calculate" />
+	<img src="img/progress.gif" class="progress">
+
+	<p class="new_side">
+	Add attacker:
+	<button id="off0" onclick="Warsim.newSide('off', 0)" accesskey="1">
+		<img src="img/x.gif" class="icon--scalable tribe tribe-1" alt="">
+		<span class="text">Romans</span></button>
+	<button id="off1" onclick="Warsim.newSide('off', 1)" accesskey="2">
+		<img src="img/x.gif" class="icon--scalable tribe tribe-2" alt="">
+		<span class="text">Teutons</span></button>
+	<button id="off2" onclick="Warsim.newSide('off', 2)" accesskey="3">
+		<img src="img/x.gif" class="icon--scalable tribe tribe-3" alt="">
+		<span class="text">Gauls</span></button>
+	<button id="off5" onclick="Warsim.newSide('off', 5)" accesskey="6" class="mode mode9">
+		<img src="img/x.gif" class="icon--scalable tribe tribe-6" alt="">
+		<span class="text">Egyptians</span></button>
+	<button id="off6" onclick="Warsim.newSide('off', 6)" accesskey="7" class="mode mode9">
+		<img src="img/x.gif" class="icon--scalable tribe tribe-7" alt="">
+		<span class="text">Huns</span></button>
+	<button id="off7" onclick="Warsim.newSide('off', 7)" accesskey="8" class="mode mode9">
+		<img src="img/x.gif" class="icon--scalable tribe tribe-8" alt="">
+		<span class="text">Spartans</span></button>
+	</p>
+
+<br />
+
+<div id="sides" class="simple1">
+	<div id="def_cond" class="race0">
+		<input type="hidden" id="mode" value="">
+		<div>
+			<img src="img/x.gif" class="icon--scalable tribe tribe-1">
+			<select id="def_race">
+				<option value="0" selected="selected">Romans</option>
+				<option value="1">Teutons</option>
+				<option value="2">Gauls</option>
+				<option value="3" class="mode mode3 mode4 mode5 mode9">Oases</option>
+				<option value="4">Natar</option>
+				<option value="5" class="mode mode9">Egyptians</option>
+				<option value="6" class="mode mode9">Huns</option>
+				<option value="7" class="mode mode9">Spartans</option>
+			</select>
+		</div>
+	<table cellspacing="0" class="outer-table"><tr>
+	<td class="outer-td"><table cellspacing="0" class="inner-table">
+		<tr class="population">
+			<td class="inner-td"><img src="img/x.gif" class="icon--scalable unit uhab"></td>
+			<td class="inner-td">Population</td>
+			<td class="inner-td"><input class="fm d5" id="dp" maxlength="6" value="1" max="999999" fc="p"  title="Total population" /></td>
+		</tr>
+		<tr class="race_player_only nn-mode4">
+			<td class="inner-td"><img src="img/x.gif" class="icon--scalable building g31" fc="d"></td>
+			<td class="inner-td">City Wall</td>
+			<td class="inner-td"><input class="fm d5" id="wall" maxlength="2" max="20" fc="d" /></td>
+		</tr>
+		<tr class="race_player_only" id="traps_wrapper">
+			<td class="inner-td"><img src="img/x.gif" class="icon--scalable unit utraps"></td>
+			<td class="inner-td">Traps</td>
+			<td class="inner-td"><input class="fm d5" id="tr" maxlength="4" max="8000" fc="t" /></td>
+		</tr>
+	</table></td>
+	<td class="outer-td"><table cellspacing="0" class="inner-table">
+		<tr class="race_player_only">
+			<td class="inner-td"><img src="img/x.gif" class="icon--scalable building g26" fc="d"></td>
+			<td class="inner-td">Residence/Palace</td>
+			<td class="inner-td"><input class="fm d5" id="rp" maxlength="2" value="" max="20" fc="d" /></td>
+		</tr>
+		<tr class="race_player_only nn-mode4">	
+			<td class="inner-td"><img src="img/x.gif" class="icon--scalable building g34" fc="d"></td>
+			<td class="inner-td">Stonemason</td>
+			<td class="inner-td"><input class="fm d5" id="dl" maxlength="2" value="" max="20" fc="d" /></td>
+		</tr>
+		<tr class="race_player_only mode mode5">	
+			<td class="inner-td"><img src="img/x.gif" class="icon--scalable building g42" fc="d"></td>
+			<td class="inner-td">Water Ditch</td>
+			<td class="inner-td"><input class="fm d5" id="wd" maxlength="2" value="" max="20" fc="d" /></td>
+		</tr>
+	</table></td>
+	<td class="outer-td"><table cellspacing="0" class="inner-table">
+		<tr class="race_player_only art">
+			<td class="inner-td"><img src="img/x.gif" class="icon--scalable art art2" fc="a"></td>
+			<td class="inner-td">Durability artifact</td>
+			<td class="inner-td"><select id="art_dur">
+				<option value="5">5x</option>
+				<option value="4">4x</option>
+				<option value="3">3x</option>
+				<option value="0" selected="selected">&mdash;</option>
+				<option value="-3">0.33x</option>
+				<option value="-4">0.25x</option>
+				<option value="-5">0.2x</option>
+			</select></td>
+		</tr>
+		<tr class="race_player_only art">
+			<td class="inner-td"><img src="img/x.gif" class="icon--scalable art art4" fc="a"></td>
+			<td class="inner-td">Scouting artifact</td>
+			<td class="inner-td"><select id="art_scout">
+				<option value="10">10x</option>
+				<option value="5">5x</option>
+				<option value="3">3x</option>
+				<option value="0" selected="selected">&mdash;</option>
+				<option value="-3">0.33x</option>
+				<option value="-5">0.2x</option>
+				<option value="-10">0.1x</option>
+			</select></td>
+		</tr>
+		<tr class="race_player_only nn-mode4">
+			<td class="inner-td" style="text-align:center;"><b>&#9834;</b></td>
+			<td class="inner-td"><label for="bp">Big party</label></td>
+			<td class="inner-td"><input id="bp" type="checkbox" /></td>
+		</tr>
+	</table></td>
+	</tr></table>
+	</div>
+</div>
+
+	<p class="new_side">
+	Add defender:
+	<button onclick="Warsim.newSide('def', 0)" accesskey="q">
+		<img src="img/x.gif" class="icon--scalable tribe tribe-1">
+		<span class="text">Romans</span></button>
+	<button onclick="Warsim.newSide('def', 1)" accesskey="w">
+		<img src="img/x.gif" class="icon--scalable tribe tribe-2">
+		<span class="text">Teutons</span></button>
+	<button onclick="Warsim.newSide('def', 2)" accesskey="e">
+		<img src="img/x.gif" class="icon--scalable tribe tribe-3">
+		<span class="text">Gauls</span></button>
+	<button onclick="Warsim.newSide('def', 5)" accesskey="r" class="mode mode4 mode9">
+		<img src="img/x.gif" class="icon--scalable tribe tribe-6">
+		<span class="text">Egyptians</span></button>
+	<button onclick="Warsim.newSide('def', 6)" accesskey="t" class="mode mode4 mode9">
+		<img src="img/x.gif" class="icon--scalable tribe tribe-7">
+		<span class="text">Huns</span></button>
+	<button onclick="Warsim.newSide('def', 7)" accesskey="y" class="mode mode4 mode9">
+		<img src="img/x.gif" class="icon--scalable tribe tribe-8">
+		<span class="text">Spartans</span></button>
+	</p>
+
+	<input type="submit" value="Calculate" />
+	<img src="img/progress.gif" class="progress">
+</form>
+
+	<div id="prefs_offset" style="display:none;">
+		<div id="prefs_frame">
+			<div id="prefs_container">
+				<a class="navi navi_close" href="#"></a>
+				<h3>Preferences</h3>
+				<form>
+				<table style="width:100%;"><tr>
+				<td class="prefs_column">
+					<div><b>Tab order</b></div>
+					<div><label><input type="checkbox" name="stop_uu" id="stop_uu" checked="checked"> stop on upgrade levels</label></div>
+					<div><label><input type="checkbox" name="stop_cb" id="stop_cb"> stop on block control group<br/>(up, down, etc)</label></div>
+					<div><label><input type="checkbox" name="stop_dt" id="stop_dt" checked="checked"> stop on unit-specific inputs<br/>(scout art, cata targets, party)</label></div>
+					<br/>
+					<div><label><input type="checkbox" name="show_tooltips" id="show_tooltips" checked="checked"> show tooltips</label></div>
+				</td><td class="prefs_column">
+					<table style="width:100%;"><thead>
+					<b>Changing numeric fields from keyboard</b>
+						<tr><td>Field types</td><td align="center">&uarr; / &darr;</td><td align="center">page&nbsp;up/down</td></tr>
+					</thead><tbody>
+					<tr>
+						<td>Troops</td>
+						<td align="center"><input name="u0" class="fm" value="1"/></td>
+						<td align="center"><input name="u1" class="fm" value="10"/></td>
+					</tr><tr>
+						<td>Upgrade</td>
+						<td align="center"><input name="i0" class="fm" value="1"/></td>
+						<td align="center"><input name="i1" class="fm" value="10"/></td>
+					</tr><tr>
+						<td>hero</td>
+						<td align="center"><input name="h0" class="fm" value="1"/></td>
+						<td align="center"><input name="h1" class="fm" value="10"/></td>
+					</tr><tr>
+						<td>levels of targets</td>
+						<td align="center"><input name="c0" class="fm" value="1"/></td>
+						<td align="center"><input name="c1" class="fm" value="10"/></td>
+					</tr><tr>
+						<td>Defense buildings</td>
+						<td align="center"><input name="d0" class="fm" value="1"/></td>
+						<td align="center"><input name="d1" class="fm" value="10"/></td>
+					</tr><tr>
+						<td>Population</td>
+						<td align="center"><input name="p0" class="fm" value="10"/></td>
+						<td align="center"><input name="p1" class="fm" value="100"/></td>
+					</tr><tr>
+						<td>Traps</td>
+						<td align="center"><input name="t0" class="fm" value="10"/></td>
+						<td align="center"><input name="t1" class="fm" value="100"/></td>
+					</tr>
+					</tbody></table>
+				</td>
+				</tr><tr>
+				<td colspan="2">
+					<div><b>Click on icon</b></div>
+					<table class="prefs_bottom">
+						<tr><td>Troops</td><td><select name="ico.u">
+							<option value="switch_up">toggle min/max upgrade</option>
+							<option value="clear_amount">clear amount of troops</option>
+						</select></td></tr>
+						<tr><td>admins</td><td><select name="ico.s">
+							<option value="round_0123">round robin values 0-1-2-3</option>
+							<option value="toggle_party">toggle great celebration on/off</option>
+						</select></td></tr>
+						<tr><td>Artifact</td><td><select name="ico.a">
+							<option value="round_positive">round robin positive values</option>
+							<option value="round_all">round robin all values</option>
+						</select></td></tr>
+					</table>
+				</td>
+				</tr></table>
+				<input class="save" type="button" value="save" id="prefs_save">
+				<br style="clear:both;"/>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>
+</div>
+<script type="text/javascript" src="js/utils8277.js?d"></script>
+<script type="text/javascript" src="js/units363b.js?j"></script>
+<script type="text/javascript">
+$$(".content img[alt]").forEach(function(img){ img.title = img.alt; });
+i18n.cond = [
+	"Population",
+	"buildings",
+	"second target",
+	"Big party"
+];
+i18n.misc = {
+	part_restore: "Combat participant was removed. <a href='#'>Restore</a>",
+	part_collapse: "disable",
+	part_expand: "enable"
+};
+i18n.report = {
+	hero: "hero",
+	traps: "Traps",
+	troops: "Troops",
+	dead: "casualties",
+	alive: "survivors",
+	none_return: "none of your soldiers have returned",
+	roles: {
+		atk: "offense",
+		def: "defense",
+		sup: "reinforcement"
+	}
+};
+var items = {"1":{"exp":15,"name":"Helmet of Awareness"},"2":{"exp":20,"name":"Helmet of Enlightenment"},"3":{"exp":25,"name":"Helmet of Wisdom"},"4":{"reg":10,"name":"Helmet of Regeneration"},"5":{"reg":15,"name":"Helmet of Healthiness"},"6":{"reg":20,"name":"Helmet of Healing"},"7":{"cp":100,"name":"Helmet of the Gladiator"},"8":{"cp":400,"name":"Helmet of the Tribune"},"9":{"cp":800,"name":"Helmet of the Consul"},"10":{"cav":10,"name":"Helmet of the Horseman"},"11":{"cav":15,"name":"Helmet of the Cavalry"},"12":{"cav":20,"name":"Helmet of the Heavy cavalry"},"13":{"inf":10,"name":"Helmet of the Mercenary"},"14":{"inf":15,"name":"Helmet of the Warrior"},"15":{"inf":20,"name":"Helmet of the Archon"},"16":{"hero":250,"unit":[3],"name":"Short sword of the Legionnaire"},"17":{"hero":1000,"unit":[4],"name":"Sword of the Legionnaire"},"18":{"hero":4000,"unit":[5],"name":"Long sword of the Legionnaire"},"19":{"hero":250,"unit":{"1":3},"name":"Short sword of the Praetorian"},"20":{"hero":1000,"unit":{"1":4},"name":"Sword of the Praetorian"},"21":{"hero":4000,"unit":{"1":5},"name":"Long sword of the Praetorian"},"22":{"hero":250,"unit":{"2":3},"name":"Short sword of the Imperian"},"23":{"hero":1000,"unit":{"2":4},"name":"Sword of the Imperian"},"24":{"hero":4000,"unit":{"2":5},"name":"Long sword of the Imperian"},"25":{"hero":250,"unit":{"4":9},"name":"Short sword of the Imperatoris"},"26":{"hero":1000,"unit":{"4":12},"name":"Sword of the Imperatoris"},"27":{"hero":4000,"unit":{"4":15},"name":"Long sword of the Imperatoris"},"28":{"hero":250,"unit":{"5":12},"name":"Light lance of the Caesaris"},"29":{"hero":1000,"unit":{"5":16},"name":"Lance of the Caesaris"},"30":{"hero":4000,"unit":{"5":20},"name":"Heavy lance of the Caesaris"},"31":{"hero":250,"unit":{"20":3},"name":"Spear of the Phalanx"},"32":{"hero":1000,"unit":{"20":4},"name":"Pike of the Phalanx"},"33":{"hero":4000,"unit":{"20":5},"name":"Lance of the Phalanx"},"34":{"hero":250,"unit":{"21":3},"name":"Short sword of the Swordsman"},"35":{"hero":1000,"unit":{"21":4},"name":"Sword of the Swordsman"},"36":{"hero":4000,"unit":{"21":5},"name":"Long sword of the Swordsman"},"37":{"hero":250,"unit":{"23":6},"name":"Short-bow of the Theutates"},"38":{"hero":1000,"unit":{"23":8},"name":"Bow of the Theutates"},"39":{"hero":4000,"unit":{"23":10},"name":"Long-bow of the Theutates"},"40":{"hero":250,"unit":{"24":6},"name":"Staff of the Druidrider"},"41":{"hero":1000,"unit":{"24":8},"name":"Great staff of the Druidrider"},"42":{"hero":4000,"unit":{"24":10},"name":"Fighting-staff of the Druidrider"},"43":{"hero":250,"unit":{"25":9},"name":"Light lance of the Haeduan"},"44":{"hero":1000,"unit":{"25":12},"name":"Lance of the Haeduan"},"45":{"hero":4000,"unit":{"25":15},"name":"Heavy lance of the Haeduan"},"46":{"hero":250,"unit":{"10":3},"name":"Club of the Clubswinger"},"47":{"hero":1000,"unit":{"10":4},"name":"Mace of the Clubswinger"},"48":{"hero":4000,"unit":{"10":5},"name":"Morning star of the Clubswinger"},"49":{"hero":250,"unit":{"11":3},"name":"Spear of the Spearman"},"50":{"hero":1000,"unit":{"11":4},"name":"Spike of the Spearman"},"51":{"hero":4000,"unit":{"11":5},"name":"Lance of the Spearman"},"52":{"hero":250,"unit":{"12":3},"name":"Hatchet of the Axeman"},"53":{"hero":1000,"unit":{"12":4},"name":"Axe of the Axeman"},"54":{"hero":4000,"unit":{"12":5},"name":"Battle axe of the Axeman"},"55":{"hero":250,"unit":{"14":6},"name":"Light hammer of the Paladin"},"56":{"hero":1000,"unit":{"14":8},"name":"Hammer of the Paladin"},"57":{"hero":4000,"unit":{"14":10},"name":"Heavy hammer of the Paladin"},"58":{"hero":250,"unit":{"15":9},"name":"Short sword of the Teutonic Knight"},"59":{"hero":1000,"unit":{"15":12},"name":"Sword of the Teutonic Knight"},"60":{"hero":4000,"unit":{"15":15},"name":"Long sword of the Teutonic Knight"},"61":{"fret":30,"name":"Small Map"},"62":{"fret":40,"name":"Map"},"63":{"fret":50,"name":"Large Map"},"64":{"fvil":30,"name":"Small Pennant"},"65":{"fvil":40,"name":"Pennant"},"66":{"fvil":50,"name":"Great Pennant"},"67":{"fall":15,"name":"Small Standard"},"68":{"fall":20,"name":"Standard"},"69":{"fall":25,"name":"Great Standard"},"73":{"raid":10,"name":"Pouch of the thief"},"74":{"raid":15,"name":"Bag of the thief"},"75":{"raid":20,"name":"Sack of the thief"},"76":{"hero":250,"name":"Small shield"},"77":{"hero":1000,"name":"Shield"},"78":{"hero":4000,"name":"Large shield"},"79":{"nat":20,"name":"Small horn of the Natarian"},"80":{"nat":25,"name":"Horn of the Natarian"},"81":{"nat":30,"name":"Large horn of the Natarian"},"82":{"reg":20,"name":"Light armour of Regeneration"},"83":{"reg":30,"name":"Armour of Regeneration"},"84":{"reg":40,"name":"Heavy armour of Regeneration"},"85":{"arm":4,"reg":10,"name":"Light scale armour"},"86":{"arm":6,"reg":15,"name":"Scale armour"},"87":{"arm":8,"reg":20,"name":"Heavy scale armour"},"88":{"hero":250,"name":"Light breastplate"},"89":{"hero":1000,"name":"Breastplate"},"90":{"hero":4000,"name":"Heavy breastplate"},"91":{"hero":250,"arm":3,"name":"Light segmented armour"},"92":{"hero":500,"arm":4,"name":"Segmented armour"},"93":{"hero":750,"arm":5,"name":"Heavy segmented armour"},"94":{"reg":10,"name":"Boots of Regeneration"},"95":{"reg":15,"name":"Boots of Healthiness"},"96":{"reg":20,"name":"Boots of Healing"},"97":{"ts":25,"name":"Boots of the Mercenary"},"98":{"ts":50,"name":"Boots of the Warrior"},"99":{"ts":75,"name":"Boots of the Archon"},"100":{"spd":3,"name":"Small spurs"},"101":{"spd":4,"name":"Spurs"},"102":{"spd":5,"name":"Nasty spurs"},"103":{"horse":14,"name":"Gelding"},"104":{"horse":17,"name":"Thoroughbred"},"105":{"horse":20,"name":"Warhorse"},"115":{"hero":250,"unit":{"50":3},"name":"Club of the Slave Militia"},"116":{"hero":1000,"unit":{"50":4},"name":"Mace of the Slave Militia"},"117":{"hero":4000,"unit":{"50":5},"name":"Morning Star of the Slave Militia"},"118":{"hero":250,"unit":{"51":3},"name":"Hatchet of the Ash Warden"},"119":{"hero":1000,"unit":{"51":4},"name":"Axe of the Ash Warden"},"120":{"hero":4000,"unit":{"51":5},"name":"Battle Axe of the Ash Warden"},"121":{"hero":250,"unit":{"52":3},"name":"Short Khopesh of the Warrior"},"122":{"hero":1000,"unit":{"52":4},"name":"Khopesh of the Warrior"},"123":{"hero":4000,"unit":{"52":5},"name":"Long Khopesh of the Warrior"},"124":{"hero":250,"unit":{"54":6},"name":"Spear of the Anhor Guard"},"125":{"hero":1000,"unit":{"54":8},"name":"Spear of the Anhor Guard"},"126":{"hero":4000,"unit":{"54":10},"name":"Lance of the Anhor Guard"},"127":{"hero":250,"unit":{"55":9},"name":"Short Bow of the Resheph Chariot"},"128":{"hero":1000,"unit":{"55":12},"name":"Bow of the Resheph Chariot"},"129":{"hero":4000,"unit":{"55":15},"name":"Long Bow of the Resheph Chariot"},"130":{"hero":250,"unit":{"60":3},"name":"Hatchet of the Mercenary"},"131":{"hero":1000,"unit":{"60":4},"name":"Axe of the Mercenary"},"132":{"hero":4000,"unit":{"60":5},"name":"Battle Axe of the Mercenary"},"133":{"hero":250,"unit":{"61":3},"name":"Composite Short Bow of the Bowman"},"134":{"hero":1000,"unit":{"61":4},"name":"Composite Bow of the Bowman"},"135":{"hero":4000,"unit":{"61":5},"name":"Composite Long Bow of the Bowman"},"136":{"hero":250,"unit":{"63":6},"name":"Short Spatha Sword of the Steppe Rider"},"137":{"hero":1000,"unit":{"63":8},"name":"Spatha Sword of the Steppe Rider"},"138":{"hero":4000,"unit":{"63":10},"name":"Long Spatha Sword of the Steppe Rider"},"139":{"hero":250,"unit":{"64":6},"name":"Composite Short Bow of the Marksman"},"140":{"hero":1000,"unit":{"64":8},"name":"Composite Bow of the Marksman"},"141":{"hero":4000,"unit":{"64":10},"name":"Composite Long Bow of the Marksman"},"142":{"hero":250,"unit":{"65":9},"name":"Short Spatha Sword of the Marauder"},"143":{"hero":1000,"unit":{"65":12},"name":"Spatha Sword of the Marauder"},"144":{"hero":4000,"unit":{"65":15},"name":"Long Spatha Sword of the Marauder"},"145":{"hero":250,"unit":{"70":3},"name":"Spear of the Hoplite"},"146":{"hero":1000,"unit":{"70":4},"name":"Pike of the Hoplite"},"147":{"hero":4000,"unit":{"70":5},"name":"Lance of the Hoplite"},"148":{"hero":250,"unit":{"72":3},"name":"Spear of the Shieldsman"},"149":{"hero":1000,"unit":{"72":4},"name":"Pike of the Shieldsman"},"150":{"hero":4000,"unit":{"72":5},"name":"Lance of the Shieldsman"},"151":{"hero":250,"unit":{"73":3},"name":"Short sword of the Twinsteel Therion"},"152":{"hero":1000,"unit":{"73":4},"name":"Sword of the Twinsteel Therion"},"153":{"hero":4000,"unit":{"73":5},"name":"Long sword of the Twinsteel Therion"},"154":{"hero":250,"unit":{"74":6},"name":"Short sword of the Elpida Rider"},"155":{"hero":1000,"unit":{"74":8},"name":"Sword of the Elpida Rider"},"156":{"hero":4000,"unit":{"74":10},"name":"Long sword of the Elpida Rider"},"157":{"hero":250,"unit":{"75":9},"name":"Spear of the Corinthian Crusher"},"158":{"hero":1000,"unit":{"75":12},"name":"Pike of the Corinthian Crusher"},"159":{"hero":4000,"unit":{"75":15},"name":"Lance of the Corinthian Crusher"}};
+
+var items45 = {"1":{"exp":15,"name":"Helmet of Awareness"},"2":{"exp":20,"name":"Helmet of Enlightenment"},"3":{"exp":25,"name":"Helmet of Wisdom"},"4":{"reg":10,"name":"Helmet of Regeneration"},"5":{"reg":15,"name":"Helmet of Healthiness"},"6":{"reg":20,"name":"Helmet of Healing"},"7":{"cp":100,"name":"Helmet of the Gladiator"},"8":{"cp":400,"name":"Helmet of the Tribune"},"9":{"cp":800,"name":"Helmet of the Consul"},"10":{"cav":10,"name":"Helmet of the Horseman"},"11":{"cav":15,"name":"Helmet of the Cavalry"},"12":{"cav":20,"name":"Helmet of the Heavy cavalry"},"13":{"inf":10,"name":"Helmet of the Mercenary"},"14":{"inf":15,"name":"Helmet of the Warrior"},"15":{"inf":20,"name":"Helmet of the Archon"},"16":{"hero":125,"unit":[3],"name":"Short sword of the Legionnaire"},"17":{"hero":1000,"unit":[4],"name":"Sword of the Legionnaire"},"18":{"hero":10666.666666666666,"unit":[5],"name":"Long sword of the Legionnaire"},"19":{"hero":125,"unit":{"1":3},"name":"Short sword of the Praetorian"},"20":{"hero":1000,"unit":{"1":4},"name":"Sword of the Praetorian"},"21":{"hero":10666.666666666666,"unit":{"1":5},"name":"Long sword of the Praetorian"},"22":{"hero":125,"unit":{"2":3},"name":"Short sword of the Imperian"},"23":{"hero":1000,"unit":{"2":4},"name":"Sword of the Imperian"},"24":{"hero":10666.666666666666,"unit":{"2":5},"name":"Long sword of the Imperian"},"25":{"hero":125,"unit":{"4":9},"name":"Short sword of the Imperatoris"},"26":{"hero":1000,"unit":{"4":12},"name":"Sword of the Imperatoris"},"27":{"hero":10666.666666666666,"unit":{"4":15},"name":"Long sword of the Imperatoris"},"28":{"hero":125,"unit":{"5":12},"name":"Light lance of the Caesaris"},"29":{"hero":1000,"unit":{"5":16},"name":"Lance of the Caesaris"},"30":{"hero":10666.666666666666,"unit":{"5":20},"name":"Heavy lance of the Caesaris"},"31":{"hero":125,"unit":{"20":3},"name":"Spear of the Phalanx"},"32":{"hero":1000,"unit":{"20":4},"name":"Pike of the Phalanx"},"33":{"hero":10666.666666666666,"unit":{"20":5},"name":"Lance of the Phalanx"},"34":{"hero":125,"unit":{"21":3},"name":"Short sword of the Swordsman"},"35":{"hero":1000,"unit":{"21":4},"name":"Sword of the Swordsman"},"36":{"hero":10666.666666666666,"unit":{"21":5},"name":"Long sword of the Swordsman"},"37":{"hero":125,"unit":{"23":6},"name":"Short-bow of the Theutates"},"38":{"hero":1000,"unit":{"23":8},"name":"Bow of the Theutates"},"39":{"hero":10666.666666666666,"unit":{"23":10},"name":"Long-bow of the Theutates"},"40":{"hero":125,"unit":{"24":6},"name":"Staff of the Druidrider"},"41":{"hero":1000,"unit":{"24":8},"name":"Great staff of the Druidrider"},"42":{"hero":10666.666666666666,"unit":{"24":10},"name":"Fighting-staff of the Druidrider"},"43":{"hero":125,"unit":{"25":9},"name":"Light lance of the Haeduan"},"44":{"hero":1000,"unit":{"25":12},"name":"Lance of the Haeduan"},"45":{"hero":10666.666666666666,"unit":{"25":15},"name":"Heavy lance of the Haeduan"},"46":{"hero":125,"unit":{"10":3},"name":"Club of the Clubswinger"},"47":{"hero":1000,"unit":{"10":4},"name":"Mace of the Clubswinger"},"48":{"hero":10666.666666666666,"unit":{"10":5},"name":"Morning star of the Clubswinger"},"49":{"hero":125,"unit":{"11":3},"name":"Spear of the Spearman"},"50":{"hero":1000,"unit":{"11":4},"name":"Spike of the Spearman"},"51":{"hero":10666.666666666666,"unit":{"11":5},"name":"Lance of the Spearman"},"52":{"hero":125,"unit":{"12":3},"name":"Hatchet of the Axeman"},"53":{"hero":1000,"unit":{"12":4},"name":"Axe of the Axeman"},"54":{"hero":10666.666666666666,"unit":{"12":5},"name":"Battle axe of the Axeman"},"55":{"hero":125,"unit":{"14":6},"name":"Light hammer of the Paladin"},"56":{"hero":1000,"unit":{"14":8},"name":"Hammer of the Paladin"},"57":{"hero":10666.666666666666,"unit":{"14":10},"name":"Heavy hammer of the Paladin"},"58":{"hero":125,"unit":{"15":9},"name":"Short sword of the Teutonic Knight"},"59":{"hero":1000,"unit":{"15":12},"name":"Sword of the Teutonic Knight"},"60":{"hero":10666.666666666666,"unit":{"15":15},"name":"Long sword of the Teutonic Knight"},"61":{"fret":30,"name":"Small Map"},"62":{"fret":40,"name":"Map"},"63":{"fret":50,"name":"Large Map"},"64":{"fvil":30,"name":"Small Pennant"},"65":{"fvil":40,"name":"Pennant"},"66":{"fvil":50,"name":"Great Pennant"},"67":{"fall":15,"name":"Small Standard"},"68":{"fall":20,"name":"Standard"},"69":{"fall":25,"name":"Great Standard"},"73":{"raid":10,"name":"Pouch of the thief"},"74":{"raid":15,"name":"Bag of the thief"},"75":{"raid":20,"name":"Sack of the thief"},"76":{"hero":125,"name":"Small shield"},"77":{"hero":1000,"name":"Shield"},"78":{"hero":10666.666666666666,"name":"Large shield"},"79":{"nat":20,"name":"Small horn of the Natarian"},"80":{"nat":25,"name":"Horn of the Natarian"},"81":{"nat":30,"name":"Large horn of the Natarian"},"82":{"reg":20,"name":"Light armour of Regeneration"},"83":{"reg":30,"name":"Armour of Regeneration"},"84":{"reg":40,"name":"Heavy armour of Regeneration"},"85":{"arm":4,"reg":10,"name":"Light scale armour"},"86":{"arm":6,"reg":15,"name":"Scale armour"},"87":{"arm":8,"reg":20,"name":"Heavy scale armour"},"88":{"hero":125,"name":"Light breastplate"},"89":{"hero":1000,"name":"Breastplate"},"90":{"hero":10666.666666666666,"name":"Heavy breastplate"},"91":{"hero":125,"arm":3,"name":"Light segmented armour"},"92":{"hero":500,"arm":4,"name":"Segmented armour"},"93":{"hero":2000,"arm":5,"name":"Heavy segmented armour"},"94":{"reg":10,"name":"Boots of Regeneration"},"95":{"reg":15,"name":"Boots of Healthiness"},"96":{"reg":20,"name":"Boots of Healing"},"97":{"ts":25,"name":"Boots of the Mercenary"},"98":{"ts":50,"name":"Boots of the Warrior"},"99":{"ts":75,"name":"Boots of the Archon"},"100":{"spd":3,"name":"Small spurs"},"101":{"spd":4,"name":"Spurs"},"102":{"spd":5,"name":"Nasty spurs"},"103":{"horse":14,"name":"Gelding"},"104":{"horse":17,"name":"Thoroughbred"},"105":{"horse":20,"name":"Warhorse"},"115":{"hero":125,"unit":{"50":3},"name":"Club of the Slave Militia"},"116":{"hero":1000,"unit":{"50":4},"name":"Mace of the Slave Militia"},"117":{"hero":10666.666666666666,"unit":{"50":5},"name":"Morning Star of the Slave Militia"},"118":{"hero":125,"unit":{"51":3},"name":"Hatchet of the Ash Warden"},"119":{"hero":1000,"unit":{"51":4},"name":"Axe of the Ash Warden"},"120":{"hero":10666.666666666666,"unit":{"51":5},"name":"Battle Axe of the Ash Warden"},"121":{"hero":125,"unit":{"52":3},"name":"Short Khopesh of the Warrior"},"122":{"hero":1000,"unit":{"52":4},"name":"Khopesh of the Warrior"},"123":{"hero":10666.666666666666,"unit":{"52":5},"name":"Long Khopesh of the Warrior"},"124":{"hero":125,"unit":{"54":6},"name":"Spear of the Anhor Guard"},"125":{"hero":1000,"unit":{"54":8},"name":"Spear of the Anhor Guard"},"126":{"hero":10666.666666666666,"unit":{"54":10},"name":"Lance of the Anhor Guard"},"127":{"hero":125,"unit":{"55":9},"name":"Short Bow of the Resheph Chariot"},"128":{"hero":1000,"unit":{"55":12},"name":"Bow of the Resheph Chariot"},"129":{"hero":10666.666666666666,"unit":{"55":15},"name":"Long Bow of the Resheph Chariot"},"130":{"hero":125,"unit":{"60":3},"name":"Hatchet of the Mercenary"},"131":{"hero":1000,"unit":{"60":4},"name":"Axe of the Mercenary"},"132":{"hero":10666.666666666666,"unit":{"60":5},"name":"Battle Axe of the Mercenary"},"133":{"hero":125,"unit":{"61":3},"name":"Composite Short Bow of the Bowman"},"134":{"hero":1000,"unit":{"61":4},"name":"Composite Bow of the Bowman"},"135":{"hero":10666.666666666666,"unit":{"61":5},"name":"Composite Long Bow of the Bowman"},"136":{"hero":125,"unit":{"63":6},"name":"Short Spatha Sword of the Steppe Rider"},"137":{"hero":1000,"unit":{"63":8},"name":"Spatha Sword of the Steppe Rider"},"138":{"hero":10666.666666666666,"unit":{"63":10},"name":"Long Spatha Sword of the Steppe Rider"},"139":{"hero":125,"unit":{"64":6},"name":"Composite Short Bow of the Marksman"},"140":{"hero":1000,"unit":{"64":8},"name":"Composite Bow of the Marksman"},"141":{"hero":10666.666666666666,"unit":{"64":10},"name":"Composite Long Bow of the Marksman"},"142":{"hero":125,"unit":{"65":9},"name":"Short Spatha Sword of the Marauder"},"143":{"hero":1000,"unit":{"65":12},"name":"Spatha Sword of the Marauder"},"144":{"hero":10666.666666666666,"unit":{"65":15},"name":"Long Spatha Sword of the Marauder"},"145":{"hero":250,"unit":{"70":3},"name":"Spear of the Hoplite"},"146":{"hero":1000,"unit":{"70":4},"name":"Pike of the Hoplite"},"147":{"hero":4000,"unit":{"70":5},"name":"Lance of the Hoplite"},"148":{"hero":250,"unit":{"72":3},"name":"Spear of the Shieldsman"},"149":{"hero":1000,"unit":{"72":4},"name":"Pike of the Shieldsman"},"150":{"hero":4000,"unit":{"72":5},"name":"Lance of the Shieldsman"},"151":{"hero":250,"unit":{"73":3},"name":"Short sword of the Twinsteel Therion"},"152":{"hero":1000,"unit":{"73":4},"name":"Sword of the Twinsteel Therion"},"153":{"hero":4000,"unit":{"73":5},"name":"Long sword of the Twinsteel Therion"},"154":{"hero":250,"unit":{"74":6},"name":"Short sword of the Elpida Rider"},"155":{"hero":1000,"unit":{"74":8},"name":"Sword of the Elpida Rider"},"156":{"hero":4000,"unit":{"74":10},"name":"Long sword of the Elpida Rider"},"157":{"hero":250,"unit":{"75":9},"name":"Spear of the Corinthian Crusher"},"158":{"hero":1000,"unit":{"75":12},"name":"Pike of the Corinthian Crusher"},"159":{"hero":4000,"unit":{"75":15},"name":"Lance of the Corinthian Crusher"}};
+
+var items5 = {"1":{"exp":"15"},"2":{"exp":"20"},"3":{"exp":"25"},"4":{"reg":[8,9,10,11,12]},"5":{"reg":[13,14,15,16,17]},"6":{"reg":[18,19,20,21,22]},"7":{"cp":[30,40,50,60,70]},"8":{"cp":[150,175,200,225,250]},"9":{"cp":[200,300,400,500,600]},"10":{"cav":[8,9,10,11,12]},"11":{"cav":[13,14,15,16,17]},"12":{"cav":[18,19,20,21,22]},"13":{"inf":[8,9,10,11,12]},"14":{"inf":[13,14,15,16,17]},"15":{"inf":[18,19,20,21,22]},"16":{"hero":[400,450,500,550,600],"unit":["3"]},"17":{"hero":[800,900,1000,1100,1200],"unit":["4"]},"18":{"hero":[1500,1600,1700,1800,2000],"unit":["5"]},"19":{"hero":[400,450,500,550,600],"unit":{"1":"3"}},"20":{"hero":[800,900,1000,1100,1200],"unit":{"1":"4"}},"21":{"hero":[1500,1600,1700,1800,2000],"unit":{"1":"5"}},"22":{"hero":[400,450,500,550,600],"unit":{"2":"3"}},"23":{"hero":[800,900,1000,1100,1200],"unit":{"2":"4"}},"24":{"hero":[1500,1600,1700,1800,2000],"unit":{"2":"5"}},"25":{"hero":[400,450,500,550,600],"unit":{"4":"9"}},"26":{"hero":[800,900,1000,1100,1200],"unit":{"4":"12"}},"27":{"hero":[1500,1600,1700,1800,2000],"unit":{"4":"15"}},"28":{"hero":[400,450,500,550,600],"unit":{"5":"12"}},"29":{"hero":[800,900,1000,1100,1200],"unit":{"5":"16"}},"30":{"hero":[1500,1600,1700,1800,2000],"unit":{"5":"20"}},"31":{"hero":[400,450,500,550,600],"unit":{"20":"3"}},"32":{"hero":[800,900,1000,1100,1200],"unit":{"20":"4"}},"33":{"hero":[1500,1600,1700,1800,2000],"unit":{"20":"5"}},"34":{"hero":[400,450,500,550,600],"unit":{"21":"3"}},"35":{"hero":[800,900,1000,1100,1200],"unit":{"21":"4"}},"36":{"hero":[1500,1600,1700,1800,2000],"unit":{"21":"5"}},"37":{"hero":[400,450,500,550,600],"unit":{"23":"6"}},"38":{"hero":[800,900,1000,1100,1200],"unit":{"23":"8"}},"39":{"hero":[1500,1600,1700,1800,2000],"unit":{"23":"10"}},"40":{"hero":[400,450,500,550,600],"unit":{"24":"6"}},"41":{"hero":[800,900,1000,1100,1200],"unit":{"24":"8"}},"42":{"hero":[1500,1600,1700,1800,2000],"unit":{"24":"10"}},"43":{"hero":[400,450,500,550,600],"unit":{"25":"9"}},"44":{"hero":[800,900,1000,1100,1200],"unit":{"25":"12"}},"45":{"hero":[1500,1600,1700,1800,2000],"unit":{"25":"15"}},"46":{"hero":[400,450,500,550,600],"unit":{"10":"3"}},"47":{"hero":[800,900,1000,1100,1200],"unit":{"10":"4"}},"48":{"hero":[1500,1600,1700,1800,2000],"unit":{"10":"5"}},"49":{"hero":[400,450,500,550,600],"unit":{"11":"3"}},"50":{"hero":[800,900,1000,1100,1200],"unit":{"11":"4"}},"51":{"hero":[1500,1600,1700,1800,2000],"unit":{"11":"5"}},"52":{"hero":[400,450,500,550,600],"unit":{"12":"3"}},"53":{"hero":[800,900,1000,1100,1200],"unit":{"12":"4"}},"54":{"hero":[1500,1600,1700,1800,2000],"unit":{"12":"5"}},"55":{"hero":[400,450,500,550,600],"unit":{"14":"6"}},"56":{"hero":[800,900,1000,1100,1200],"unit":{"14":"8"}},"57":{"hero":[1500,1600,1700,1800,2000],"unit":{"14":"10"}},"58":{"hero":[400,450,500,550,600],"unit":{"15":"9"}},"59":{"hero":[800,900,1000,1100,1200],"unit":{"15":"12"}},"60":{"hero":[1500,1600,1700,1800,2000],"unit":{"15":"15"}},"61":{"fret":[20,25,30,35,40]},"62":{"fret":[40,45,50,55,60]},"63":{"fret":[80,85,90,95,100]},"64":{"fvil":[25,30,35]},"65":{"fvil":[35,40,45]},"66":{"fvil":[45,50,55]},"67":{"fall":[13,14,15,16,17]},"68":{"fall":[18,19,20,21,22]},"69":{"fall":[23,24,25,26,27]},"70":{"vis":[3,4,5,6,7]},"71":{"vis":[8,9,10,11,12]},"72":{"vis":[15,16,17,18,20]},"73":{"raid":[8,9,10,11,12]},"74":{"raid":[13,14,15,16,17]},"75":{"raid":[18,19,20,21,22]},"76":{"hero":[400,450,500,550,600]},"77":{"hero":[800,900,1000,1100,1200]},"78":{"hero":[1500,1600,1700,1800,2000]},"79":{"nat":[18,19,20,21,22]},"80":{"nat":[23,24,25,26,27]},"81":{"nat":[28,29,30,31,32]},"82":{"reg":[16,18,20,22,24]},"83":{"reg":[26,28,30,32,34]},"84":{"reg":[36,38,40,42,44]},"85":{"arm":"4","reg":[8,9,10,11,12]},"86":{"arm":"6","reg":[13,14,15,16,17]},"87":{"arm":"8","reg":[16,18,20,22,24]},"88":{"hero":[400,450,500,550,600]},"89":{"hero":[800,900,1000,1100,1200]},"90":{"hero":[1500,1600,1700,1800,2000]},"91":{"hero":[200,225,250,275,300],"arm":"3"},"92":{"hero":[400,450,500,550,600],"arm":"4"},"93":{"hero":[750,800,850,900,1000],"arm":"5"},"94":{"exp":[13,14,15,16,17]},"95":{"exp":[18,19,20,21,22]},"96":{"exp":[25,26,27,28,30]},"97":{"ts":[15,20,25,30,35]},"98":{"ts":[40,45,50,55,60]},"99":{"ts":[75,80,85,90,100]},"100":{"spd":[2,3]},"101":{"spd":[4,5]},"102":{"spd":[5,6]},"103":{"horse":"14"},"104":{"horse":[15,16,17,18,19]},"105":{"horse":[20,21,22,23,25]},"112":["#ointment"],"113":["#scroll"],"114":["#bucket"],"115":["#book"],"117":["#small_bandage"],"118":["#bandage"],"119":["#cage"],"121":{"eva":[150,175,200,225,250]},"122":{"eva":[800,900,1000,1100,1200]},"123":{"eva":[1500,1750,2000,2250,2500]},"130":{"hero":[400,450,500,550,600],"unit":{"50":"3"}},"131":{"hero":[800,900,1000,1100,1200],"unit":{"50":"4"}},"132":{"hero":[1500,1600,1700,1800,2000],"unit":{"50":"5"}},"133":{"hero":[400,450,500,550,600],"unit":{"51":"3"}},"134":{"hero":[800,900,1000,1100,1200],"unit":{"51":"4"}},"135":{"hero":[1500,1600,1700,1800,2000],"unit":{"51":"5"}},"136":{"hero":[400,450,500,550,600],"unit":{"53":"3"}},"137":{"hero":[800,900,1000,1100,1200],"unit":{"53":"4"}},"138":{"hero":[1500,1600,1700,1800,2000],"unit":{"53":"5"}},"139":{"hero":[400,450,500,550,600],"unit":{"54":"6"}},"140":{"hero":[800,900,1000,1100,1200],"unit":{"54":"8"}},"141":{"hero":[1500,1600,1700,1800,2000],"unit":{"54":"10"}},"142":{"hero":[400,450,500,550,600],"unit":{"55":"9"}},"143":{"hero":[800,900,1000,1100,1200],"unit":{"55":"12"}},"144":{"hero":[1500,1600,1700,1800,2000],"unit":{"55":"15"}},"145":{"hero":[400,450,500,550,600],"unit":{"60":"3"}},"146":{"hero":[800,900,1000,1100,1200],"unit":{"60":"4"}},"147":{"hero":[1500,1600,1700,1800,2000],"unit":{"60":"5"}},"148":{"hero":[400,450,500,550,600],"unit":{"61":"3"}},"149":{"hero":[800,900,1000,1100,1200],"unit":{"61":"4"}},"150":{"hero":[1500,1600,1700,1800,2000],"unit":{"61":"5"}},"151":{"hero":[400,450,500,550,600],"unit":{"62":"6"}},"152":{"hero":[800,900,1000,1100,1200],"unit":{"62":"8"}},"153":{"hero":[1500,1600,1700,1800,2000],"unit":{"62":"10"}},"154":{"hero":[400,450,500,550,600],"unit":{"64":"6"}},"155":{"hero":[800,900,1000,1100,1200],"unit":{"64":"8"}},"156":{"hero":[1500,1600,1700,1800,2000],"unit":{"64":"10"}},"157":{"hero":[400,450,500,550,600],"unit":{"65":"6"}},"158":{"hero":[800,900,1000,1100,1200],"unit":{"65":"8"}},"159":{"hero":[1500,1600,1700,1800,2000],"unit":{"65":"10"}}};
+
+var weapons = [];
+for (var id in items) {
+	if ('unit' in items[id]) {
+		var u = 0;
+		if (!items[id].unit.length) {
+		  	for (u in items[id].unit) { break; }
+		}
+		var r = Math.floor(u / 10);
+		u %= 10;
+		if (!(r in weapons)) weapons[r] = {};
+		if (!(u in weapons[r])) weapons[r][u] = [];
+		weapons[r][u].push(id);
+	}
+}
+</script>
+<script type="text/javascript" src="js/log8fa1.js?f"></script>
+<script type="text/javascript" src="js/warsimb2f5.js?g"></script>
+<script type="text/javascript">
+var defDetails = new Warsim.FormWrapper([
+	{elt: "#dp", name: "p", defaultValue: 1}, // population
+	{elt: "#def_race", name: "r"}, // place of battle
+	{elt: "#tr", name: "t"}, // traps
+	{elt: "#wall", name: "w"},
+	{elt: "#rp", name: "R"}, // residence/palace
+	{elt: "#dl", name: "s"}, // stonemason
+	{elt: "#wd", name: "o"}, // mOat
+	{elt: "#bp", name: "C"}, // big party
+	{elt: "#art_scout", name: "S"},
+	{elt: "#art_dur", name: "D"},
+	{elt: "#mode", name: "m", defaultValue: '4'}
+], "d:")
+defDetails.adopt($('def_cond'));
+
+var offSide = new Warsim.FormWrapper([
+//	top row
+	{elt: ".race_selector", name: "r"},
+	{elt: ".attackType", name: "R"},
+	{elt: ".pop", name: "p", defaultValue: 1},
+	{elt: ".brew_party", name: "B"},
+	{elt: ".metallurgy", name: "m"},
+//	mid row
+	{elt: ".unitHolder > .fm:not(.up)", name: "u"},
+	{elt: ".unitHolder > .up", name: "U", dependsOn: 'u'},
+	{elt: ".plus", name: "P" },
+//	hero
+	{elt: "[name=hero_switcher]", name: "h"},
+	{elt: ".hero > table input, .hero > table select", name: "s", dependsOn: 'h'},
+	{elt: ".hero > span .hero_mounted", name: "c", dependsOn: 'h'},
+	{elt: ".hero .hero_input", name: "i", dependsOn: 'h'},
+	{elt: ".hero .right_quality, .hero .right_crystals", name: "I", dependsOn: 'h'},
+//	bottom row
+	{elt: "select.art", name: "S"},
+	{elt: ".cata_tgt", name: "b"},
+	{elt: ".ida", name: "ww", dependsOn: 'b'},
+	{elt: ".party", name: "C"}
+], "a:");
+
+var defSide = new Warsim.FormWrapper([
+//	top row
+	{elt: ".race_selector", name: "r"},
+	{elt: ".metallurgy", name: "m"},
+//	mid row
+	{elt: ".unitHolder > .fm:not(.up)", name: "u"},
+	{elt: ".unitHolder > .up", name: "U", dependsOn: 'u'},
+	{elt: ".plus", name: "P" },
+//	hero
+	{elt: "[name=hero_switcher]", name: "h"},
+	{elt: ".hero > table input, .hero > table select", name: "s", dependsOn: 'h'},
+	{elt: ".hero > div select", name: "i", dependsOn: 'h'},
+	{elt: ".hero .right_quality, .hero .right_crystals", name: "I", dependsOn: 'h'}
+]);
+
+var simulationCache = {};
+
+function custom_encode (str) {
+	return str.replace(/a:(?:r(\d))?(.*)u([\d,]+)U([\d,]+)/, function(all, race, other, units, ups) {
+		var ups = ups.split(',');
+		var u = [], U = [], MU = true;
+		units.split(',').forEach(function(un, i) {
+			if (un = un || '') {
+				if (ups[i] != 20) MU = false;
+				U.push(ups[i] || '');
+			}
+			u.push(un);
+		});
+		u = 'u' + (u + '').replace(/,+$/, '');
+		U = 'U' + (MU ? '!' : (U + '').replace(/,+$/, ''));
+		switch (race || '0') {
+			case '0': u = u.replace(/u,,(\d+),,(\d*),(\d*)/, "u$1_$2_$3"); break;
+			case '1': u = u.replace(/u(\d*),,(\d*),,,(\d+)/, "u$1_$2_$3"); break;
+			case '2': u = u.replace(/u,(\d+),(\d*),,,(\d*)/, "u$1_$2_$3"); break;
+		}
+		u = u.replace(/0{3}(\D|$)/g, 'k$1');
+		return "a:" +
+			(race ? "r" + race : "") + other + u + U;
+	}).replace(/hs100,100,100,(c)i([\d,]+),+b$/, "h!$1$2");
+}
+
+function custom_decode (str) {
+	return str.replace(/a:(?:r(\d))?(.*)u([\dk,_]+)U([\d,]+|!)/, function(all, race, other, units, ups) {
+		var u = [], U = [], MU = ups == '!';
+		var un;
+		race = parseInt(race) || 0;
+		units = units.replace(/k/g, '000');
+		switch (race) {
+			case 0: units = units.replace(/^(\d+)_(\d*)_(\d*)/, ",,$1,,$2,$3"); break;
+			case 1: units = units.replace(/^(\d*)_(\d*)_(\d+)/, "$1,,$2,,,$3"); break;
+			case 2: units = units.replace(/^(\d+)_(\d*)_(\d*)/, ",$1,$2,,,$3"); break;
+		}
+		ups = ups.split(',');
+		units = units.split(',');
+		for (var i = 0, ui = 0; i < 10; i++) {
+			un = units[i];
+			U.push(un ? (MU ? 20 : ups[ui++] || '') : '');
+			u.push(un || '');
+		};
+		u = 'u' + u;
+		U = 'U' + U;
+		return "a:r" + race + other + u + U;
+	}).replace(/h!(c)?([\d,]+)/, "hs100,100,100,$1i$2");
+}
+
+function gather_all() {
+	var sides = $$("#sides > div:not(.collapsed)");
+
+	var req = [];
+	var hash = [];
+	var data = null;
+
+	sides.forEach(function(div) {
+		if (div.className === "info") return;
+		if (div.id === 'def_cond') {
+			data = defDetails.gather();
+			req.unshift(data.req);
+		} else {
+			if (div.classList.contains('off')) {
+				data = offSide.adopt(div).gather();
+				data.hash = custom_encode(data.hash);
+				data.req.side = "off";
+			} else {
+				data = defSide.adopt(div).gather();
+				data.req.side = "def";
+			}
+			req.push(data.req);
+		}
+		hash.push(data.hash);
+	});
+	
+	var def = req.shift();
+	req.reverse();
+	req.unshift(def);
+	return { req: req, hash: hash };
+}
+
+function form_request() {
+	
+	var data = gather_all();
+	var json = JSON.stringify(data.req);
+
+	// no off or empty off
+	if (!data.req.some(function (s) {
+		return s.side === 'off';
+	}) || data.req.some(function (s) {
+		return s.side === 'off'
+			&& !s.u.some(Boolean)
+			&& !s.h;
+	})) { return; }
+/*	if (json in simulationCache) {
+		location.hash = data.hash.join("#");
+		return wrapResponse(simulationCache[json]);
+}*/
+
+	waiting = setTimeout(set_waiting, 250);
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if (this.readyState === 4) {
+			unset_waiting();
+			if (this.status === 200) {
+				var response
+				try {
+					response = JSON.parse(this.responseText);
+				} catch(e) {
+					$$("p.error")[0].innerHTML = "Wrong server response. Are you sure you are connected to the Internet?";
+					$('report').style.display = '';
+					return;
+				}
+				simulationCache[json] = response;
+				wrapResponse(response);
+			} else if (this.status === 404 || this.status === 0) {
+				$$("p.error")[0].innerHTML = "Network error";
+				$('report').style.display = '';
+			}
+		}
+	};
+	xhr.open('POST.html', "awar2.php", true);
+	xhr.setRequestHeader('Accept', "application/json");
+	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	xhr.send("data=" + encodeURIComponent(json) + "&mode=" + Warsim.getMode());
+	location.hash = data.hash.join("#");
+}
+function set_waiting() {
+	if (waiting) document.body.classList.add("processing");
+}
+function unset_waiting() {
+	if (waiting) clearTimeout(waiting);
+	waiting = false;
+	document.body.classList.remove("processing");
+}
+/*function switch_alive(alive_on) {
+	var r = 0;
+	display_style = alive_on ? '' : 'none';
+	while (row = $('alive'+r)) {
+		row.style.display = display_style;
+		r++;
+	}
+}*/
+
+// init hacks for browsers
+$('wall').value = "";
+//$('def_race').value = 2;
+
+// read state from hash
+(function() {
+	if (!location.hash) {
+		// default simulator init
+		Warsim.newSide('off', 0); // roman attacker
+		//$$(".side .units input")[10].value = 100;
+		Warsim.newSide('def', 2); // and gaul defender
+		return;
+	}
+	var parts = location.hash.split("#");
+	var s;
+	if (!parts[0]) parts.shift();
+	for (var p = 0; p < parts.length; p++) {
+		s = parts[p];
+		if (s.match(/^[ad]:/)) {
+			if (s.charAt(0) == "a") {
+				s = custom_decode(s);
+				offSide.adopt(Warsim.newSide('off', 0, p)).parse(s);
+			} else {
+				defDetails.parse(s);
+				Warsim.updateDef.call($('def_race'));
+			}
+		} else {
+			defSide.adopt(Warsim.newSide('def', 0, p)).parse(s);
+		}
+	}
+	form_request();
+})();
+
+document.addEventListener('click', function(event){
+    var heroParent, currentItem = null;
+    if (event.target === document) { return; }
+	if (heroParent = findParent(event.target, ".hero")) {
+		currentItem = heroParent.querySelector(".hero_items");
+	}
+	var otherOpenedItems = $$(".side .hero .opened");
+	for (var i = 0; i < otherOpenedItems.length; i++) {
+		var div = otherOpenedItems[i];
+		if (div != currentItem) {
+			div.classList.remove("opened");
+		}
+	}
+});
+document.main.addEventListener('submit', function(event){
+	event.preventDefault();
+	form_request();
+	return false;
+});
+window.addEventListener('message', function (event){
+	switch(event.data) {
+		case 'getUrlHash':
+			var msg = "type=getUrlHash,data=" + gather_all().hash.join('#');
+			event.source.postMessage(msg, "*");
+		break;
+		case 'setUrlHash':
+			location.hash = event.data;
+			location.reload();
+		break;
+		case 'getSize':
+			var sizes = window.innerWidth + "x" + window.innerHeight;
+			event.source.postMessage("type=Size,data=", sizes);
+		break;
+	}
+}, false);
+</script>
+<div id="icons">
+	This is a site about browser online game „Travian”.<br/>
+	Which contains different tools and calculators,<br/>
+	helping you playing this wonderful MMOG.
+	<noscript><p style="background:red">It will works properly only if JavaScript is enabled!</p></noscript>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','../www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64635667-1', 'auto');
+  ga('set', 'language', document.documentElement.lang);
+  ga('send', 'pageview');
+
+</script>
+</body>
+
+<!-- Mirrored from travian.kirilloid.ru/warsim2.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:01:21 GMT -->
+</html>

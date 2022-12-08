@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from travian.kirilloid.ru/def_calc.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:01:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/ico" href="img/favicon.ico" sizes="16x16">
+<link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+<link rel="stylesheet" type="text/css" href="css/stylee167.css?e">
+<link rel="stylesheet" type="text/css" media="screen and (pointer: coarse)" href="css/touch.css">
+<link rel="stylesheet" type="text/css" href="css/ltr.css">
+
+<link rel="icon" sizes="192x192" href="img/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="img/icon-152.png">
+<script type="text/javascript">
+if (!window.$) {
+	$ = function (id) { return document.getElementById(id); };
+}
+var _overlay = null;
+function scriptLoadFail() {
+	if (_overlay) {
+		return;
+	}
+	var div = document.createElement('div');
+	div.className = "overlay";
+	div.innerHTML = "<button class='close' onclick='closeOverlay()'>&times;</button>"
+				  + "<p>There was an error loading JavaScript.</p>"
+				  + "<p>The page might work incorrectly.</p>"
+				  + "<p class='buttons'>"
+				  + "<button class='but' onclick='location.reload()'>🔁 Reload</button>"
+				  + "<button class='but' onclick='closeOverlay()'>❎ Ignore</button></p>";
+	$$(".page")[0].appendChild(div);
+	_overlay = div;
+	document.addEventListener('keyup', closeOverlayOnEsc);
+}
+function closeOverlay() {
+	_overlay.parentNode.removeChild(_overlay);
+	document.removeEventListener('keyup', closeOverlayOnEsc);
+	_overlay = null;
+}
+function closeOverlayOnEsc(e) {
+	if (e.keyCode === 27) {
+		closeOverlay();
+	}
+}
+document.addEventListener('keypress', function (e) {
+  if (e.key === '\n' && (e.ctrlKey || e.metaKey)) {
+	var original = document.getSelection().toString().trim();
+	if (!original) original = prompt("Nothing was selected, enter what to replace:");
+	if (!original) return alert("Still nothing. See you later.");
+	const result = prompt("How to better translate this?", original);
+	if (!result) return;
+	var img = new Image();
+	img.onload = function () { alert("Thanks!"); };
+	img.onerror = function () { alert("Failed! Did you suggest too long string?"); };
+	img.src = 'suggest_translation.html'
+	  + '?lang=' + document.documentElement.lang
+	  + '&path=' + encodeURIComponent(location.pathname)
+	  + '&original=' + encodeURIComponent(original)
+	  + '&suggest=' + encodeURIComponent(result)
+  }
+});
+Element.prototype.matches =
+	Element.prototype.matches ||
+	Element.prototype.msMatchesSelector || 
+	function(s) {
+		var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+			i = matches.length;
+		while (--i >= 0 && matches.item(i) !== this) {}
+		return i > -1;
+	};
+function findParent(e, s) {
+	if (e.closest) return e.closest(s);
+	while (e && e !== document) {
+		if (e.matches(s)) return e;
+		e = e.parentNode;
+	}
+	return null;
+}
+(function () {
+	function css(name, value) {
+		if (arguments.length === 1) { 
+			return this[0].style[name];
+		}
+		this.forEach(function (el) { el.style[name] = value; });
+	}
+	function prop(name, value) {
+		if (arguments.length === 1) { 
+			return this[0][name];
+		}
+		this.forEach(function (el) { el[name] = value; });
+	}
+	function on(event, handler) {
+		this.forEach(function (el) {
+			el.addEventListener(event, handler, false);
+		});
+		return this;
+	}
+	function addClass(cls) {
+		this.forEach(function (el) {
+			el.classList.add(cls);
+		});
+	}
+	function removeClass(cls) {
+		this.forEach(function (el) {
+			el.classList.remove(cls);
+		});
+	}
+	function toggleClass(cls, set) {
+		this.forEach(function (el) {
+			if (set) {
+				el.classList.add(cls);
+			} else if (set == null) {
+				el.classList.toggle(cls);
+			} else {
+				el.classList.remove(cls);
+			}
+		});
+	}
+	function find(selector) {
+		return wrap(this.reduce(function (a, el) {
+			return a.concat([].slice.call(el.querySelectorAll(selector)));
+		}, []));
+	}
+	function wrap(a) {
+		a.on = on;
+		a.css = css;
+		a.prop = prop;
+		a.addClass = addClass;
+		a.removeClass = removeClass;
+		a.toggleClass = toggleClass;
+		a.find = find;
+		a.parent = parent;
+		return a;
+	}
+	function query(ctx, selector) {
+		return [].slice.call(ctx.querySelectorAll(selector));
+	}
+	$$ = function (selector, context) {
+		if (context === undefined) { context = document; }
+		var a;
+		if (selector instanceof HTMLElement) {
+			a = [selector];
+		} else if (typeof selector === 'string') {
+			a = query(context, selector);
+		} else if (selector instanceof Array) {
+			a = selector;
+		} else {
+			throw new TypeError("Selector of wrong type: " + Object.prototype.toString.call(a));
+		}
+		return wrap(a);
+	};
+	Cookie = {
+		write: function (name, value, options) {
+			if (!options) options = {};
+			document.cookie = name + "=" + value
+				+ (options.duration ? ';max-age=' + (options.duration * 86400) : '');
+		},
+		read: function (name) {
+			var m = document.cookie.match(new RegExp("(^|; )" + name + "=(.*?)(; |$)"));
+			return m && m[2];
+		},
+		dispose: function (name) {
+			document.cookie = name + "=0;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		}
+	};
+	if (!window.Event) {
+		window.Event = function (type, params) {
+			var event = document.createEvent('Event');
+			event.initEvent(type, true, true);
+			return event;
+		};
+	}
+}());
+</script>
+	<title> Travian :: defense calculator </title>
+	<script type="text/javascript" src="js/utils8277.js?d"></script>
+	<script type="text/javascript" src="js/units363b.js?j"></script>
+	<script>
+	units[0][0].name = "Legionnaire";units[0][1].name = "Praetorian";units[0][2].name = "Imperian";units[0][3].name = "Equites Legati";units[0][4].name = "Equites Imperatoris";units[0][5].name = "Equites Caesaris";units[0][6].name = "Battering ram";units[0][7].name = "Fire Catapult";units[0][8].name = "Senator";units[0][9].name = "Settler";units[1][0].name = "Maceman";units[1][1].name = "Spearman";units[1][2].name = "Axeman";units[1][3].name = "Scout";units[1][4].name = "Paladin";units[1][5].name = "Teutonic Knight";units[1][6].name = "Ram";units[1][7].name = "Catapult";units[1][8].name = "Chief";units[1][9].name = "Settler";units[2][0].name = "Phalanx";units[2][1].name = "Swordsman";units[2][2].name = "Pathfinder";units[2][3].name = "Theutates Thunder";units[2][4].name = "Druidrider";units[2][5].name = "Haeduan";units[2][6].name = "Ram";units[2][7].name = "Trebuchet";units[2][8].name = "Chieftain";units[2][9].name = "Settler";units[5][0].name = "Slave Militia";units[5][1].name = "Ash Warden";units[5][2].name = "Khopesh Warrior";units[5][3].name = "Sopdu Explorer";units[5][4].name = "Anhur Guard";units[5][5].name = "Resheph Chariot";units[5][6].name = "Ram";units[5][7].name = "Stone Catapult";units[5][8].name = "Nomarch";units[5][9].name = "Settler";units[6][0].name = "Mercenary";units[6][1].name = "Bowman";units[6][2].name = "Spotter";units[6][3].name = "Steppe Rider";units[6][4].name = "Marksman";units[6][5].name = "Marauder";units[6][6].name = "Ram";units[6][7].name = "Catapult";units[6][8].name = "Logades";units[6][9].name = "Settler";units[7][0].name = "Hoplite";units[7][1].name = "Sentinel";units[7][2].name = "Shieldsman";units[7][3].name = "Twinsteel Therion";units[7][4].name = "Elpida Rider";units[7][5].name = "Corinthian Crusher";units[7][6].name = "Ram";units[7][7].name = "Ballista";units[7][8].name = "Ephor";units[7][9].name = "Settler";	</script>
+	<style>
+		.page,
+		.page input,
+		.page select {
+			font-size: 16px;
+		}
+		.page {
+			line-height: 24px;
+		}
+		#server { max-width: 100%; }
+		.u {
+			width: 100%;
+			box-sizing: border-box;
+		}
+		.row > * {
+			margin-top: 8px;
+			width: 100%;
+		}
+		.row {
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: space-between;
+		}
+		img.res { vertical-align: -5%; }
+		.v-table {
+			display: grid;
+			grid-template-columns: repeat(6, auto);
+			grid-gap: 8px;
+			align-items: center;
+		}
+		.result {
+			/* display: grid; */
+			width: 100%;
+		}
+/*		.result__total-cost {
+			grid-area: a;
+		}
+		.result__res-per-hour {
+			grid-area: b;
+		}
+		.result__def-stats {
+			grid-area: c;
+		}
+		.result__upkeep {
+			grid-area: d;
+		} */
+		.text-overflow {
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+		.b-lvl { width: 100%; box-sizing: border-box; }
+		.c-xs-4 { width: calc((100% + 8px) / 12 * 4 - 8px); }
+		.c-xs-6 { width: calc((100% + 8px) / 12 * 6 - 8px); }
+		.c-xs-8 { width: calc((100% + 8px) / 12 * 8 - 8px); }
+		.b-range {
+			display: flex;
+    		justify-content: space-between;
+		}
+		.b-range input.b-range-slider {
+			flex-grow: 1;
+			max-height: 1.5rem;
+		}
+		.b-range--with-buttons input.b-range-slider {
+    		margin: 0 8px;
+		}
+		#a {
+			width: 100%;
+			padding: 2px 0px;
+		}
+		.but {
+			max-height: 26px;
+			min-width: 32px;
+    		text-align: center;
+    		box-sizing: border-box;
+		}
+		@media all and (min-width: 480px) {
+			.c-sm-2 { width: calc((100% + 8px) / 12 * 2 - 8px); }
+			.c-sm-4 { width: calc((100% + 8px) / 12 * 4 - 8px); }
+			.c-sm-6 { width: calc((100% + 8px) / 12 * 6 - 8px); }
+			.c-sm-8 { width: calc((100% + 8px) / 12 * 8 - 8px); }
+			.v-table {
+				grid-template-columns: auto;
+				grid-auto-flow: column;
+				grid-template-rows: repeat(2, auto);
+				justify-items: center;
+			}
+		}
+		.disabled {
+			opacity: 0.5;
+    		pointer-events: none;
+		}
+		.t2 .mode:not(.mode-2),
+		.t3 .mode:not(.mode-3),
+		.t4 .mode:not(.mode-4),
+		.t5 .mode:not(.mode-5) {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+<script>
+var m = location.hash.match(/v=\d+\.(\d+)/);
+if (m) document.body.className = 't' + m[1].slice(0, 1) + ' t' + m[1];
+var unitNames = [["Legionnaire","Praetorian","Imperian","Equites Legati","Equites Imperatoris","Equites Caesaris"],["Maceman","Spearman","Axeman","Scout","Paladin","Teutonic Knight"],["Phalanx","Swordsman","Pathfinder","Theutates Thunder","Druidrider","Haeduan"],["Rat","Spider","Serpent","Bat","Wild boar","Wolf"],["Pikeman","Thorned Warrior","Guardsman","Birds Of Prey","Axerider","Natarian Knight"],["Slave Militia","Ash Warden","Khopesh Warrior","Sopdu Explorer","Anhur Guard","Resheph Chariot"],["Mercenary","Bowman","Spotter","Steppe Rider","Marksman","Marauder"],["Hoplite","Sentinel","Shieldsman","Twinsteel Therion","Elpida Rider","Corinthian Crusher"]];
+</script>
+
+<div class="ad"><style id="scaling">
+	.icon--scalable {
+		zoom: var(--scale-zoom);
+		transform: scale(var(--scale-transform));
+	}
+</style>
+<script type="text/javascript" async><!--
+(function () {
+	var urls = {};
+	window.onerror = function(msg, url, line, column, error) {
+		if ($ == window.jQuery) { msg = "jQuery sneaked here!"; }
+		var origin = location.protocol + '//' + location.host;
+		var params =
+			"?msg=" + encodeURIComponent(msg) +
+			"&url=" + encodeURIComponent(url) +
+			"&page=" + encodeURIComponent(location.href.replace(origin, '')) +
+			"&line=" + line +
+            "&lang=" + document.documentElement.lang +
+            "&column=" + (column === undefined ? 'n/a' : column) +
+            "&stack=" + encodeURIComponent(error && error.stack) +
+			"";
+		var url = "error.html"+ params;
+		if (urls[url] > 3) return false;
+		var img = new Image();
+		img.width = 1;
+		img.height = 1;
+		img.src = url;
+		document.body.appendChild(img);
+		urls[url] = (urls[url] || 0) + 1;
+		return false;
+	};
+	if (!window.devicePixelRatio) return;
+	Cookie.write('dpi', Math.round(devicePixelRatio * 96), { duration: 365 });
+	var oldValue = devicePixelRatio;
+	var zoomKind = window.CSS && CSS.supports('zoom', '1') ? 'zoom' : 'transform';
+	function setZoomLevel(zoomLevel) {
+		document.body.style.setProperty("--scale-" + zoomKind, zoomLevel);
+	}
+	function resize(currentScale) {
+		function f(n) {
+			return Math.abs(Math.log(currentScale / n));
+		}
+		var zoomLevels = [0.125, 0.25, 0.5, 1, 1.25, 1.5, 2, 2.5, 3, 4];
+		zoomLevels.sort(function (a, b) { return f(a) - f(b); });
+		setZoomLevel(zoomLevels[0] / currentScale);
+	}
+	window.addEventListener('resize', function () {
+		var newValue = devicePixelRatio;
+		if (newValue === oldValue) { return; }
+		resize(oldValue = newValue);
+	});
+	resize(devicePixelRatio);
+}());
+--></script>
+<!--[if lte IE 10]>
+    <div id="warning">
+        <a href="https://www.microsoft.com/en-us/WindowsForBusiness/End-of-IE-support">
+            Support for older versions of Internet Explorer ended on January 12th, 2016
+        </a>
+    </div>
+<![endif]-->
+</div>
+<div id="menu">
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="index.html" class="icon--scalable menuitem-index"></a><div>Home Page</div></div>
+	</span>
+
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="warsim2.html" class="icon--scalable menuitem-warsim2"></a><div>Extended Combat Simulator</div></div>
+		<div class="menutitle">Calculators</div>
+		<div class="menuitem"><a href="distance.html" class="icon--scalable menuitem-distance"></a><div>distance calculator</div></div>
+		<div class="menuitem"><a href="conq.html" class="icon--scalable menuitem-conq"></a><div>Conquering calculator</div></div>
+		<div class="menuitem"><a href="off_calc.html" class="icon--scalable menuitem-off_calc"></a><div>offense calculator</div></div>
+		<div class="menuitem"><a href="def_calc.html" class="icon--scalable menuitem-def_calc"></a><div>defense calculator</div></div>
+		<div class="menuitem"><a href="war.html" class="icon--scalable menuitem-war"></a><div>units' attributes calculator</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="build.html" class="icon--scalable menuitem-build"></a><div>buildings</div></div>
+		<div class="menutitle">Tables</div>
+		<div class="menuitem"><a href="villages_res.html" class="icon--scalable menuitem-villages_res"></a><div>resource development calculator</div></div>
+		<div class="menuitem"><a href="troops.html" class="icon--scalable menuitem-troops"></a><div>Troops</div></div>
+		<div class="menuitem"><a href="oases.html" class="icon--scalable menuitem-oases"></a><div>Oases</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="hero4.html" class="icon--scalable menuitem-hero4"></a><div>hero (T4)</div></div>
+		<div class="menutitle">hero</div>
+		<div class="menuitem"><a href="hero.html" class="icon--scalable menuitem-hero"></a><div>hero (T3)</div></div>
+		<div class="menuitem"><a href="items.html" class="icon--scalable menuitem-items"></a><div>items</div></div>
+	</span>
+	
+	<span class="menublock">
+		<div class="menuitem menuitem-large"><a href="report.html" class="icon--scalable menuitem-report"></a><div>logger</div></div>
+		<div class="menutitle">Misc</div>
+		<div class="menuitem"><a href="about.html" class="icon--scalable menuitem-about"></a><div>about this site</div></div>
+		<div class="menuitem"><a href="thanks.html" class="icon--scalable menuitem-thanks"></a><div>Acknowledgements</div></div>
+			</span>
+	
+</div>
+<div id="langbar">
+	<img alt="ar" src="img/x.gif" class="icon--scalable click flag ae">
+	<img alt="bg" src="img/x.gif" class="icon--scalable click flag bg">
+	<img alt="cs" src="img/x.gif" class="icon--scalable click flag cz">
+	<img alt="da" src="img/x.gif" class="icon--scalable click flag dk">
+	<img alt="de" src="img/x.gif" class="icon--scalable click flag de">
+	<img alt="ee" src="img/x.gif" class="icon--scalable click flag ee">
+	<img alt="el" src="img/x.gif" class="icon--scalable click flag gr">
+	<img alt="en" src="img/x.gif" class="icon--scalable click flag us">
+	<img alt="es" src="img/x.gif" class="icon--scalable click flag es">
+	<img alt="fa" src="img/x.gif" class="icon--scalable click flag ir">
+	<img alt="fr" src="img/x.gif" class="icon--scalable click flag fr">
+	<img alt="he" src="img/x.gif" class="icon--scalable click flag il">
+	<img alt="hu" src="img/x.gif" class="icon--scalable click flag hu">
+	<img alt="it" src="img/x.gif" class="icon--scalable click flag it">
+	<img alt="ja" src="img/x.gif" class="icon--scalable click flag jp">
+	<img alt="lt" src="img/x.gif" class="icon--scalable click flag lt">
+	<img alt="lv" src="img/x.gif" class="icon--scalable click flag lv">
+	<img alt="nl" src="img/x.gif" class="icon--scalable click flag nl">
+	<img alt="pl" src="img/x.gif" class="icon--scalable click flag pl">
+	<img alt="pt" src="img/x.gif" class="icon--scalable click flag pt">
+	<img alt="rs" src="img/x.gif" class="icon--scalable click flag rs">
+	<img alt="ru" src="img/x.gif" class="icon--scalable click flag ru">
+	<img alt="sl" src="img/x.gif" class="icon--scalable click flag si">
+	<img alt="sv" src="img/x.gif" class="icon--scalable click flag se">
+	<img alt="tr" src="img/x.gif" class="icon--scalable click flag tr">
+	<img alt="uk" src="img/x.gif" class="icon--scalable click flag ua">
+	</div>
+
+<script type="text/javascript">
+(function(){
+	var page = location.pathname.match(/(\w+)\.php$/) || [,'index'];
+	$$(".menuitem-" + page[1]).addClass('current');
+})();
+function switch_lang(lang_name) {
+	const d = new Date();
+	d.setYear(d.getYear() + 1);
+	document.cookie = "lang=" + lang_name + ';expires=' + d.toISOString();
+	window.location.reload();
+}
+$$(".flag").on('click', function(){ switch_lang(this.alt) });
+(function(){
+	var search = $$("#search input")[0];
+	if (!search || !window.fetch) return;
+	var index = [];
+	fetch('asearch.html')
+		.then(function (s) {
+			return s.json();
+		})
+		.then(function (obj) {
+			for (var k in obj) {
+				var item = obj[k];
+				if (typeof item.str === 'string') {
+					item.str = item.str.toLowerCase();
+					index.push(item);
+				} else {
+					item.str.forEach(function (s) {
+						var obj = {
+							ico: item.ico,
+							str: s.toLowerCase(),
+							url: item.url
+						};
+						if (item.ver) {
+							obj.ver = item.ver;
+						}
+						index.push(obj);
+					});
+				}
+			}
+		});
+	var lastResults = [];
+	var lastIndex = -1;
+	function matcher(term) {
+		return function(item) {
+			if (item.str.indexOf(term) !== -1) return true;
+			const letters = term.split('');
+			const words = item.str.split(' ');
+			if (words.length >= letters.length
+			&& letters.every(function (c, i) { return words[i][0] === c; })) {
+				return true;
+			}
+			return false;
+		}
+	}
+	search.oninput = function () {
+		var term = this.value.toLowerCase();
+		if (term.length < 2) {
+			window['search-results'].innerHTML = '';
+			return;
+		}
+		let termMatcher = matcher(term);
+		lastResults = index.filter(termMatcher).slice(0, 10);
+		if (lastResults.length > 0 && lastIndex === -1) {
+			lastIndex = 0;
+		}
+		window['search-results'].innerHTML = lastResults.map(function (item) {
+			return '<a href="' + item.url + '">'
+				+ '<img src="img/x.gif" class="' + item.ico + '"> '
+				+ item.str.replace(term, '<mark>$&</mark>')
+				+ '</a>';
+		}).join('');
+	};
+	search.onkeyup = function (e) {
+		if (e.keyCode === 38) {
+			// up
+			e.preventDefault();
+		}
+		if (e.keyCode === 40) {
+			// down
+			e.preventDefault();
+		}
+	}
+}());
+</script>
+
+<div class="page" id="page-def_calc">
+<div class="content">
+
+<!-- INPUTS -->
+
+<div class="row">
+	<label class="c-xs-4 c-sm-2" for="server">server:</label>
+	<div class="c-xs-8 c-sm-4"><style>
+    #serverHint {
+        position: relative;
+        display: inline-block;
+        z-index: 100;
+    }
+    #serverHint > div {
+        position: absolute;
+        border: 1px solid gray;
+        background: white;
+        padding: 4px;
+        width: 200px;
+        z-index: 1;
+        top: -12px;
+        box-shadow: 0 0 2px gray;
+        white-space: normal;
+    }
+    #serverHint .but {
+        font-size: 14px;
+    }
+    #serverVersionNew {
+        font-weight: bold;
+    }
+    #serverHintButtons {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 8px;
+    }
+</style>
+<select id="server">
+    <optgroup label="Kingdoms">
+        <option value="1.50">T5</option>
+        <option value="3.50">T5 3x</option>
+        <option value="5.50">T5 5x</option>
+    </optgroup>
+    <optgroup label="Legends">
+        <option value="1.45">T4.5 1x</option>
+        <option value="1.46">T4.6 1x</option>
+        <option value="2.46">T4.6 2x</option>
+        <option value="3.46">T4.6 3x</option>
+        <option value="5.46">T4.6 5x</option>
+        <option value="10.46">T4.6 10x</option>
+    </optgroup>
+    <optgroup label="Specials">
+        <option value="1.431" disabled>New Year Special</option>
+        <option value="1.432">Annual Special</option>
+        <option value="2.432">Annual Special 2x</option>
+        <option value="3.432">Annual Special 3x</option>
+    </optgroup>
+    <optgroup label="Classis">
+        <option value="1.36">T3.6</option>
+        <option value="3.36">T3.6 3x</option>
+        <option value="1.25">T2.5</option>
+    </optgroup>
+</select>
+<div id="serverHint" style="display: none;">
+    <div>
+        <div>You have changed version to <span id="serverVersionNew"></span> on another tab</div>
+        <div id="serverHintButtons">
+            <input type="button" class="but" value="use it" id="serverHintButtonUse">
+            <input type="button" class="but" value="discard" id="serverHintButtonDiscard">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+(function (server) {
+    if (!server) { return; }
+    var lastValue = null;
+    var lastNewValue = null;
+    function f() {
+        lastNewValue = lastValue = this.value;
+        var s = parseVersion(this.value);
+        document.body.className = 't' + s.major + ' t' + s.major + s.minor;
+    };
+    server.addEventListener('change', f);
+    window.addEventListener('load', function () {
+        setTimeout(f.bind(server), 0);
+    });
+    window.addEventListener('storage', function (event) {
+        if (event.key === 'v') {
+            lastNewValue = event.newValue;
+        }
+    });
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState !== 'visible') { return; }
+        if (lastNewValue === lastValue) { return; }
+        var option = [].filter.call(server.options, function (o) {
+            return o.value === lastNewValue;
+        })[0];
+        if (!option) return;
+        var fullVersion = option.parentNode.label + ' / ' + option.innerHTML;
+        $('serverVersionNew').innerHTML = fullVersion;
+        $('serverHint').style.display = '';
+    });
+    $('serverHintButtonUse').onclick = function () {
+        server.value = lastNewValue;
+        f.call(server);
+        $('serverHint').style.display = 'none';
+    };
+    $('serverHintButtonDiscard').onclick = function () {
+        $('serverHint').style.display = 'none';
+    };
+}(document.getElementById('server')));
+</script>
+</div>
+
+	<label class="c-xs-4 c-sm-2" for="r">tribes:</label>
+	<select class="c-xs-8 c-sm-4" id="r">
+	<option value='0'>The Roman Troops</option><option value='1'>The Teutonic Troops</option><option value='2'>The Gallic Troops</option><option value='5'>The Egyptian Troops</option><option value='6'>The Huns Troops</option><option value='7'>The Spartans</option>	</select>
+</div>
+
+<div class="row">
+<div class="v-table">
+			<label for="u0">
+			<img src="img/x.gif" class="icon--scalable unit u1" alt=""/>
+		</label>
+		<input id="u0" type="number" class="u"
+			min="0" max="10000000" data-index="0" pattern="[0-9]*" />
+			<label for="u1">
+			<img src="img/x.gif" class="icon--scalable unit u2" alt=""/>
+		</label>
+		<input id="u1" type="number" class="u"
+			min="0" max="10000000" data-index="1" pattern="[0-9]*" />
+			<label for="u2">
+			<img src="img/x.gif" class="icon--scalable unit u3" alt=""/>
+		</label>
+		<input id="u2" type="number" class="u"
+			min="0" max="10000000" data-index="2" pattern="[0-9]*" />
+			<label for="u3">
+			<img src="img/x.gif" class="icon--scalable unit u4" alt=""/>
+		</label>
+		<input id="u3" type="number" class="u"
+			min="0" max="10000000" data-index="3" pattern="[0-9]*" />
+			<label for="u4">
+			<img src="img/x.gif" class="icon--scalable unit u5" alt=""/>
+		</label>
+		<input id="u4" type="number" class="u"
+			min="0" max="10000000" data-index="4" pattern="[0-9]*" />
+			<label for="u5">
+			<img src="img/x.gif" class="icon--scalable unit u6" alt=""/>
+		</label>
+		<input id="u5" type="number" class="u"
+			min="0" max="10000000" data-index="5" pattern="[0-9]*" />
+	</div>
+</div>
+
+<div class="row">
+	<div class="c-xs-8 c-sm-4 text-overflow">
+		<label for="b">
+			<img src="img/x.gif" class="icon--scalable building g19" alt="">
+			Barracks		</label>
+	</div>
+	<div class="c-xs-4 c-sm-2">
+		<input type="number" name="b" id="b" class="b-lvl"
+			min="0" max="20" value="0" pattern="[0-9]*">
+	</div>
+	<div class="c-sm-6 b-range b-range--with-buttons">
+		<span class="but" onclick="set('b',1)">1</span>
+		<input type="range" name="b" class="b-range-slider"
+			min="1" max="20" value="1"
+			oninput="set('b', this.value)">
+		<span class="but" onclick="set('b',20)">20</span>
+	</div>
+</div>
+
+<div class="row">
+	<div class="c-xs-8 c-sm-4 text-overflow">
+		<label for="s">
+			<img src="img/x.gif" class="icon--scalable building g20" alt="">
+			Stable		</label>
+	</div>
+	<div class="c-xs-4 c-sm-2">
+		<input type="number" id="s" name="s" class="b-lvl"
+			min="1" max="20" value="1" pattern="[0-9]*">
+	</div>
+	<div class="c-sm-6 b-range b-range--with-buttons">
+		<span class="but" onclick="set('s', 1)">1</span>
+		<input type="range" name="s" class="b-range-slider"
+			min="1" max="20" value="1"
+			oninput="set('s', this.value)">
+		<span class="but" onclick="set('s', 20)">20</span>
+	</div>
+</div>
+
+<div class="row mode mode-3 mode-4 mode-5" id="hdp_wrap">
+	<div class="c-xs-8 c-sm-4 text-overflow">
+		<label for="h">
+			<img src="img/x.gif" class="icon--scalable building g41" alt="" />
+			Horse Drinking Trough		</label>
+	</div>
+	<div class="c-xs-4 c-sm-2">
+		<input type="number" name="h" class="b-lvl"
+			id="h" min="0" max="20" value="0" pattern="[0-9]*">
+	</div>
+	<div class="c-sm-6 b-range b-range--with-buttons">
+		<span class="but" onclick="set('h', 0)">0</span>
+		<input type="range" name="h" class="b-range-slider"
+			min="0" max="20" value="0"
+			oninput="set('h', this.value)">
+		<span class="but" onclick="set('h', 20)">20</span>
+	</div>
+</div>
+
+<div class="row mode mode-3 mode-4 mode-5" id="art_wrap">
+	<div class="c-xs-8 c-sm-4 text-overflow">
+		<label for="a">
+			<img src="img/x.gif" class="icon--scalable art art6" alt="" />
+			Troops' training artifact		</label>
+	</div>
+	<div class="c-xs-4 c-sm-2">
+		<select id="a" name="a" onchange="set('a', this.value)">
+			<!--option value="-2">200% (negative)</option>
+			<option value="-1">133% (negative)</option-->
+			<option value="0" selected="selected">—</option>
+			<option value="1">75%</option>
+			<option value="2">50%</option>
+		</select>
+	</div>
+	<div class="c-sm-6"></div>
+</div>
+
+<div class="row mode mode-4 mode-5">
+	<div class="c-xs-8 c-sm-4 text-overflow">
+		<label for="ar">
+			<img src="img/x.gif" class="icon--scalable ab_rec" alt="" />
+			Recruitment		</label>
+	</div>
+	<div class="c-xs-4 c-sm-2">
+		<input type="number" name="ar" id="ar" class="b-lvl"
+			min="0" max="10" value="0" step="2" pattern="[0-9]*">
+	</div>
+	<div class="c-sm-6 b-range b-range--with-buttons">
+		<span class="but" onclick="set('ar', 0)">0</span>
+		<input type="range" name="ar" min="0" max="10" value="0" step="2"
+			oninput="set('ar', this.value)" class="b-range-slider">
+		<span class="but" onclick="set('ar', 10)">10</span>
+	</div>
+</div>
+
+<div class="row mode mode-4">
+	<div class="c-sm-6">
+		<label>
+			<img src="img/x.gif" class="icon--scalable itemCategory itemCategory_helmet"
+				alt="Helmets (head)" />
+			<select name="hi" onchange="set('hi', this.value)">
+				<option value="0">&mdash;</option>
+				<option value="10">Helmet of the Mercenary</option>
+				<option value="15">Helmet of the Warrior</option>
+				<option value="20">Helmet of the Archon</option>
+			</select>
+		</label>
+	</div>
+	<div class="c-sm-6">
+		<label>
+			<img src="img/x.gif" class="icon--scalable itemCategory itemCategory_helmet"
+				alt="Helmets (head)" />
+		</label>
+		<select name="hc" onchange="set('hc', this.value)">
+			<option value="0">&mdash;</option>
+			<option value="10">Helmet of the Horseman</option>
+			<option value="15">Helmet of the Cavalry</option>
+			<option value="20">Helmet of the Heavy cavalry</option>
+		</select>
+	</div>
+</div>
+
+<div class="row mode mode-5">
+	<div class="c-xs-8 c-sm-4">
+		<label for="hi">
+			<img src="img/x.gif" class="icon--scalable itemCategory itemCategory_helmet"
+				alt="Helmets (head)" />
+			infantry		</label>
+	</div>
+	<div class="c-xs-4 c-sm-2">
+		<input type="number" id="hi" name="hi" class="b-lvl"
+			min="0" max="27" value="" pattern="[0-9]*" />
+	</div>
+	<div class="c-sm-6 b-range b-range--with-buttons">
+		<span class="but" onclick="set('hi', 0)">0</span>
+		<input type="range" name="hi" class="b-range-slider"
+			min="0" max="27" value="0"
+			oninput="set('hi', this.value)">
+		<span class="but" onclick="set('hi', 27)">27</span>
+	</div>
+	<div class="c-xs-8 c-sm-4">
+		<label for="hc">
+			<img src="img/x.gif" class="icon--scalable itemCategory itemCategory_helmet" alt="" />
+			cavalary		</label>
+	</div>
+	<div class="c-xs-4 c-sm-2">
+		<input type="number" id="hc" name="hc" class="b-lvl"
+			min="0" max="27" value="0" pattern="[0-9]*"
+			oninput="set('hc', this.value)" />
+	</div>
+	<div class="c-sm-6 b-range b-range--with-buttons">
+		<span class="but" onclick="set('hc', 0)">0</span>
+		<input type="range" name="hc" class="b-range-slider"
+			min="0" max="27" value="0"
+			oninput="set('hc', this.value)">
+		<span class="but" onclick="set('hc', 27)">27</span>
+	</div>
+</div>
+
+<!-- VALUES -->
+
+<div class="row">
+	<div class="c-xs-6">
+		<span class="value" id="t_i">0</span>
+		<img src="img/x.gif" class="icon--scalable res r7" alt="Time"/>
+		<img src="img/x.gif" class="icon--scalable building g19" alt="Barracks"/>
+	</div>
+	<div class="c-xs-6">
+		<span class="value" id="t_c">0</span>
+		<img src="img/x.gif" class="icon--scalable res r7" alt="Time"/>
+		<img src="img/x.gif" class="icon--scalable building g20" alt="Stable"/>
+	</div>
+	<div class="c-xs-8">
+	<img src="img/x.gif" class="icon--scalable res r1" alt="Lumber"/>&nbsp;<span id="r0"></span> |
+	<img src="img/x.gif" class="icon--scalable res r2" alt="Clay"/>&nbsp;<span id="r1"></span> |
+	<img src="img/x.gif" class="icon--scalable res r3" alt="Iron"/>&nbsp;<span id="r2"></span> |
+	<img src="img/x.gif" class="icon--scalable res r4" alt="Crop"/>&nbsp;<span id="r3"></span>
+	</div>
+	<div class="c-xs-4">
+		<span class="value" id="tc_t">0</span>
+		<img src="img/x.gif" class="icon--scalable res r6" alt="Total cost"/> /
+		<img src="img/x.gif" class="icon--scalable res r7" alt="Time"/>
+	</div>
+	<div class="c-xs-8">
+		<img src="img/x.gif" class="icon--scalable stats def_i" alt="infantry"/>
+		<span class="value" id="di">0</span> + 
+		<img src="img/x.gif" class="icon--scalable stats def_c" alt="cavalary"/>
+		<span class="value" id="dc">0</span> = 
+		<img src="img/x.gif" class="icon--scalable stats def_all" alt="defense"/>
+		<span class="value" id="dd">0</span>
+	</div>
+	<div class="c-xs-4">
+		<span class="value" id="dd_t">0</span>
+		<img src="img/x.gif" class="icon--scalable stats def_all" alt="defense"/> /
+		<img src="img/x.gif" class="icon--scalable res r7" alt="Time"/>
+	</div>
+	<div>
+		<span class="value" id="cc">0</span>
+		<img src="img/x.gif" class="icon--scalable res r5" alt="upkeep"/>
+	</div>
+</div>
+
+<script src="js/server.js"></script>
+<script src="js/utils.js"></script>
+<script>
+const lang = document.documentElement.lang;
+var state = {
+	r: 0,
+	v: getMyVersion(),
+	u: [],
+	b: 1,
+	s: 1,
+	h: 0,
+	a: 0,
+	ar: 0,
+	hi: 0,
+	hc: 0,
+};
+StateSaver.bind(state, {
+	r: 'i', v: 's', u: 'a',
+	b: 'i', s: 'i', h: 'i', a: 'i',
+	ar: 'i', hi: 'i', hc: 'i',
+});
+$('server').addEventListener('change', function () {
+	state.v = this.value;
+	update_all();
+});
+$$(".u").on('input', function () {
+	state.u[this.dataset.index] = +this.value;
+	update_all();
+});
+
+function set(name, value) {
+	state[name] = value;
+	if (name === 'r') {
+		var imgs = $$(".v-table img");
+		for (var u = 0; u < 6; u++) imgs[u].alt = unitNames[value][u];
+	}
+	const inputs = document.getElementsByName(name);
+	for (var i = inputs.length - 1; i >= 0; i--) {
+		var input = inputs.item(i);
+		if (input.value !== value) {
+			input.value = value;
+		}
+	}
+	update_all();
+}
+
+const formatter = new Intl.NumberFormat(lang, { notation: 'compact' });
+function format(num) {
+	return formatter.format(num);
+}
+
+function update_all() {
+	var stats = { di: 0, dc: 0, c: [0, 0, 0, 0], cc: 0, cu: 0, ti: 0, tc: 0 };
+	var v = parseVersion(state.v);
+	var raceUnits = (units['t' + v.major + '.' + v.minor]
+				  || units['t' + v.major]
+				  || units)[state.r];
+	$$(".v-table .unit").forEach(function (u, i) {
+		u.className = 'icon--scalable unit u' + (state.r * 10 + i + 1);
+	});
+	const hdp = state.r == 0 ? (1 + state.h / 100) : 1;
+	const helmInfBonus = SERVER.hasItems() ? 1 + state.hi / 100 : 1;
+	const helmCavBonus = SERVER.hasItems() ? 1 + state.hc / 100 : 1;
+	const artTrainBonus = SERVER.hasArtifacts() ? 1 - state.a / 4 : 1;
+	const recruitmentBonus = SERVER.hasAllianceBoni() ? 1 - state.ar / 100 : 1;
+	state.u.forEach(function (u, i) {
+		var unit = raceUnits[i];
+		stats.di += u * unit.def_i;
+		stats.dc += u * unit.def_c;
+		let time = unit.time * artTrainBonus * recruitmentBonus / v.speed;
+		if (unit.prod === 20) {
+			stats.ti += u * Math.round(time * Math.pow(0.9, state.b - 1) / helmInfBonus);
+		}
+		if (unit.prod === 21) {
+			stats.tc += u * Math.round(time * Math.pow(0.9, state.s - 1) / helmCavBonus / hdp);
+		}
+		unit.cost.forEach(function (r, i) {
+			stats.c[i] += r * u;
+			stats.cc += r * u;
+		});
+		stats.cu += u * unit.cu;
+	});
+	t_i.innerText = timeI2S(stats.ti);
+	t_c.innerText = timeI2S(stats.tc);
+	
+	const minNonZeroTime = Math.max.apply(Math, [stats.ti, stats.tc].filter(Boolean));
+	r0.innerText = format(stats.c[0]);
+	r1.innerText = format(stats.c[1]);
+	r2.innerText = format(stats.c[2]);
+	r3.innerText = format(stats.c[3]);
+	tc_t.innerText = Math.round(stats.cc / (minNonZeroTime / 3600));
+	di.innerText = format(stats.di);
+	dc.innerText = format(stats.dc);
+	dd.innerText = format(stats.di + stats.dc);
+	dd_t.innerText = Math.round((stats.di + stats.dc) / (minNonZeroTime / 3600));
+	cc.innerText = stats.cu;
+	StateSaver.save();
+}
+StateSaver.load();
+r.value = state.r || 0;
+function changeTribe() {
+	set('r', this.value);
+	var isHdpEnabled = this.value == 0;
+	if (isHdpEnabled) {
+		hdp_wrap.classList.remove('disabled');
+	} else {
+		hdp_wrap.classList.add('disabled');
+	}
+	$$('#hdp_wrap input').forEach(function (input) {
+		input.disabled = !isHdpEnabled;
+	});
+}
+r.addEventListener('input', changeTribe, false)
+function changeNum() {
+	const min = +this.min;
+	const max = +this.max;
+	var val = +this.value;
+	if (val < min) val = min;
+	if (val > max) val = max;
+	if (val != this.value) this.value = val;
+	set(this.name, val);
+}
+b.addEventListener('input', changeNum, false);
+s.addEventListener('input', changeNum, false);
+h.addEventListener('input', changeNum, false);
+ar.addEventListener('input', changeNum, false);
+hi.addEventListener('input', changeNum, false);
+hc.addEventListener('input', changeNum, false);
+changeTribe.call(r);
+const unitInputs = $$('.u');
+for (var i = 0; i < 6; i++)
+	unitInputs[i].value = state.u[i] || '';
+set('b', state.b);
+set('s', state.s);
+set('h', state.h);
+set('a', state.a);
+set('ar', state.ar);
+set('hi', state.hi);
+set('hc', state.hc);
+$('server').value = state.v;
+
+</script>
+
+</div>
+</div>
+
+<div id="icons">
+	This is a site about browser online game „Travian”.<br/>
+	Which contains different tools and calculators,<br/>
+	helping you playing this wonderful MMOG.
+	<noscript><p style="background:red">It will works properly only if JavaScript is enabled!</p></noscript>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','../www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64635667-1', 'auto');
+  ga('set', 'language', document.documentElement.lang);
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+
+<!-- Mirrored from travian.kirilloid.ru/def_calc.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 03:01:27 GMT -->
+</html>
