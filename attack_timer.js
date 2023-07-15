@@ -30,7 +30,7 @@ let t_holder = null;
 button.addEventListener ("click", function() {
   t_holder = setTimeout(() => {
     $('.rallyPointConfirm')[0].click()
-  }, new Date(time_input.value) - new Date() + Math.floor(Math.random() * (100 - 10) + 10););
+  }, new Date(time_input.value) - new Date() + Math.floor(Math.random() * (100 - 10) + 10));
   console.log(t_holder, new Date(time_input.value) - new Date());
   button.innerHTML = '已設定完成';
   button.disabled = true;
