@@ -18,7 +18,7 @@ time_input.style.left = "10px";
 time_input.style.width = 300;
 time_input.style.zIndex = 99;
 d = new Date();
-time_input.value = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+time_input.value = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+d.getHours()+':'+(d.getMinutes()<10?'0':'') + d.getMinutes()+':'+d.getSeconds();
 
 // 2. Append somewhere
 let body = document.getElementsByClassName("contentPage")[0];
@@ -26,12 +26,20 @@ body.appendChild(button);
 body.appendChild(time_input);
 let t_holder = null;
 
+
+function last_counter() {
+  setTimeout(() => {
+    $('.rallyPointConfirm')[0].click()
+  }, new Date(time_input.value) - new Date());
+}
+
 // 3. Add event handler
 button.addEventListener ("click", function() {
-  t_holder = setTimeout(() => {
-    $('.rallyPointConfirm')[0].click()
-  }, new Date(time_input.value) - new Date() + Math.floor(Math.random() * (100 - 10) + 10));
-  console.log(t_holder, new Date(time_input.value) - new Date());
+  if (new Date(time_input.value) - new Date() > 1500) {
+    setTimeout(last_counter, new Date(time_input.value) - new Date() - 1000);
+  } else {
+    last_counter();
+  }
   button.innerHTML = '已設定完成';
   button.disabled = true;
   time_input.disabled = true;
