@@ -10,6 +10,19 @@ button.style.background = '#f0f0f0';
 button.style.display = 'block';
 button.style.zIndex = 99;
 
+let button2 = document.createElement("button");
+button2.innerHTML = "重設";
+button2.style.position = 'absolute';
+button2.style.bottom = "10px";
+button2.style.left = "200px";
+button2.style.width = 300;
+button2.style.height = 300;
+button2.style.padding = '10px';
+button2.style.background = '#f0f0f0';
+button2.style.display = 'block';
+button2.style.zIndex = 99;
+button2.disabled = true;
+
 let countdown_text = document.createElement("p");
 countdown_text.setAttribute("type", "text");
 countdown_text.style.position = 'absolute';
@@ -53,15 +66,18 @@ arrived_time.value=arrived.getFullYear()+'-'+(arrived.getMonth()+1)+'-'+arrived.
 // 2. Append somewhere
 let body = document.getElementsByClassName("contentPage")[0];
 body.appendChild(button);
+body.appendChild(button2);
 body.appendChild(time_input);
 body.appendChild(countdown_text);
 body.appendChild(arrived_text);
 body.appendChild(arrived_time);
 let t_holder = null;
 
+let t = null;
+let ct = null;
 
 function last_counter() {
-  setTimeout(() => {
+  t = setTimeout(() => {
     $('.rallyPointConfirm')[0].click()
   }, new Date(time_input.value) - new Date());
 }
@@ -69,22 +85,35 @@ function last_counter() {
 function countdown() {
   if (new Date(time_input.value) - new Date() > 0) {
     countdown_text.innerHTML = "倒數計時: " + (new Date(time_input.value) - new Date())/1000;
-    setTimeout(countdown, 500);
+    ct = setTimeout(countdown, 500);
   }
 }
 
 // 3. Add event handler
 button.addEventListener ("click", function() {
   if (new Date(time_input.value) - new Date() > 1500) {
-    setTimeout(last_counter, new Date(time_input.value) - new Date() - 1000);
+    t = setTimeout(last_counter, new Date(time_input.value) - new Date() - 1000);
   } else {
     last_counter();
   }
-  setTimeout(countdown, 500);
+  ct = setTimeout(countdown, 500);
   button.innerHTML = '已設定完成';
   button.disabled = true;
+  button2.disabled = false;
   time_input.disabled = true;
   arrived_time.disabled = true;
+});
+
+// 3. Add event handler
+button2.addEventListener ("click", function() {
+  clearTimeout(t);
+  clearTimeout(ct)
+  countdown_text.innerHTML = "已取消攻擊"
+  button.innerHTML = '攻波定時';
+  button.disabled = false;
+  button2.disabled = true;
+  time_input.disabled = false;
+  arrived_time.disabled = false;
 });
 
 time_input.addEventListener ("change", function() {
