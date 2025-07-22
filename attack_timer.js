@@ -43,12 +43,21 @@ arrived_time.style.width = 300;
 arrived_time.style.zIndex = 99;
 
 
+function formatISODateTime(date) {
+  const pad = (n) => n.toString().padStart(2, '0');
+  return date.getFullYear() + '-' +
+         pad(date.getMonth() + 1) + '-' +
+         pad(date.getDate()) + 'T' +
+         pad(date.getHours()) + ':' +
+         pad(date.getMinutes()) + ':' +
+         pad(date.getSeconds());
+}
 let d = new Date();
-time_input.value = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+d.getHours()+':'+(d.getMinutes()<10?'0':'') + d.getMinutes()+':'+d.getSeconds();
+time_input.value = formatISODateTime(d);
 
 let travel_time = document.getElementById('in').innerHTML.match(/\d{1,2}:\d{2}:\d{2}/g)[0].split(':');
 let arrived = new Date(d.getTime() + (travel_time[0]*3600 + travel_time[1]*60 + travel_time[2]*1) * 1000);
-arrived_time.value=arrived.getFullYear()+'-'+(arrived.getMonth()+1)+'-'+arrived.getDate()+' '+arrived.getHours()+':'+(arrived.getMinutes()<10?'0':'') + arrived.getMinutes()+':'+arrived.getSeconds();
+arrived_time.value = formatISODateTime(arrived);
 
 // 2. Append somewhere
 let body = document.getElementsByClassName("contentPage")[0];
@@ -90,11 +99,11 @@ button.addEventListener ("click", function() {
 time_input.addEventListener ("change", function() {
   let travel_time = document.getElementById('in').innerHTML.match(/\d{1,2}:\d{2}:\d{2}/g)[0].split(':');
   let arrived = new Date(new Date(time_input.value).getTime() + (travel_time[0]*3600 + travel_time[1]*60 + travel_time[2]*1) * 1000);
-  arrived_time.value=arrived.getFullYear()+'-'+(arrived.getMonth()+1)+'-'+arrived.getDate()+' '+arrived.getHours()+':'+(arrived.getMinutes()<10?'0':'') + arrived.getMinutes()+':'+arrived.getSeconds();
+  arrived_time.value = formatISODateTime(arrived);
 });
 
 arrived_time.addEventListener ("change", function() {
   let travel_time = document.getElementById('in').innerHTML.match(/\d{1,2}:\d{2}:\d{2}/g)[0].split(':');
   let depart = new Date(new Date(arrived_time.value).getTime() - (travel_time[0]*3600 + travel_time[1]*60 + travel_time[2]*1) * 1000);
-  time_input.value=depart.getFullYear()+'-'+(depart.getMonth()+1)+'-'+depart.getDate()+' '+depart.getHours()+':'+(depart.getMinutes()<10?'0':'') + depart.getMinutes()+':'+depart.getSeconds();
+  time_input.value = formatISODateTime(depart);
 });
