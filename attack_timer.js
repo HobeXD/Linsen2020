@@ -1,3 +1,8 @@
+// editing UI
+document.getElementById('content').style.marginBottom = '100px';
+
+let storageKey = 'savedArrivedTime';
+
 let button = document.createElement("button");
 button.innerHTML = "攻波定時";
 button.style.position = 'absolute';
@@ -63,14 +68,9 @@ function formatISODateTime(date) {
          pad(date.getDate()) + 'T' +
          pad(date.getHours()) + ':' +
          pad(date.getMinutes()) + ':' +
-         pad(date.getSeconds());
+         pad(date.getSeconds()) + '.' +
+         pad(date.getMilliseconds(), 3);
 }
-let d = new Date();
-time_input.value = formatISODateTime(d);
-
-let travel_time = document.getElementById('in').innerHTML.match(/\d{1,2}:\d{2}:\d{2}/g)[0].split(':');
-let arrived = new Date(d.getTime() + (travel_time[0]*3600 + travel_time[1]*60 + travel_time[2]*1) * 1000);
-arrived_time.value = formatISODateTime(arrived);
 
 // 2. Append somewhere
 let body = document.getElementsByClassName("contentPage")[0];
@@ -135,4 +135,23 @@ arrived_time.addEventListener ("change", function() {
   let travel_time = document.getElementById('in').innerHTML.match(/\d{1,2}:\d{2}:\d{2}/g)[0].split(':');
   let depart = new Date(new Date(arrived_time.value).getTime() - (travel_time[0]*3600 + travel_time[1]*60 + travel_time[2]*1) * 1000);
   time_input.value = formatISODateTime(depart);
+  localStorage.setItem(storageKey, document.getElementById('in').innerHTML);
+});
+
+
+// 儲存的出發時間
+window.addEventListener('DOMContentLoaded', () => {
+  let d = new Date();
+  time_input.value = formatISODateTime(d);
+
+  let travel_time = document.getElementById('in').innerHTML.match(/\d{1,2}:\d{2}:\d{2}/g)[0].split(':');
+  let arrived = new Date(d.getTime() + (travel_time[0]*3600 + travel_time[1]*60 + travel_time[2]*1) * 1000);
+
+  
+  const savedTime = new Date(localStorage.getItem(storageKey));
+  if (saved && savedTime > arrived) {
+    arrived = savedTime;
+  }
+  
+  arrived_time.value = formatISODateTime(arrived);
 });
