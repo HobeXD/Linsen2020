@@ -135,7 +135,7 @@ arrived_time.addEventListener ("change", function() {
   let travel_time = document.getElementById('in').innerHTML.match(/\d{1,2}:\d{2}:\d{2}/g)[0].split(':');
   let depart = new Date(new Date(arrived_time.value).getTime() - (travel_time[0]*3600 + travel_time[1]*60 + travel_time[2]*1) * 1000);
   time_input.value = formatISODateTime(depart);
-  localStorage.setItem(storageKey, document.getElementById('in').innerHTML);
+  localStorage.setItem(storageKey, arrived_time.value);
 });
 
 
@@ -149,7 +149,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   
   const savedTime = new Date(localStorage.getItem(storageKey));
-  if (saved && savedTime > arrived) {
+  if (savedTime && savedTime > arrived) {
     arrived = savedTime;
   }
   
