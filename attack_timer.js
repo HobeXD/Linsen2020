@@ -140,7 +140,7 @@ arrived_time.addEventListener ("change", function() {
 
 
 // 儲存的出發時間
-window.addEventListener('DOMContentLoaded', () => {
+//window.addEventListener('DOMContentLoaded', () => {
   let d = new Date();
   time_input.value = formatISODateTime(d);
 
@@ -154,4 +154,5 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   
   arrived_time.value = formatISODateTime(arrived);
-});
+  arrived_time.dispatchEvent(new Event('change', { bubbles: true }));
+//});
