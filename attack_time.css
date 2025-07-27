@@ -1,0 +1,26 @@
+.attack-timer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  z-index: 99;
+  display: flex;
+  padding: 10px;
+}
+
+.attack-timer-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0 5px;
+}
+
+.attack-timer-list > *:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.attack-timer-item {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
