@@ -1,158 +1,242 @@
 // editing UI
 document.getElementById('content').style.marginBottom = '100px';
 
-let storageKey = 'savedArrivedTime';
+const styleElement = document.createElement('link');
+styleElement.setAttribute('rel', 'stylesheet');
+styleElement.setAttribute('href', 'https://hobexd.github.io/Linsen2020/attack_timer.css');
+document.head.appendChild(styleElement);
 
-let button = document.createElement("button");
-button.innerHTML = "攻波定時";
-button.style.position = 'absolute';
-button.style.bottom = "10px";
-button.style.left = "10px";
-button.style.width = 300;
-button.style.height = 300;
-button.style.padding = '10px';
-button.style.background = '#f0f0f0';
-button.style.display = 'block';
-button.style.zIndex = 99;
+const storageKey = 'savedArrivedTime';
+const storageKey2 = 'savedArrivedListTime';
+const buttonClassName = 'textButtonV1 green';
+const savedTimeList = JSON.parse(localStorage.getItem(storageKey2)) || [];
 
-let button2 = document.createElement("button");
-button2.innerHTML = "重設";
-button2.style.position = 'absolute';
-button2.style.bottom = "10px";
-button2.style.left = "200px";
-button2.style.width = 300;
-button2.style.height = 300;
-button2.style.padding = '10px';
-button2.style.background = '#f0f0f0';
-button2.style.display = 'block';
-button2.style.zIndex = 99;
-button2.disabled = true;
+const contentDiv = document.createElement("div");
+contentDiv.className = 'attack-timer';
 
-let countdown_text = document.createElement("p");
-countdown_text.setAttribute("type", "text");
-countdown_text.style.position = 'absolute';
-countdown_text.style.bottom = "60px";
-countdown_text.style.left = "10px";
-countdown_text.style.zIndex = 99;
-countdown_text.innerHTML = "";
+const startBlock = document.createElement("div");
+startBlock.className = 'attack-timer-list';
 
-let time_input = document.createElement("input");
-time_input.setAttribute("type", "text");
-time_input.style.position = 'absolute';
-time_input.style.bottom = "50px";
-time_input.style.left = "10px";
-time_input.style.width = 300;
-time_input.style.zIndex = 99;
+const endBlock = document.createElement("div");
+endBlock.className = 'attack-timer-list';
 
-let arrived_text = document.createElement("p");
-arrived_text.setAttribute("type", "text");
-arrived_text.style.position = 'absolute';
-arrived_text.style.bottom = "60px";
-arrived_text.style.left = "200px";
-arrived_text.style.zIndex = 99;
-arrived_text.innerHTML = "抵達時間: ";
+const timeList = document.createElement("div");
+timeList.className = 'attack-timer-list';
 
-let arrived_time = document.createElement("input");
-arrived_time.setAttribute("type", "text");
-arrived_time.style.position = 'absolute';
-arrived_time.style.bottom = "50px";
-arrived_time.style.left = "200px";
-arrived_time.style.width = 300;
-arrived_time.style.zIndex = 99;
+const timeItem = document.createElement("div");
+timeItem.className = 'attack-timer-item';
 
+const setButton = document.createElement("button");
+setButton.className = buttonClassName;
+setButton.innerHTML = '攻波定時';
 
-function formatISODateTime(date) {
-  const pad = (n) => n.toString().padStart(2, '0');
-  return date.getFullYear() + '-' +
-         pad(date.getMonth() + 1) + '-' +
-         pad(date.getDate()) + 'T' +
-         pad(date.getHours()) + ':' +
-         pad(date.getMinutes()) + ':' +
-         pad(date.getSeconds()) + '.' +
-         pad(date.getMilliseconds(), 3);
-}
+const resetButton = document.createElement("button");
+resetButton.className = buttonClassName;
+resetButton.innerHTML = '重設';
+
+const countdownText = document.createElement("p");
+// countdownText.className = 'attack-timer-countdown';
+countdownText.innerHTML = '倒數計時: ';
+
+const timeInput = document.createElement("input");
+timeInput.setAttribute("type", "text");
+// timeInput.className = 'attack-timer-input';
+
+const arrivedText = document.createElement("p");
+// arrivedText.className = 'attack-timer-countdown';
+arrivedText.innerHTML = '抵達時間: ';
+
+const arrivedTime = document.createElement("input");
+arrivedTime.setAttribute("type", "text");
+// arrivedTime.className = 'attack-timer-input';
+const addIcon = `
+  <svg width="12" height="12" viewBox="0 0 18 18">
+    <path d="M16 10h-6v6H8v-6H2V8h6V2h2v6h6z" class="outline"></path>
+    <path d="M16 10h-6v6H8v-6H2V8h6V2h2v6h6z" class="icon"></path>
+  </svg>
+`;
+
+const deleteIcon = `
+  <svg width="12" height="12" viewBox="0 0 18 6">
+    <path d="M16 4H2V2h14z" class="outline"></path>
+    <path d="M16 4H2V2h14z" class="icon"></path>
+  </svg>
+`;
+
+const pushIcon = `
+  <svg width="12" height="12" viewBox="0 0 18 18">
+    <path d="M6 0L6 12L0 12L11 22L22 12L16 12L16 0Z" class="outline"></path>
+    <path d="M6 0L6 12L0 12L11 22L22 12L16 12L16 0Z" class="icon"></path>
+  </svg>
+`;
+
+const template = document.createElement('template');
+
+const templateClassName = 'textButtonV2 buttonFramed plus rectangle withIcon green';
+template.innerHTML = `
+  <div class="attack-timer-item">
+    <input type="text" placeholder="儲存時間">
+    <button aria-label="Delete" Style="width: 24px; height: 24px;" class="${templateClassName}">${deleteIcon}</button>
+    <button aria-label="Push" Style="width: 24px; height: 24px;" class="${templateClassName}">${pushIcon}</button>
+  </div>
+`;
+
+const addButton = document.createElement("button");
+addButton.className = "textButtonV2 buttonFramed plus rectangle withIcon green";
+addButton.style.width = '24px';
+addButton.style.height = '24px';
+addButton.setAttribute("aria-label", "Add");
+addButton.innerHTML = addIcon;
+
+const saveTimeInput = document.createElement("input");
+saveTimeInput.setAttribute("type", "text");
+saveTimeInput.setAttribute("placeholder", "儲存時間");
 
 // 2. Append somewhere
-let body = document.getElementsByClassName("contentPage")[0];
-body.appendChild(button);
-body.appendChild(button2);
-body.appendChild(time_input);
-body.appendChild(countdown_text);
-body.appendChild(arrived_text);
-body.appendChild(arrived_time);
-let t_holder = null;
+const body = document.getElementsByClassName("contentPage")[0];
+body.appendChild(contentDiv);
+contentDiv.appendChild(startBlock);
+contentDiv.appendChild(endBlock);
+contentDiv.appendChild(timeList);
+
+startBlock.appendChild(countdownText);
+startBlock.appendChild(timeInput);
+startBlock.appendChild(setButton);
+
+endBlock.appendChild(arrivedText);
+endBlock.appendChild(arrivedTime);
+endBlock.appendChild(resetButton);
+
+timeList.appendChild(timeItem);
+timeItem.appendChild(saveTimeInput);
+timeItem.appendChild(addButton);
+
+const formatISODateTime = (date) => {
+  const pad = (n) => n.toString().padStart(2, '0');
+  return date.getFullYear() + '-' +
+    pad(date.getMonth() + 1) + '-' +
+    pad(date.getDate()) + 'T' +
+    pad(date.getHours()) + ':' +
+    pad(date.getMinutes()) + ':' +
+    pad(date.getSeconds()) + '.' +
+    pad(date.getMilliseconds(), 3);
+};
 
 let t = null;
 let ct = null;
 
 function last_counter() {
   t = setTimeout(() => {
-    $('.rallyPointConfirm')[0].click()
-  }, new Date(time_input.value) - new Date());
+    $('.rallyPointConfirm')[0].click();
+  }, new Date(timeInput.value) - new Date());
+}
+
+const addTimeItem = (saveTime) => {
+  const newItem = template.content.firstElementChild.cloneNode(true);
+  const del = newItem.querySelector('[aria-label="Delete"]');
+  const push = newItem.querySelector('[aria-label="Push"]');
+  const input = newItem.querySelector('input');
+  input.value = saveTime;
+
+  del.addEventListener("click", () => {
+    const index = savedTimeList.indexOf(input.value);
+    if (index > -1) {
+      savedTimeList.splice(index, 1);
+    }
+    localStorage.setItem(storageKey2, JSON.stringify(savedTimeList));
+    newItem.remove();
+  });
+
+  push.addEventListener("click", () => {
+    if (input.value) {
+      arrivedTime.value = formatISODateTime(new Date(input.value));
+      arrivedTime.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  });
+
+  timeList.appendChild(newItem);
+};
+
+if (savedTimeList?.length > 0) {
+  savedTimeList
+    // .filter(saveTime => new Date(saveTime) > arrived) // Filter out empty strings
+    .forEach(saveTime => {
+      addTimeItem(saveTime);
+    });
 }
 
 function countdown() {
-  if (new Date(time_input.value) - new Date() > 0) {
-    countdown_text.innerHTML = "倒數計時: " + (new Date(time_input.value) - new Date())/1000;
+  if (new Date(timeInput.value) - new Date() > 0) {
+    countdownText.innerHTML = "倒數計時: " + (new Date(timeInput.value) - new Date()) / 1000;
     ct = setTimeout(countdown, 500);
   }
 }
 
 // 3. Add event handler
-button.addEventListener ("click", function() {
-  if (new Date(time_input.value) - new Date() > 1500) {
-    t = setTimeout(last_counter, new Date(time_input.value) - new Date() - 1000);
+setButton.addEventListener("click", () => {
+  if (new Date(timeInput.value) - new Date() > 1500) {
+    t = setTimeout(last_counter, new Date(timeInput.value) - new Date() - 1000);
   } else {
     last_counter();
   }
   ct = setTimeout(countdown, 500);
-  button.innerHTML = '已設定完成';
-  button.disabled = true;
-  button2.disabled = false;
-  time_input.disabled = true;
-  arrived_time.disabled = true;
+  setButton.innerHTML = '已設定完成';
+  setButton.disabled = true;
+  resetButton.disabled = false;
+  timeInput.disabled = true;
+  arrivedTime.disabled = true;
 });
 
 // 3. Add event handler
-button2.addEventListener ("click", function() {
+resetButton.addEventListener("click", () => {
   clearTimeout(t);
-  clearTimeout(ct)
-  countdown_text.innerHTML = "已取消攻擊"
-  button.innerHTML = '攻波定時';
-  button.disabled = false;
-  button2.disabled = true;
-  time_input.disabled = false;
-  arrived_time.disabled = false;
+  clearTimeout(ct);
+  countdownText.innerHTML = "已取消攻擊";
+  setButton.innerHTML = '攻波定時';
+  setButton.disabled = false;
+  resetButton.disabled = true;
+  timeInput.disabled = false;
+  arrivedTime.disabled = false;
 });
 
-time_input.addEventListener ("change", function() {
-  let travel_time = document.getElementById('in').innerHTML.match(/\d{1,2}:\d{2}:\d{2}/g)[0].split(':');
-  let arrived = new Date(new Date(time_input.value).getTime() + (travel_time[0]*3600 + travel_time[1]*60 + travel_time[2]*1) * 1000);
-  arrived_time.value = formatISODateTime(arrived);
+timeInput.addEventListener("change", () => {
+  const travelTime = document.getElementById('in').innerHTML.match(/\d{1,2}:\d{2}:\d{2}/g)[0].split(':');
+  const arrived = new Date(new Date(timeInput.value).getTime() + (travelTime[0] * 3600 + travelTime[1] * 60 + travelTime[2] * 1) * 1000);
+  arrivedTime.value = formatISODateTime(arrived);
 });
 
-arrived_time.addEventListener ("change", function() {
-  let travel_time = document.getElementById('in').innerHTML.match(/\d{1,2}:\d{2}:\d{2}/g)[0].split(':');
-  let depart = new Date(new Date(arrived_time.value).getTime() - (travel_time[0]*3600 + travel_time[1]*60 + travel_time[2]*1) * 1000);
-  time_input.value = formatISODateTime(depart);
-  localStorage.setItem(storageKey, arrived_time.value);
+arrivedTime.addEventListener("change", () => {
+  const travelTime = document.getElementById('in').innerHTML.match(/\d{1,2}:\d{2}:\d{2}/g)[0].split(':');
+  const depart = new Date(new Date(arrivedTime.value).getTime() - (travelTime[0] * 3600 + travelTime[1] * 60 + travelTime[2] * 1) * 1000);
+  timeInput.value = formatISODateTime(depart);
+  localStorage.setItem(storageKey, arrivedTime.value);
+});
+
+addButton.addEventListener("click", () => {
+  const saveTime = saveTimeInput.value;
+
+  savedTimeList.push(saveTime);
+  localStorage.setItem(storageKey2, JSON.stringify(savedTimeList));
+
+  addTimeItem(saveTime);
+
+  saveTimeInput.value = '';
 });
 
 
 // 儲存的出發時間
 //window.addEventListener('DOMContentLoaded', () => {
-  let d = new Date();
-  time_input.value = formatISODateTime(d);
+const d = new Date();
+timeInput.value = formatISODateTime(d);
 
-  let travel_time = document.getElementById('in').innerHTML.match(/\d{1,2}:\d{2}:\d{2}/g)[0].split(':');
-  let arrived = new Date(d.getTime() + (travel_time[0]*3600 + travel_time[1]*60 + travel_time[2]*1) * 1000);
+const travelTime = document.getElementById('in').innerHTML.match(/\d{1,2}:\d{2}:\d{2}/g)[0].split(':');
+let arrived = new Date(d.getTime() + (travelTime[0] * 3600 + travelTime[1] * 60 + travelTime[2] * 1) * 1000);
 
-  
-  const savedTime = new Date(localStorage.getItem(storageKey));
-  if (savedTime && savedTime > arrived) {
-    arrived = savedTime;
-  }
-  
-  arrived_time.value = formatISODateTime(arrived);
-  arrived_time.dispatchEvent(new Event('change', { bubbles: true }));
-//});
+
+const savedTime = new Date(localStorage.getItem(storageKey));
+if (savedTime && savedTime > arrived) {
+  arrived = savedTime;
+}
+
+arrivedTime.value = formatISODateTime(arrived);
+arrivedTime.dispatchEvent(new Event('change', { bubbles: true }));
